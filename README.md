@@ -27,3 +27,4 @@ Most UW students decide to live near the school like the dorm, off-campus apartm
 * `server/`: contains all server-side backend code in NodeJS
   - set up the server via `npm start`
 * `client/`: contains all client-side frontend code written in ReactJS
+* `reports`: contains all reports and writeups related to this project
