@@ -5,6 +5,7 @@ var connection = mysql.createConnection({
    port     : '3306',
    user     : 'admin',
    password : 'Ryan6666!!',
+   database : 'dublease'
  });
 var app = express();
 
