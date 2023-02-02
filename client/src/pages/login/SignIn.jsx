@@ -9,18 +9,18 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 
-import {PromotionRight} from "./Promotion.jsx";
-import {Text} from "../../components/Text";
+import { PromotionRight } from "./Promotion.jsx";
+import { Text } from "../../components/Text";
 
 const SignIn = () => {
-// const history = useHistory();
+  const formRef = React.useRef();
 
-const [showPassword, setShowPassword] = React.useState(false);
-const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-const handleMouseDownPassword = ({event}) => {
-  event.preventDefault();
-};
+  const handleMouseDownPassword = ({ event }) => {
+    event.preventDefault();
+  };
 
 
   return (
@@ -42,64 +42,60 @@ const handleMouseDownPassword = ({event}) => {
               Welcome back! Please enter your details.
             </Text>
           </div>
+
+          <form ref={formRef} className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
+            <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[352px]">
+              <Text
+                className="font-medium text-black_901 text-left w-[auto]"
+                variant="body6"
+              >
+                Email
+              </Text>
+              <TextField
+                required
+                id="email"
+                className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
+                type="email"
+                label="hi@example.com"
+                size="30ch"
+                variant="outlined"
+
+              ></TextField>
+            </div>
             <div className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
-              <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[352px]">
+              <div className="flex flex-col gap-[8px] h-[100%] items-start justify-start w-[100%]">
                 <Text
                   className="font-medium text-black_901 text-left w-[auto]"
                   variant="body6"
                 >
-                  Email
+                  Password
                 </Text>
-                <TextField
-                  id="email"
-                  className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
-                  type="email"
-                  label="hi@example.com"
-                  size="30ch"
-                  variant="outlined"
-                ></TextField>
-              </div>
-              <div className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
-                <div className="flex flex-col gap-[8px] h-[100%] items-start justify-start w-[100%]">
-                  <Text
-                    className="font-medium text-black_901 text-left w-[auto]"
-                    variant="body6"
-                  >
-                    Password
-                  </Text>
-                  <FormControl sx={{ m: 0, width: '30ch' }} color="secondary" variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                    <OutlinedInput 
-                      id="outlined-adornment-password" 
-                      type={showPassword ? 'text' : 'password'} 
-                      color="secondary"
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                           color="secondary"
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Password"
-                    />
-                  </FormControl>
-                </div>
-                {/* <div className="flex flex-col justify-center w-[352px]">
-                  <Text
-                    className="font-medium text-deep_purple_A200 text-left w-[auto]"
-                    variant="body6"
-                  >
-                    Forgot Password?
-                  </Text>
-                </div> */}
+                <FormControl sx={{ m: 0, width: '30ch' }} color="secondary" variant="outlined" required>
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+
+                    id="outlined-adornment-password"
+                    type={showPassword ? 'text' : 'password'}
+                    color="secondary"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          color="secondary"
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
               </div>
             </div>
+
             <div className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
               <Button
                 className="cursor-pointer font-bold text-[16px] text-center text-white_A700 w-[352px] bg-deep_purple_A200_75 text-white_A700"
@@ -107,24 +103,26 @@ const handleMouseDownPassword = ({event}) => {
                 size="3xl"
                 variant="contained"
                 color="secondary"
+                onClick={() => formRef.current.reportValidity()}
               >
                 Login
               </Button>
             </div>
-            <Text
-              className="font-normal text-gray_601 text-left w-[auto]"
-              variant="body6"
-            >
-              <span className="text-gray_601 text-[14px] font-plusjakartasans">
-                Don’t have an account?{" "}
-              </span>
-              <Link className="text-deep_purple_A200 text-[14px] font-plusjakartasans font-bold"
+          </form>
+          <Text
+            className="font-normal text-gray_601 text-left w-[auto]"
+            variant="body6"
+          >
+            <span className="text-gray_601 text-[14px] font-plusjakartasans">
+              Don’t have an account?{" "}
+            </span>
+            <Link className="text-deep_purple_A200 text-[14px] font-plusjakartasans font-bold"
               to="../signup">
-                Sign up for free
-              </Link>
-            </Text>
-          </div>
-        <PromotionRight/>
+              Sign up for free
+            </Link>
+          </Text>
+        </div>
+        <PromotionRight />
       </div>
     </>
   );
