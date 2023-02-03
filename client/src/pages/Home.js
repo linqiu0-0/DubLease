@@ -10,6 +10,7 @@ import {Stack} from "@mui/material";
 import Button from "@mui/material/Button";
 import DropDownSelect from "../components/DropDownSelect";
 import FilterDrawer from "../components/FilterDrawer";
+import Map from "../components/Map"
 
 const Home = () => {
     return (
@@ -18,7 +19,7 @@ const Home = () => {
             <Box marginX={10}>
                 <Grid container spacing={2} mt={2}>
                     <Grid xs={6}>
-                        map
+                        <Map />
                     </Grid>
                     <Grid xs={6}>
                         <Typography variant="subtitle1" component="h2">
