@@ -3,26 +3,25 @@ import {FormControl, Select} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 
 
-function DropDownSelect() {
-    const [age, setAge] = React.useState('');
+function DropDownSelect({ items }) {
+    const [value, setValue] = React.useState('');
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setValue(event.target.value);
     };
 
     return (
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl sx={{ m: 1, minWidth: 150 }}>
             <Select
-                value={age}
+                value={value}
                 onChange={handleChange}
                 displayEmpty
             >
-                <MenuItem value="">
-                    Any Price
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {items.map((item) => (
+                    <MenuItem key={item.value} value={item.value}>
+                        {item.text}
+                    </MenuItem>
+                ))}
             </Select>
         </FormControl>
     );

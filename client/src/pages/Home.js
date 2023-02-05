@@ -1,39 +1,42 @@
 import React from "react";
 import MainAppBar from "../components/AppBar";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import LeaseCard from "../components/LeaseCard";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import SearchBar from "../components/SearchBar";
 import {Stack} from "@mui/material";
-import Button from "@mui/material/Button";
 import DropDownSelect from "../components/DropDownSelect";
 import FilterDrawer from "../components/FilterDrawer";
-import Map from "../components/Map"
+import Map from "../components/Map";
+import BasicFilters from "../data.json";
 
 const Home = () => {
     return (
         <>
             <MainAppBar />
-            <Box marginX={10}>
-                <Grid container spacing={2} mt={2}>
+            <Box marginX={4}>
+                <Grid container spacing={3} mt={2}>
                     <Grid xs={6}>
                         <Map />
                     </Grid>
                     <Grid xs={6}>
-                        <Typography variant="subtitle1" component="h2">
+                        <Typography variant="h5" component="h1" p={1}>
+                            Search Properties
+                        </Typography>
+                        <Typography variant="subtitle1" component="div" p={1}>
                             0 Results found
                         </Typography>
                         <Box my={2} sx={{display: "flex"}}>
                             <SearchBar />
                             <FilterDrawer />
                         </Box>
-                        <DropDownSelect />
-                        <DropDownSelect />
-                        <DropDownSelect />
-                        <DropDownSelect />
-                        <Stack spacing={4}
+                        <React.Fragment>
+                            {BasicFilters.map((filter) => (
+                                <DropDownSelect key={filter.id} items={filter.items}/>
+                            ))}
+                        </React.Fragment>
+                        <Stack spacing={3}
                         sx={{
                             maxHeight: "1000px",
                             overflow: "auto"
