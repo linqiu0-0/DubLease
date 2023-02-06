@@ -28,3 +28,9 @@ Most UW students decide to live near the school like the dorm, off-campus apartm
   - set up the server via `npm start`
 * `client/`: contains all client-side frontend code written in ReactJS
 * `reports/`: contains all reports and writeups related to this project
+
+## How to start the system
+1. Fisrt build the system through `docker compose build `
+2. Then run the system through`docker compose up`
+
+
