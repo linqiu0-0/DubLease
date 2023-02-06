@@ -1,0 +1,10 @@
+
+ @font-face { font-style : normal; src: url("../assets/fonts/InterRegular.ttf"); font-family : "Inter"; font-weight : 400;  }
+ @font-face { font-style : bold; src: url("../assets/fonts/PlusJakartaSansBold.ttf"); font-family : "Plus Jakarta Sans"; font-weight : 700;  }
+ @font-face { font-style : bold; src: url("../assets/fonts/PlusJakartaSansMedium.ttf"); font-family : "Plus Jakarta Sans"; font-weight : 400;  }
+ @font-face { font-style : bold; src: url("../assets/fonts/PlusJakartaSansExtraBold.ttf"); font-family : "Plus Jakarta Sans"; font-weight : 800;  }
+ @font-face { font-style : normal; src: url("../assets/fonts/PlusJakartaSansRegular.ttf"); font-family : "Plus Jakarta Sans"; font-weight : 400;  }
+ @font-face { font-style : bold; src: url("../assets/fonts/PoppinsSemiBold.ttf"); font-family : "Poppins"; font-weight : 600;  }
+ @font-face { font-style : normal; src: url("../assets/fonts/PoppinsRegular.ttf"); font-family : "Poppins"; font-weight : 400;  }
+ @font-face { font-style : normal; src: url("../assets/fonts/GaladaRegular.ttf"); font-family : "Galada"; font-weight : 400;  }
+ @font-face { font-style : bold; src: url("../assets/fonts/PoppinsMedium.ttf"); font-family : "Poppins"; font-weight : 500;  }
