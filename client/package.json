@@ -14,12 +14,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.7.0",
-    "react-scripts": "^2.1.3",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=8080 react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "start": "DISABLE_ESLINT_PLUGIN=true PORT=8080 react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -42,6 +42,8 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "autoprefixer": "10.4.2",
     "eslint": "^8.33.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-flowtype": "^8.0.3",
@@ -49,6 +51,9 @@
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^5.0.0-next-2ef24145e-20230202"
+    "eslint-plugin-react-hooks": "^5.0.0-next-2ef24145e-20230202",
+    "postcss": "8.4.8",
+    "react-password-checklist": "^1.4.3",
+    "tailwindcss": "3.0.18"
   }
 }
