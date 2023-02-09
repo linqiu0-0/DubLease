@@ -8,12 +8,15 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
+import {useNavigate } from "react-router-dom";
+
 
 import { PromotionRight } from "./Promotion.jsx";
 import { Text } from "../../components/Text";
 
 const SignIn = () => {
   const formRef = React.useRef();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -21,6 +24,16 @@ const SignIn = () => {
   const handleMouseDownPassword = ({ event }) => {
     event.preventDefault();
   };
+
+
+
+  const handleSignUpEvent = () => {
+    if(formRef.current.reportValidity()) {
+        navigate({
+            pathname: '/',
+        });
+    }
+};
 
 
   return (
@@ -103,7 +116,7 @@ const SignIn = () => {
                 size="3xl"
                 variant="contained"
                 color="secondary"
-                onClick={() => formRef.current.reportValidity()}
+                onClick={handleSignUpEvent}
               >
                 Login
               </Button>

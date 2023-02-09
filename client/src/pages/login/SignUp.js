@@ -8,12 +8,15 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import PasswordChecklist from "react-password-checklist"
+import {useNavigate } from "react-router-dom";
+
 
 import { PromotionRight } from "./Promotion.jsx";
 import { Text } from "../../components/Text";
 
 const SignUp = () => {
     const formRef = React.useRef();
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = React.useState(false);
     const [signedup, setSignUp] = React.useState(false);
@@ -29,6 +32,17 @@ const SignUp = () => {
     const handleMouseDownPassword = ({ event }) => {
         event.preventDefault();
     };
+
+    const handleSignUpEvent = () => {
+        setSignUp(true); 
+        formRef.current.reportValidity();
+        if(signedup && passValid) {
+            navigate({
+                pathname: '/',
+            });
+        }
+    };
+
     return (
         <>
             <div className="bg-white_A700 font-plusjakartasans h-[950px] mx-[auto] relative w-[100%]">
@@ -172,7 +186,7 @@ const SignUp = () => {
                             size="3xl"
                             variant="contained"
                             color="secondary"
-                            onClick={e => {setSignUp(true); formRef.current.reportValidity()}}
+                            onClick={handleSignUpEvent}
                         >
                             Sign Up
                         </Button>
