@@ -1,35 +1,58 @@
-var express = require('express');
-var mysql = require('mysql');
-var AWS = require('aws-sdk');
-AWS.config.update({region: 'us-west-2'});
-var connection = mysql.createConnection({
-   host     : 'database-dublease.cgiuptojslql.us-west-2.rds.amazonaws.com',
-   port     : '3306',
-   user     : 'admin',
-   password : 'Ryan6666!!',
-   database : 'dublease'
-});
-var app = express();
+const account = require('./user/account');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 
-var db = require('./data/database');
-var account = require('./user/account');
+app.use(
+   bodyParser.urlencoded({
+     extended: false,
+   })
+ );
+app.use(bodyParser.json());
 
-var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 app.get('/', function (req, res) {
    res.send('Hello World');
 });
 
+
+/*_________________________End Points__________________________ */
+
 // Sign-in Module
 app.post('/signup', async (req, res) => {
-   code, msg = account.signup(req, res);
-   res.status(code);
-   res.send(msg);
+   var email = req.body.email;
+   var password = req.body.password;
+   var username = req.body.username;
+
+   if (!email || !password || !username) {
+      res.status(400).send("invalid user parameters");
+      return;
+   }
+
+   try {
+      const {code, msg} = await account.signup(email, password, username);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
 });
-app.post('/signin', async (req, res) => {
-   code, msg = account.verify_signin(req, res);
-   res.status(code);
-   res.send(msg);
+
+app.post('/login', async (req, res) => {
+   var email = req.body.email;
+   var password = req.body.password;
+   if (!email || !password) {
+      res.status(400).send("invalid user parameters");
+      return;
+   }
+
+   try {
+      const {code, msg} = await account.verify_login(email, password);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
 });
 
 
@@ -37,59 +60,5 @@ var server = app.listen(8000, function () {
    var host = server.address().address;
    var port = server.address().port;
    
-   console.log("Example app listening at http://%s:%s", host, port);
-
-   db.database_init();
-});
-
-var bucketParams = {
-   Bucket : 'dubleaseimages',
- };
-
-s3.listObjects(bucketParams, function(err, data) {
-   if (err) {
-     console.log("Error", err);
-   } else {
-     console.log("Success", data);
-   }
- });
-
-
-var objectParams = {
-   Bucket : 'dubleaseimages',
-   Key: 'logo192.png',
- };
-
- s3.getObject(objectParams, function(err, data) {
-   if (err) {
-     console.log("Error", err);
-   } else {
-     console.log("Success", data);
-   }
-});
-
-var bucketParams = {
-   Bucket : 'dubleaseimages',
- };
-
-s3.listObjects(bucketParams, function(err, data) {
-   if (err) {
-     console.log("Error", err);
-   } else {
-     console.log("Success", data);
-   }
- });
-
-
-var objectParams = {
-   Bucket : 'dubleaseimages',
-   Key: 'logo192.png',
-};
-
-s3.getObject(objectParams, function(err, data) {
-   if (err) {
-     console.log("Error", err);
-   } else {
-     console.log("Success", data);
-   }
+   console.log("App listening at port %s", port);
 });
