@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "proxy": "http://localhost:8000",
   "scripts": {
     "test": "mocha",
     "start": "node app.js"
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/linqiu0-0/DubLease#readme",
   "dependencies": {
     "aws-sdk": "^2.1308.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "mocha": "^10.2.0",
     "mysql": "^2.18.1"
