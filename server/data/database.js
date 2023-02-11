@@ -49,3 +49,24 @@ exports.get_user = async function(email) {
         });
     });
 }
+
+// Params:
+//  sql_conditions: basically what's after the WHERE clause (e.g. "name = ? AND MIN_PRICE < ? AND ...")
+//  condition_values: values corresponding to the specified conditions. Orders must match exactly
+// Return:
+//  list of filtered subleases (could be empty)
+exports.filter_sublease = async function(sql_conditions, condition_values) {
+    const sql = 'SELECT * FROM Sublease WHERE ' + sql_conditions;
+    console.log(sql);
+    console.log(condition_values);
+    return new Promise((resolve, reject) => {
+        connection.query(sql, condition_values, function(error, results, fields) {
+            subleases = [];
+            for (let row in results) {
+                subleases.push(JSON.parse(JSON.stringify(results[row])));
+            }
+            console.log("subleases: \n", subleases);
+            return error ? reject(error) : resolve(subleases);
+        });
+    });
+}
