@@ -10,6 +10,7 @@ import "../styles/App.css"
 
 
 function LeaseCard({ LeaseCardData }) {
+    console.log(LeaseCardData);
     return (
         <Paper>
             <Grid container spacing={1}>

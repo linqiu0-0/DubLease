@@ -37,8 +37,8 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
     var conditions = [];// basically what's after the WHERE clause (e.g. "name = ? AND MIN_PRICE < ? AND ...")
     var values = [];    // values corresponding to the specified conditions. Orders must match exactly
     if (name) {
-        conditions.push("PropertyName = ?");
-        values.push(name);
+        conditions.push("PropertyName like ?");
+        values.push("%" + name + "%");
     }
     if (min_price) {
         conditions.push("PropertyPrice >= ?");
@@ -59,7 +59,8 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
     }
     
     // initial filtering on conditions besides dates
-    const subleases = await db.filter_sublease(conditions.join(" AND "), values);
+    const sql_conditions = conditions.length? " WHERE " + conditions.join(" AND ") : conditions.join(" AND ");
+    const subleases = await db.filter_sublease(sql_conditions, values);
     // console.log(subleases);
     var result = [];
     for (let id in subleases) {
@@ -89,9 +90,9 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
             });
         }
     }
-    if (!result) {
-        return {code: 400, msg: "No matches"};
-    }
+    // if (!result) {
+    //     return {code: 400, msg: "No matches"};
+    // }
     return {
         code : 200,
         msg : result

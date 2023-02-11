@@ -9,7 +9,7 @@ import {Stack} from "@mui/material";
 import DropDownSelect from "../components/DropDownSelect";
 import Map from "../components/Map";
 import BasicFilters from "../data.json";
-import LeaseCardData from "../LeaseCardData.json";
+// import LeaseCardData from "../LeaseCardData.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
 
@@ -55,10 +55,12 @@ const initialFilters = [
     }
 ];
 
-const headers = { 'Content-Type': 'application/json' }
+const headers = { 'Content-Type': 'application/json',
+    "Access-Control-Allow-Origin": "*"};
 
 const Home = () => {
     const [filters, setFilters] = React.useState(initialFilters);
+    const [leaseCardData, setLeaseCardData] = React.useState([]);
 
     const chooseFilterCallback = (para) => (filterValue) => {
         console.log(para);
@@ -73,30 +75,30 @@ const Home = () => {
     }
 
     const searchWithFilters = (event) => {
-        let queryUrl = "?";
+        let queryUrl = "";
         filters.map((filter) => {
             queryUrl += filter.filterQuery + "=" + filter.value + "&";
         });
         queryUrl = queryUrl.slice(0, -1);
-        console.log(queryUrl);
+        console.log("http://localhost:8000/home?" + queryUrl);
 
-        // fetch('https://api.npms.io/v2/search?q=react', {
-        // })
-        //     .then(async response => {
-        //         const data = await response.json();
-        //
-        //         // check for error response
-        //         if (!response.ok) {
-        //             // get error message from body or default to response statusText
-        //             const error = (data && data.message) || response.statusText;
-        //             return Promise.reject(error);
-        //         }
-        //
-        //         console.log("haha");
-        //     })
-        //     .catch(error => {
-        //         console.error('There was an error!', error);
-        //     });
+        fetch("http://localhost:8000/home?" + queryUrl,
+        {headers})
+            .then(async response => {
+                const data = await response.json();
+                console.log(data);
+                // check for error response
+                if (!response.ok) {
+                    // get error message from body or default to response statusText
+                    const error = (data && data.message) || response.statusText;
+                    return Promise.reject(error);
+                }
+
+                setLeaseCardData(data);
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
     }
 
 
@@ -113,7 +115,7 @@ const Home = () => {
                             Search Properties
                         </Typography>
                         <Typography variant="subtitle1" component="div" p={1}>
-                            {Object.keys(LeaseCardData).length} Results found
+                            {Object.keys(leaseCardData).length} Results found
                         </Typography>
                         <Box sx={{display: "flex"}}>
                             <SearchBar
@@ -135,11 +137,11 @@ const Home = () => {
                         </React.Fragment>
                         <Stack spacing={3}
                         sx={{
-                            maxHeight: "1000px",
+                            height: "800px",
                             overflow: "auto"
                         }}>
-                            {LeaseCardData.map((singleLease) => (
-                                <LeaseCard key={singleLease.id} LeaseCardData={singleLease} />
+                            {leaseCardData.map((singleLease) => (
+                                <LeaseCard key={singleLease.post_id} LeaseCardData={singleLease} />
                             ))}
                         </Stack>
                     </Grid>

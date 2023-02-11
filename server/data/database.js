@@ -56,7 +56,7 @@ exports.get_user = async function(email) {
 // Return:
 //  list of filtered subleases (could be empty)
 exports.filter_sublease = async function(sql_conditions, condition_values) {
-    const sql = 'SELECT * FROM Sublease WHERE ' + sql_conditions;
+    const sql = 'SELECT * FROM Sublease' + sql_conditions;
     console.log(sql);
     console.log(condition_values);
     return new Promise((resolve, reject) => {
