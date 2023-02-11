@@ -42,7 +42,7 @@ function load(p) {
     return comp;
 }
 
-function initMap() {
+export function initMap() {
     const google = window.google;
 
     const map = new google.maps.Map(document.getElementById("map"), {
