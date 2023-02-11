@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "coverImg": {
+      "src": "https://images1.apartments.com/i2/WCQqdTdOx7whsIN4SXA0qt-msh5dw_VGIju9PzqlhX4/111/hub-u-district-seattle-seattle-wa-primary-photo.jpg",
+      "alt": "Hub U District photo"
+    },
+    "price": "1500",
+    "name": "Hub U District",
+    "address": "5000 University Way NE, Seattle, WA 98105",
+    "bedNum": "2",
+    "bathNum": "2",
+    "space": "500"
+  },
+  {
+    "id": 2,
+    "coverImg": {
+      "src": "https://images1.apartments.com/i2/WCQqdTdOx7whsIN4SXA0qt-msh5dw_VGIju9PzqlhX4/111/hub-u-district-seattle-seattle-wa-primary-photo.jpg",
+      "alt": "Hub U District photo"
+    },
+    "price": "1700",
+    "name": "Hub U District",
+    "address": "5000 University Way NE, Seattle, WA 98105",
+    "bedNum": "1",
+    "bathNum": "1",
+    "space": "600"
+  },
+  {
+    "id": 3,
+    "coverImg": {
+      "src": "https://www.americancampus.com/getmedia/028fc022-0390-4782-a5dc-7fe900355591/226_01_gallery_730x547.jpg",
+      "alt": "Twelve At U District photo"
+    },
+    "price": "1500",
+    "name": "Twelve At U District",
+    "address": "4535 12th Ave NE, Seattle, WA 98105",
+    "bedNum": "4",
+    "bathNum": "2",
+    "space": "400"
+  },
+  {
+    "id": 4,
+    "coverImg": {
+      "src": "https://www.americancampus.com/assets/227-elevenatudistrict/gallery/galleryslider/001-227-Exterior3-gallery-V2.jpg",
+      "alt": "Bridges@11th photo"
+    },
+    "price": "1450",
+    "name": "Bridges@11th",
+    "address": "4557 11th Ave NE, Seattle, WA 98105",
+    "bedNum": "4",
+    "bathNum": "2",
+    "space": "450"
+  },
+  {
+    "id": 5,
+    "coverImg": {
+      "src": "https://www.weberthompson.com/wp-content/uploads/2020/08/Trailside_AR_1.jpg",
+      "alt": "Trailside photo"
+    },
+    "price": "1800",
+    "name": "Trailside",
+    "address": "4801 24th Ave NE, Seattle, WA 98105",
+    "bedNum": "1",
+    "bathNum": "1",
+    "space": "547"
+  }
+]
