@@ -2,6 +2,7 @@ const account = require('./user/account');
 const express = require('express');
 const bodyParser = require('body-parser');
 const search = require('./user/search');
+const cors = require('cors');
 const app = express();
 
 app.use(
@@ -11,6 +12,12 @@ app.use(
  );
 app.use(bodyParser.json());
 
+app.use(
+    cors({
+        origin: ['http://localhost:8080'],
+        methods: ['POST', 'GET'],
+    })
+);
 
 app.get('/', function (req, res) {
    res.send('Hello World');
@@ -67,11 +74,11 @@ app.get('/home', async (req, res) => {
   var gender = req.query.gender;
   console.log(name + ", " + start_date + ", " + end_date + ", " + min_price + ", " + max_price + ", " + bed + ", " + gender);
 
-  if (!name && !start_date && !end_date && !min_price && !max_price
-      && !bed && !gender) {
-     res.status(400).send("need to specify at least one condition");
-     return;
-  }
+  // if (!name && !start_date && !end_date && !min_price && !max_price
+  //     && !bed && !gender) {
+  //    res.status(400).send("need to specify at least one condition");
+  //    return;
+  // }
 
   try {
      const {code, msg} = await search.search_sublease(name, start_date, end_date, min_price, max_price, bed, gender);

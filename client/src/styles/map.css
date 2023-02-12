@@ -1,0 +1,159 @@
+:root {
+    --purple: #805cdb;
+    --blue: #65ccf8;
+    --orange: #ed991b;
+    --pink: #ec75ec;
+    --green: #6dc031;
+    --black: #000000;
+    --white: #ffffff;
+  }
+  
+  /*
+   * Fill the container window.
+   */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /*
+   * Set the map to same size as the div container
+   */
+  #map {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .property {
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: var(--pink);
+    border-radius: 50%;
+    font-size: 14px;
+    transition: all 0.3s ease-out;
+  }
+
+  .property::after {
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid var(--white);
+    top: 92%;
+    position: absolute;
+    content: "";
+  }
+
+  .property .icon {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: var(--white);
+  }
+  
+  .property .info {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .property .price {
+    color: var(--white);
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  .property .address {
+    color: var(--white);
+    font-size: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+  }
+  
+  .property .features {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .property .features > div {
+    background: var(--white);
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    font-size: 10px;
+  }
+  
+  .property.hover {
+    height: 80px;
+    width: auto;
+    background-color: var(--pink);
+    border-radius: 8px;
+    padding: 8px 15px;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .property.hover .info {
+    display: flex;
+  }
+  
+  .property .bed {
+    color: var(--orange);
+  }
+  
+  .property .bath {
+    color: var(--orange);
+  }
+  
+  .property .size {
+    color: var(--orange);
+  }
+  
+  /*
+   * House
+   */
+  .property.highlight:has(.fa-house) .icon {
+    color: var(--blue);
+  }
+  
+  .property:not(.highlight):has(.fa-house) {
+    background-color: var(--blue);
+  }
+  
+  .property:not(.highlight):has(.fa-house)::after {
+    border-top: 9px solid var(--blue);
+  }
+  
+  /*
+   * Building
+   */
+  .property.highlight:has(.fa-building) .icon {
+    color: var(--pink);
+  }
+  
+  .property:not(.highlight):has(.fa-building) {
+    background-color: var(--pink);
+  }
+  
+  .property:not(.highlight):has(.fa-building)::after {
+    border-top: 9px solid var(--pink);
+  }
+  
+  /*
+   * Shared building
+   */
+  .property.highlight:has(.fa-building-user) .icon {
+    color: var(--purple);
+  }
+  
+  .property:not(.highlight):has(.fa-building-user) {
+    background-color: var(--purple);
+  }
+  
+  .property:not(.highlight):has(.fa-building-user)::after {
+    border-top: 9px solid var(--purple);
+  }
