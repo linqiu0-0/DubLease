@@ -72,7 +72,8 @@ function as expected.
 ## How to test the system
 
 # Deployment
-Our app is deployed on the Amazon EC2. 
+Our app is deployed on the Amazon EC2. Frontend is deployed with `port 8080` 
+and backend is deployed with `port 8000`.
 
 
 
