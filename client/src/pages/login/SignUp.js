@@ -8,7 +8,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import PasswordChecklist from "react-password-checklist"
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 import { PromotionRight } from "./Promotion.jsx";
@@ -20,9 +20,11 @@ const SignUp = () => {
 
     const [showPassword, setShowPassword] = React.useState(false);
     const [signedup, setSignUp] = React.useState(false);
-    const [passValid, setPassValid] = React.useState(false);
+    const [passValid, setPassValid] = React.useState(false); // check if password format valid
 
-    const [password, setPassword] = React.useState("")
+    const [password, setPassword] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [username, setUsername] = React.useState("");
     const [passwordAgain, setPasswordAgain] = React.useState("")
 
 
@@ -33,13 +35,42 @@ const SignUp = () => {
         event.preventDefault();
     };
 
+
+    const updateSignupData = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "email": email, "password": password, "username": username })
+        };
+        console.log(requestOptions.body);
+        fetch("http://localhost:8000/signup", requestOptions)
+            .then(checkStatus)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                navigate({
+                    pathname: '/home',
+                });
+            })
+            .catch(handleError);
+    }
+
+    function handleError(error) {
+        alert(error);
+    }
+
+    function checkStatus(response) {
+        if (!response.ok) {
+            throw Error("Error in request: " + response.statusText);
+        }
+        return response;
+    }
+
     const handleSignUpEvent = () => {
-        setSignUp(true); 
+        setSignUp(true);
         formRef.current.reportValidity();
-        if(signedup && passValid) {
-            navigate({
-                pathname: '/',
-            });
+        if (signedup) {
+            updateSignupData();
         }
     };
 
@@ -77,6 +108,7 @@ const SignUp = () => {
                                 label="User Name"
                                 size="30ch"
                                 variant="outlined"
+                                onChange ={e => setUsername(e.target.value)}
                             ></TextField>
                         </div>
                         <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[352px]">
@@ -94,6 +126,7 @@ const SignUp = () => {
                                 label="hi@example.com"
                                 size="30ch"
                                 variant="outlined"
+                                onChange ={e => setEmail(e.target.value)}
                             ></TextField>
                         </div>
                         <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[352px]">
@@ -108,7 +141,7 @@ const SignUp = () => {
                                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                     <OutlinedInput
                                         required
-                                        id="outlined-adornment-password"
+                                        id="outlined-adornment-password2"
                                         type={showPassword ? 'text' : 'password'}
                                         onChange={e => setPassword(e.target.value)}
                                         color="secondary"
