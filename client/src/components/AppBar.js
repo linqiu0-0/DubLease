@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import {createTheme, SvgIcon} from "@mui/material";
-import { ReactComponent as Logo } from '../images/DubLeaseLogo.svg';
+import { ReactComponent as Logo } from '../assets/images/DubLeaseLogo.svg';
 import {ThemeProvider} from "@emotion/react";
 
 const pages = ['Home', 'Message', 'Add Lease', 'About Us'];

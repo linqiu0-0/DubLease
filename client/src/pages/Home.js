@@ -8,7 +8,7 @@ import SearchBar from "../components/SearchBar";
 import {Stack} from "@mui/material";
 import DropDownSelect from "../components/DropDownSelect";
 import Map from "../components/Map";
-import BasicFilters from "../data.json";
+import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
 
@@ -59,7 +59,7 @@ const headers = { 'Content-Type': 'application/json',
 
 const Home = () => {
     const [filters, setFilters] = React.useState(initialFilters);
-    const [leaseCardData, setLeaseCardData] = React.useState([]);
+    const [leaseData, setLeaseData] = React.useState([]);
 
     const chooseFilterCallback = (para) => (filterValue) => {
         console.log(para);
@@ -93,7 +93,7 @@ const Home = () => {
                     return Promise.reject(error);
                 }
 
-                setLeaseCardData(data);
+                setLeaseData(data);
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -111,14 +111,14 @@ const Home = () => {
             <Box marginX={4}>
                 <Grid container spacing={3} mt={2}>
                     <Grid xs={6}>
-                        <Map leaseData={leaseCardData}/>
+                        <Map leaseData={leaseData}/>
                     </Grid>
                     <Grid xs={6}>
                         <Typography variant="h5" component="h1" p={1}>
                             Search Properties
                         </Typography>
                         <Typography variant="subtitle1" component="div" p={1}>
-                            {Object.keys(leaseCardData).length} Results found
+                            {Object.keys(leaseData).length} Results found
                         </Typography>
                         <Box sx={{display: "flex"}}>
                             <SearchBar
@@ -138,13 +138,13 @@ const Home = () => {
                                                 chooseFilterCallback={chooseFilterCallback(filter.queryPara)}/>
                             ))}
                         </React.Fragment>
-                        <Stack spacing={3}
+                        <Stack spacing={2} mt={1}
                         sx={{
                             height: "800px",
                             overflow: "auto"
                         }}>
-                            {leaseCardData.map((singleLease) => (
-                                <LeaseCard key={singleLease.post_id} LeaseCardData={singleLease} />
+                            {leaseData.map((singleLease) => (
+                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} />
                             ))}
                         </Stack>
                     </Grid>
