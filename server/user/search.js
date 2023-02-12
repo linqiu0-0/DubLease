@@ -86,7 +86,9 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
                 periodEnd: sublease.SubleasePeriodEnd,
                 description: sublease.PropertyDescription,
                 parking: sublease.ParkingAvailable,
-                deposit: sublease.Deposit
+                deposit: sublease.Deposit,
+                longitude: sublease["Longitude"],
+                latitude: sublease["Latitude"]
             });
         }
     }

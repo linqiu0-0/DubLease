@@ -1,7 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../styles/map.css';
 
 const center = { lat: 47.659662, lng: -122.31 };
+
+let propertyData;
+
+function Map({leaseData}) {
+    propertyData = leaseData;
+
+    useEffect(() => {
+        initMap();
+    }, [leaseData]);
+
+    return (
+        <div id='map' ></div>
+    )
+}
 
 function hoverOver(markerView) {
     markerView.content.classList.add("hover");
@@ -14,10 +28,12 @@ function unhover(markerView) {
 function load(p) {
     const comp = document.createElement("div");
     comp.classList.add("property");
+    p.category = p.category === "Apartment" ? "building" : p.category;
+    p.category = p.category.toLowerCase();
 
     comp.innerHTML = `
         <div class="icon">
-            <i class="fa fa-icon fa-${p.type}"></i>
+            <i class="fa fa-icon fa-${p.category}"></i>
         </div>
         <div class="info">
             <div class="price">${p.price}</div>
@@ -26,15 +42,15 @@ function load(p) {
             <div class="features">
             <div>
                 <i class="fa fa-bed fa-lg bed"></i>
-                <span>${p.bed}</span>
+                <span>${p.bedNum}</span>
             </div>
             <div>
                 <i class="fa fa-bath fa-lg bath"></i>
-                <span>${p.bath}</span>
+                <span>${p.bathNum}</span>
             </div>
             <div>
                 <i class="fa fa-ruler fa-lg size"></i>
-                <span>${p.size} ft<sup>2</sup></span>
+                <span>${p.space} ft<sup>2</sup></span>
             </div>
             </div>
         </div>
@@ -50,12 +66,17 @@ export function initMap() {
         center,
         mapId: "4504f8b37365c3d0",
     });
-    
+
+
     // Add Markers with label
-    for (const p of properties) {
+    for (const p of propertyData) {
+        let position =  {
+            lat: p.latitude,
+            lng: p.longitude
+        };
         const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
             map,
-            position: p.position,
+            position: position,
             content: load(p)
         });
 
@@ -195,12 +216,6 @@ const properties = [
         address: "4710 University Way NE, Seattle, WA 98105",
     },
 ];
-
-function Map() {
-    return (
-        <div id='map'></div>
-    )
-}
 
 window.initMap = initMap;
 

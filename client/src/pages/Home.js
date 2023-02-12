@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import MainAppBar from "../components/AppBar";
 import Box from "@mui/material/Box";
 import LeaseCard from "../components/LeaseCard";
@@ -9,7 +9,6 @@ import {Stack} from "@mui/material";
 import DropDownSelect from "../components/DropDownSelect";
 import Map from "../components/Map";
 import BasicFilters from "../data.json";
-// import LeaseCardData from "../LeaseCardData.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
 
@@ -102,13 +101,17 @@ const Home = () => {
     }
 
 
+    useEffect(() => {
+        searchWithFilters();
+    }, []);
+
     return (
         <>
             <MainAppBar />
             <Box marginX={4}>
                 <Grid container spacing={3} mt={2}>
                     <Grid xs={6}>
-                        <Map />
+                        <Map leaseData={leaseCardData}/>
                     </Grid>
                     <Grid xs={6}>
                         <Typography variant="h5" component="h1" p={1}>
