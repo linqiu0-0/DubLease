@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import {Text} from "../../components/Text";
 import {Img} from "../../components/Img";
 import {Line} from "../../components/Line";
+import { ReactComponent as Logo } from '../../images/DubLeaseLogo.svg';
 
 const PromotionRight = () => {
     return (
@@ -12,11 +13,12 @@ const PromotionRight = () => {
             <div className="flex flex-col items-start justify-start w-[134px]">
               <div className="flex flex-col items-center justify-start p-[4px] w-[100%]">
                 <div className="flex flex-row items-end justify-evenly md:w-[100%] sm:w-[100%] w-[94%]">
-                  <Img
+                  {/* <Img
                     src="images/img_notification.svg"
                     className="h-[32px] w-[32px]"
                     alt="notification"
-                  />
+                  /> */}
+                  <Logo/>
                   <Text
                     className="font-bold mb-[2px] mt-[8px] text-indigo_900 text-left w-[auto]"
                     variant="body4"
@@ -50,13 +52,13 @@ const PromotionRight = () => {
                         className="font-bold text-black_901 text-left tracking-ls02 md:tracking-ls111 sm:tracking-ls111 w-[auto]"
                         variant="body3"
                       >
-                        Beverly Springfield
+                        Hub U District
                       </Text>
                       <Text
                         className="font-normal text-gray_601 text-left w-[auto]"
                         variant="body5"
                       >
-                        2821 Sevilla, Palm Harbor, TX
+                        5000 University Way NE, Seattle, WA
                       </Text>
                     </div>
                     <Button
@@ -202,11 +204,12 @@ const PromotionRight = () => {
               >
                 Powered by
               </Text>
-              <Img
+              {/* <Img
                 src="images/img_home.svg"
                 className="h-[24px] w-[24px]"
                 alt="notification One"
-              />
+              /> */}
+              <Logo/>
             </div>
             <Text
               className="font-normal leading-[150.00%] max-w-[448px] text-gray_601 text-left"

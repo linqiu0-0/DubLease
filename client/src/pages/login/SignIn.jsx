@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from "react";
 import { Link } from "react-router-dom"
 import { TextField, Button } from "@mui/material";
@@ -8,19 +9,61 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
+import {useNavigate } from "react-router-dom";
+
 
 import { PromotionRight } from "./Promotion.jsx";
 import { Text } from "../../components/Text";
 
 const SignIn = () => {
   const formRef = React.useRef();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = ({ event }) => {
     event.preventDefault();
   };
+
+  const checkLoginStatus = () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({"email": email, "password": password })
+    };
+    fetch("http://localhost:8000/login", requestOptions)
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(data => {
+      // log user id
+      console.log(data);
+      navigate({
+        pathname: '/home',
+      });
+    })
+    .catch(handleError);
+  }
+
+  function handleError(error) {
+    alert(error);
+  }
+  
+  function checkStatus(response) {
+    if (!response.ok) {
+        throw Error("Error in request: " + response.statusText);
+    }
+    return response;
+  } 
+
+  const handleSignUpEvent = () => {
+    if(formRef.current.reportValidity() ) {
+      checkLoginStatus()
+
+    }
+};
 
 
   return (
@@ -59,6 +102,7 @@ const SignIn = () => {
                 label="hi@example.com"
                 size="30ch"
                 variant="outlined"
+                onChange={(e) => setEmail(e.target.value)}
 
               ></TextField>
             </div>
@@ -77,6 +121,7 @@ const SignIn = () => {
                     id="outlined-adornment-password"
                     type={showPassword ? 'text' : 'password'}
                     color="secondary"
+                    onChange={(e) => setPassword(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -103,7 +148,7 @@ const SignIn = () => {
                 size="3xl"
                 variant="contained"
                 color="secondary"
-                onClick={() => formRef.current.reportValidity()}
+                onClick={handleSignUpEvent}
               >
                 Login
               </Button>
