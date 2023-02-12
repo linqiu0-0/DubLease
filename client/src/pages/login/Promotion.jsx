@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import {Text} from "../../components/Text";
 import {Img} from "../../components/Img";
 import {Line} from "../../components/Line";
-import { ReactComponent as Logo } from '../../images/DubLeaseLogo.svg';
+import { ReactComponent as Logo } from '../../assets/images/DubLeaseLogo.svg';
 
 const PromotionRight = () => {
     return (
