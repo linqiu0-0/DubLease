@@ -3,21 +3,20 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {Divider, Paper, SvgIcon} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { ReactComponent as BedIcon } from '../images/BedIcon.svg';
-import { ReactComponent as SizeIcon } from '../images/SizeIcon.svg';
-import { ReactComponent as BathIcon } from '../images/BathIcon.svg';
+import { ReactComponent as BedIcon } from '../assets/images/BedIcon.svg';
+import { ReactComponent as SizeIcon } from '../assets/images/SizeIcon.svg';
+import { ReactComponent as BathIcon } from '../assets/images/BathIcon.svg';
 import "../styles/App.css"
 
 
-function LeaseCard({ LeaseCardData }) {
-    console.log(LeaseCardData);
+function LeaseCard({ leaseCardData }) {
     return (
-        <Paper>
+        <Paper variant="outlined">
             <Grid container spacing={1}>
                 <Grid xs={5}>
                     <img
-                        src={LeaseCardData.coverImg.src}
-                        alt={LeaseCardData.coverImg.alt}
+                        src={leaseCardData.coverImg.src}
+                        alt={leaseCardData.coverImg.alt}
                         className="img"
                     />
                 </Grid>
@@ -33,13 +32,13 @@ function LeaseCard({ LeaseCardData }) {
                         }}
                     >
                         <Typography variant="subtitle1" component="h2">
-                            ${LeaseCardData.price} / month
+                            ${leaseCardData.price} / month
                         </Typography>
                         <Typography variant="h5" component="h2" marginTop={0}>
-                            {LeaseCardData.name}
+                            {leaseCardData.name}
                         </Typography>
                         <Typography variant="body2" component="span" marginTop={0}>
-                            {LeaseCardData.address}
+                            {leaseCardData.address}
                         </Typography>
                         <Divider />
                         <Box sx={{
@@ -52,7 +51,7 @@ function LeaseCard({ LeaseCardData }) {
                                     <BedIcon />
                                 </SvgIcon>
                                 <Typography variant="body1" component="span" marginTop={0} mx={1}>
-                                    {LeaseCardData.bedNum}
+                                    {leaseCardData.bedNum}
                                 </Typography>
                             </Box>
                             <Box mx={2}>
@@ -60,7 +59,7 @@ function LeaseCard({ LeaseCardData }) {
                                     <BathIcon />
                                 </SvgIcon>
                                 <Typography paragraph variant="body1" component="span" marginTop={0} mx={1}>
-                                    {LeaseCardData.bathNum}
+                                    {leaseCardData.bathNum}
                                 </Typography>
                             </Box>
 
@@ -69,7 +68,7 @@ function LeaseCard({ LeaseCardData }) {
                                     <SizeIcon />
                                 </SvgIcon>
                                 <Typography variant="body1" component="span" marginTop={0} mx={1}>
-                                    {LeaseCardData.space}
+                                    {leaseCardData.space}
                                 </Typography>
                             </Box>
 
