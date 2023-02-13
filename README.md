@@ -92,7 +92,7 @@ Most UW students decide to live near the school like the dorm, off-campus apartm
 
 ## Documentation
 
-The more detailed development guide can be found in here [Developer Guideline](./DeveloperGuidelines.md).
+The more detailed development guide can be found in here [Developer Guidelines](./DeveloperGuide.md).
 For technical documentation, please refer to our Google documents regarding [Backend Routers](https://docs.google.com/document/d/1Q48TTSTBrOSXKS06upeNwzYLw0O1lRpGk2PCigNLAS8/edit?usp=sharing) .
 
 
