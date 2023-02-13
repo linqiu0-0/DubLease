@@ -4,10 +4,9 @@ import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Box from "@mui/material/Box";
 
 export default function MonthPicker({ prefix, chooseFilterCallback }) {
-    const [value, setValue] = React.useState(dayjs());
+    const [value, setValue] = React.useState(null);
 
     const handleChange = (event) => {
         setValue(event);
@@ -20,7 +19,7 @@ export default function MonthPicker({ prefix, chooseFilterCallback }) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
                 views={['year', 'month']}
-                label={prefix + " Year And Month"}
+                label={prefix + " Date"}
                 minDate={dayjs('2023-01-01')}
                 maxDate={dayjs('2029-12-31')}
                 value={value}

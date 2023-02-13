@@ -9,8 +9,8 @@ function DropDownSelect({ items, label, chooseFilterCallback }) {
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        console.log(event.target);
-        console.log(chooseFilterCallback);
+        // console.log(event.target);
+        // console.log(chooseFilterCallback);
         chooseFilterCallback(event.target.value);
     };
 

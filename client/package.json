@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "DISABLE_ESLINT_PLUGIN=true PORT=8080 react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true PORT=8080 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

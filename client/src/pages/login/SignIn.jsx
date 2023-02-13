@@ -34,14 +34,16 @@ const SignIn = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({"email": email, "password": password })
     };
-    fetch("http://localhost:8000/login", requestOptions)
+    fetch(process.env.REACT_APP_SERVER_URL + "login", requestOptions)
     .then(checkStatus)
     .then(response => response.json())
     .then(data => {
       // log user id
-      console.log(data);
-      navigate({
-        pathname: '/home',
+      console.log(data.username);
+      navigate('/home', {
+        state: {
+          username: data.username
+        }
       });
     })
     .catch(handleError);

@@ -12,13 +12,12 @@ import {ThemeProvider} from "@emotion/react";
 const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function MainAppBar() {
+function MainAppBar({ username }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
-        console.log("haha");
     };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -26,7 +25,6 @@ function MainAppBar() {
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
-        console.log("emmm");
     };
 
     const handleCloseUserMenu = () => {
@@ -36,7 +34,7 @@ function MainAppBar() {
     const customTheme = createTheme({
         palette: {
             secondary: {
-                main: "#9c27b0",
+                main: "#ab47bc",
                 contrastText: "#6a0dad "
             }
         }
@@ -71,7 +69,7 @@ function MainAppBar() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Button variant="contained" sx={{mr: 3}}>View Profile</Button>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Tony Song" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={username} src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Box>
                     </Toolbar>
