@@ -1,7 +1,7 @@
 const account = require('./user/account');
 const express = require('express');
 const bodyParser = require('body-parser');
-const search = require('./user/search');
+const search = require('./sublease/search');
 const cors = require('cors');
 const app = express();
 
