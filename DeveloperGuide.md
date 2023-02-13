@@ -73,8 +73,8 @@ function as expected.
 - `/Dockerfile`: docker config to launch the system
 
 ## Current dependency
-npm: version 6.14.13+
-node: version 14+
+- npm: version 6.14.13+
+- node: version 14+
 
 ## How to run the system
 1. `cd server` from the root directory
