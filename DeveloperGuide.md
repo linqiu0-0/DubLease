@@ -43,7 +43,7 @@ the most update-to-date version in here.
 - `/tailwind.config.js`: tailwind css config
 
 ## Current dependency
-- npm: 6.14.13
+- npm: 6.14.13+
 - Chrome: 109.0.5414.119
 
 
@@ -61,8 +61,20 @@ function as expected.
 # Backend
 
 ## Project structure /server
+- `app.js`: the backend main program that sets up the server and all the endpoints
+- `data`: contains code in the databse layer
+   - `database.js`: code that interacts with Amazon RDS Database
+   - `images.js`: code that interacts with Amazon S3 File Storage to save and read images
+- `user`: contains code in the business logic layer that handles user data
+   - `account.js`: handles sign up and log in activities
+- `sublease`: contains code in the business logic layer that handles subleasing information
+   - `search.js`: functions that searches for available subleases based on user-specified filters and conditions
+- `test`: test code for the backend
+- `/Dockerfile`: docker config to launch the system
 
 ## Current dependency
+- npm: version 6.14.13+
+- node: version 14+
 
 ## How to run the system
 1. `cd server` from the root directory
@@ -70,6 +82,8 @@ function as expected.
 2. Start the server: `$ npm start`
 
 ## How to test the system
+1. `cd server` from the root directory
+2. run `npm test`
 
 # Deployment
 Our app is deployed on the Amazon EC2. Frontend is deployed with `port 8080` 
