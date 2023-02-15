@@ -50,11 +50,12 @@ const SignIn = () => {
   }
 
   function handleError(error) {
-    alert(error);
+    console.log(error);
   }
   
   function checkStatus(response) {
     if (!response.ok) {
+        response.text().then(txt => {alert(txt);});
         throw Error("Error in request: " + response.statusText);
     }
     return response;
