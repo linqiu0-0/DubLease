@@ -111,6 +111,4 @@ This Week:
     - AWS free tier usage is running out and we are not sure why
 
 Plan for next week:
-
 - Testing major functionalities
-- Prepare for beta release
