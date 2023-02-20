@@ -6,8 +6,11 @@ To get started, clone the repo:
 `$ git@github.com:linqiu0-0/DubLease.git`
 
 ## Start Developing
+### Downloading Docker
+You can download docker following [this link](https://www.docker.com/)
+
 ### Start containers
-Use the `docker-compose` tool from the root directory to start both the backend and frontend containers, :
+Use `docker-compose` from the root directory to start both the backend and frontend containers:
 1. Fisrt build the system through `docker compose build `
 2. Then run the system through`docker compose up`
    
@@ -18,11 +21,6 @@ If you have any errors with docker, please launch frontend and backend service s
 # Frontend
 DubLease frontend uses the React framework with javascript. 
 The UI design for the frontend is based on this [Fimga Design](https://www.figma.com/file/8Ivetl62l7CELx0hTaaq1N/Dub-Lease?node-id=0%3A1&t=QWbdjKd0nRIM1hva-1).
-
-## How to visit DubLease
-Currently, Dublease is published on  [DubLease]( http://52.38.78.226:8080/
-). You can sign up to visit and explore 
-the most update-to-date version in here. 
 
 ## Project structure /client
 - `/src`: source code folder
