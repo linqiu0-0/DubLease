@@ -13,7 +13,7 @@ Use the `docker-compose` tool from the root directory to start both the backend 
    
 Now, you should get logs from both the express server/backend and the webpack-dev-server that serves the frontend.
 
-If you have any docker errors, please launch the frontend and backend services separately and follow the rest tutorial. To do this, open a terminal, navigate to `/client`, and run `npm install && npm start`. Then, navigate to `/server` with a new terminal and run `npm install && npm start`.
+If you have any docker errors, please launch the frontend and backend services separately and follow the rest tutorial.
 
 # Frontend
 DubLease frontend uses the React framework with javascript. 
