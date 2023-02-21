@@ -5,12 +5,13 @@ import LeaseCard from "../components/LeaseCard";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import SearchBar from "../components/SearchBar";
-import {Stack} from "@mui/material";
+import {createTheme, Stack, ThemeProvider} from "@mui/material";
 import DropDownSelect from "../components/DropDownSelect";
 import Map from "../components/Map";
-import BasicFilters from "../data.json";
+import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
+import {useLocation} from "react-router-dom";
 
 const monthPicker = [
     {
@@ -57,31 +58,45 @@ const initialFilters = [
 const headers = { 'Content-Type': 'application/json',
     "Access-Control-Allow-Origin": "*"};
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            // Purple and green play nicely together.
+            main: "#ab47bc",
+        },
+        secondary: {
+            // This is green.A700 as hex.
+            main: '#11cb5f',
+        },
+    },
+});
+
 const Home = () => {
     const [filters, setFilters] = React.useState(initialFilters);
-    const [leaseCardData, setLeaseCardData] = React.useState([]);
+    const [leaseData, setLeaseData] = React.useState([]);
+    const userInfo = useLocation();
 
     const chooseFilterCallback = (para) => (filterValue) => {
-        console.log(para);
-        console.log(filterValue);
         const newFilters = [...filters];
         const filter = filters.find(
             f => f.filterQuery === para
         )
         filter.value = filterValue;
         setFilters(newFilters);
-        console.log(filters);
+        // console.log(filters);
     }
 
     const searchWithFilters = (event) => {
-        let queryUrl = "";
+        let queryUrl = "?";
         filters.map((filter) => {
-            queryUrl += filter.filterQuery + "=" + filter.value + "&";
+            if (filter.value !== "" && (filter.value !== "0" || filter.filterQuery === "name")) {
+                queryUrl += filter.filterQuery + "=" + filter.value + "&";
+            }
         });
         queryUrl = queryUrl.slice(0, -1);
-        console.log("http://localhost:8000/home?" + queryUrl);
+        console.log(process.env.REACT_APP_SERVER_URL + "home" + queryUrl);
 
-        fetch("http://localhost:8000/home?" + queryUrl,
+        fetch(process.env.REACT_APP_SERVER_URL + "home" + queryUrl,
         {headers})
             .then(async response => {
                 const data = await response.json();
@@ -93,7 +108,7 @@ const Home = () => {
                     return Promise.reject(error);
                 }
 
-                setLeaseCardData(data);
+                setLeaseData(data);
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -106,25 +121,26 @@ const Home = () => {
     }, []);
 
     return (
+        <ThemeProvider theme={theme}>
         <>
-            <MainAppBar />
+            <MainAppBar username={userInfo.state.username}/>
             <Box marginX={4}>
                 <Grid container spacing={3} mt={2}>
                     <Grid xs={6}>
-                        <Map leaseData={leaseCardData}/>
+                        <Map leaseData={leaseData}/>
                     </Grid>
                     <Grid xs={6}>
                         <Typography variant="h5" component="h1" p={1}>
                             Search Properties
                         </Typography>
                         <Typography variant="subtitle1" component="div" p={1}>
-                            {Object.keys(leaseCardData).length} Results found
+                            {Object.keys(leaseData).length} Results found
                         </Typography>
                         <Box sx={{display: "flex"}}>
                             <SearchBar
                                 chooseFilterCallback={chooseFilterCallback("name")}
                                 searchWithFilters={searchWithFilters}/>
-                            <Button variant="contained" color="secondary" onClick={searchWithFilters}>Apply Filter</Button>
+                            <Button variant="contained" color="primary" onClick={searchWithFilters}>Apply Filter</Button>
                         </Box>
                         <MonthPicker
                             prefix={monthPicker[0].prefix}
@@ -138,19 +154,20 @@ const Home = () => {
                                                 chooseFilterCallback={chooseFilterCallback(filter.queryPara)}/>
                             ))}
                         </React.Fragment>
-                        <Stack spacing={3}
+                        <Stack spacing={2} mt={1}
                         sx={{
                             height: "800px",
                             overflow: "auto"
                         }}>
-                            {leaseCardData.map((singleLease) => (
-                                <LeaseCard key={singleLease.post_id} LeaseCardData={singleLease} />
+                            {leaseData.map((singleLease) => (
+                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} />
                             ))}
                         </Stack>
                     </Grid>
                 </Grid>
             </Box>
         </>
+        </ThemeProvider>
     );
 };
 

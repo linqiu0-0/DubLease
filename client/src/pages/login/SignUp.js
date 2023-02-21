@@ -43,24 +43,28 @@ const SignUp = () => {
             body: JSON.stringify({ "email": email, "password": password, "username": username })
         };
         console.log(requestOptions.body);
-        fetch("http://localhost:8000/signup", requestOptions)
+        fetch(process.env.REACT_APP_SERVER_URL + "signup", requestOptions)
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                navigate({
-                    pathname: '/home',
+                navigate('/home', {
+                    state: {
+                        username: data.username
+                    }
                 });
             })
             .catch(handleError);
     }
 
     function handleError(error) {
-        alert(error);
+        console.log(error);
+        // alert(error);
     }
 
     function checkStatus(response) {
         if (!response.ok) {
+            response.text().then(txt => {alert(txt);});
             throw Error("Error in request: " + response.statusText);
         }
         return response;

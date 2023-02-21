@@ -9,13 +9,13 @@ function DropDownSelect({ items, label, chooseFilterCallback }) {
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        console.log(event.target);
-        console.log(chooseFilterCallback);
+        // console.log(event.target);
+        // console.log(chooseFilterCallback);
         chooseFilterCallback(event.target.value);
     };
 
     return (
-        <FormControl sx={{ m: 1, minWidth: 200, mt: 1}}>
+        <FormControl sx={{ m: 1, minWidth: 200, my: 1}}>
             <InputLabel id={label + "-select-label"}>{label}</InputLabel>
             <Select
                 id={label + "-select"}

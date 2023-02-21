@@ -2,7 +2,6 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -50,18 +49,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function SearchBar({chooseFilterCallback, searchWithFilters}) {
-    const [value, setValue] = React.useState('');
-    // const navigate = useNavigate();
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            console.log(event.target.value);
-            // navigate("/signin");
+            // console.log(searchWithFilters);
+            searchWithFilters();
         }
     }
 
     const handleChange = (event) => {
-        //console.log(event.target.value);
         chooseFilterCallback(event.target.value);
     }
 

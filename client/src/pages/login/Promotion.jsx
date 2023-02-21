@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import {Text} from "../../components/Text";
 import {Img} from "../../components/Img";
 import {Line} from "../../components/Line";
-import { ReactComponent as Logo } from '../../images/DubLeaseLogo.svg';
+import { ReactComponent as Logo } from '../../assets/images/DubLeaseLogo.svg';
 
 const PromotionRight = () => {
     return (
@@ -42,7 +42,7 @@ const PromotionRight = () => {
               <div className="absolute bg-white_A700 border border-gray_301 border-solid flex flex-col h-[max-content] inset-[0] items-center justify-center m-[auto] p-[24px] sm:px-[20px] rounded-radius8 shadow-bs4 w-[99%]">
                 <div className="flex flex-col items-start justify-start w-[100%]">
                   <Img
-                    src="images/img_image.png"
+                    src="https://images1.apartments.com/i2/WCQqdTdOx7whsIN4SXA0qt-msh5dw_VGIju9PzqlhX4/111/hub-u-district-seattle-seattle-wa-primary-photo.jpg"
                     className="h-[212px] sm:h-[auto] object-cover md:w-[100%] sm:w-[100%] w-[auto]"
                     alt="Image One"
                   />

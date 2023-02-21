@@ -34,25 +34,28 @@ const SignIn = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({"email": email, "password": password })
     };
-    fetch("http://localhost:8000/login", requestOptions)
+    fetch(process.env.REACT_APP_SERVER_URL + "login", requestOptions)
     .then(checkStatus)
     .then(response => response.json())
     .then(data => {
       // log user id
-      console.log(data);
-      navigate({
-        pathname: '/home',
+      console.log(data.username);
+      navigate('/home', {
+        state: {
+          username: data.username
+        }
       });
     })
     .catch(handleError);
   }
 
   function handleError(error) {
-    alert(error);
+    console.log(error);
   }
   
   function checkStatus(response) {
     if (!response.ok) {
+        response.text().then(txt => {alert(txt);});
         throw Error("Error in request: " + response.statusText);
     }
     return response;
