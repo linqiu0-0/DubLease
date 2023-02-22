@@ -1,15 +1,18 @@
-const account = require('./user/account');
 const express = require('express');
 const bodyParser = require('body-parser');
-const search = require('./sublease/search');
 const cors = require('cors');
+
+const search = require('./sublease/search');
+const account = require('./user/account');
+const imageHandler = require('./data/file_storage');
+
 const app = express();
 
 app.use(
    bodyParser.urlencoded({
      extended: false,
    })
- );
+);
 app.use(bodyParser.json());
 
 app.use(
@@ -88,6 +91,20 @@ app.get('/home', async (req, res) => {
      res.status(500).send(new Error("internal server error"));
   }
 });
+
+app.get('/get_image', async (req, res) => {
+   const key = req.query.key;
+   if (!key) {
+      res.status(400).send("need to specify the image key");
+      return;
+   }
+
+   const data = await imageHandler.getObject(key);
+   if (!data) {
+      res.status(500).send(new Error("failed to retrieve image"));
+   }
+   res.status(200).send(data);
+})
 
 
 var server = app.listen(8000, function () {

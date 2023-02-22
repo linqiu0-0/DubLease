@@ -1,35 +1,3 @@
-// CREATE TABLE Persons (
-//     PostID int,
-//     PropertyName varchar(255),
-//     PropertyCategory varchar(255),
-//     PropertyAddress varchar(255),
-//     PropertyPrice int,
-//     RoomSize int,
-//     RoomType varchar(255),               xByB
-//     GenderLimit int,                     0, 1, 2
-//     IsPetFriendly int,                   0, 1
-//     SubleasePeriodStart varchar(255),    yyyy-mm-dd
-//     SubleasePeriodEnd varchar(255),      yyyy-mm-dd
-//     PropertyDescription varchar(255),
-//     ParkingAvailable int,                0, 1
-//     Deposit int
-// );
-// INSERT INTO Sublease VALUES (
-// 	1,
-//     'Hub U District',
-//     'Apartment',
-//     '5000 University Way NE',
-//     1500,
-//     1300,
-//     '4B4B',
-//     0,
-// 	0,
-//     '2023-01-03',
-//     '2023-06-08',
-// 	'This is Hub',
-//     1,
-//     0
-// );
 const db = require('../data/database');
 
 exports.search_sublease = async function(name, start_date, end_date, min_price, max_price, bed, gender) {

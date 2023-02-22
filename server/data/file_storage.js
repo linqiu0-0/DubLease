@@ -14,12 +14,12 @@ var objectParams = {
 };
 
 exports.getObject = async function(key) {
-  const objectParams = {
+  const params = {
     Bucket : bucket,
     Key : key,
   }
   try {
-    const results = await s3.getObject(objectParams).promise();
+    const results = await s3.getObject(params).promise();
     return results;
   } catch (err) {
     console.error(err);
