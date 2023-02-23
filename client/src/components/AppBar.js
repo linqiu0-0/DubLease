@@ -10,6 +10,8 @@ import { ReactComponent as Logo } from '../assets/images/DubLeaseLogo.svg';
 import {ThemeProvider} from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 
+import {AccountMenu} from "./AccountMenu"
+
 const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -33,13 +35,7 @@ function MainAppBar({ username }) {
         setAnchorElUser(null);
     };
 
-    const handleViewProfile = () => {
-        navigate('/profile', {
-            state: {
-              username: "Lin"
-            }
-          });
-    }
+
 
     const customTheme = createTheme({
         palette: {
@@ -77,9 +73,10 @@ function MainAppBar({ username }) {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button>
+                            {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={username} src="/static/images/avatar/2.jpg" />
+                                {/* <Avatar alt={username} src="/static/images/avatar/2.jpg" /> */}
+                                <AccountMenu username={username}/>
                             </IconButton>
                         </Box>
                     </Toolbar>

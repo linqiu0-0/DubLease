@@ -5,8 +5,9 @@ import { Line } from "../../components/Line";
 import { Img } from "../../components/Img";
 import { ReactComponent as Logo } from '../../assets/images/DubLeaseLogo.svg';
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
-import { TextField, Button, IconButton, Avatar } from "@mui/material";
+import { TextField, Button} from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
+import { AccountMenu } from "../../components/AccountMenu";
 
 const Profile = () => {
 
@@ -56,7 +57,7 @@ const Profile = () => {
                                             DubLease
                                         </Text>
 
-                                        <ul className="flex flex-row gap-[24px] sm:hidden items-center justify-right md:ml-[0] ml-[80%] w-[auto] common-row-list common-row-list">
+                                        <ul className="flex flex-row gap-[10px] sm:hidden items-center justify-right md:ml-[0] ml-[80%] w-[auto] common-row-list common-row-list">
                                             <li className="w-[40px] my-[4px]">
                                                 <Button
                                                     className="flex h-[40px] items-center justify-center min-w-[] w-[40px]"
@@ -72,12 +73,12 @@ const Profile = () => {
                                                 </Button>
                                             </li>
                                             <li className="sm:w-[100%] sm:my-[10px] w-[1%] my-[4px]">
+                                            </li>
+                                            <li className="sm:w-[100%] sm:my-[10px] w-[1%] my-[4px]">
                                                 <Line className="bg-black_900_63 h-[40px] w-[1px]" />
                                             </li>
                                             <li className="w-[40px] my-[4px]">
-                                                <IconButton sx={{ p: 0 }}>
-                                                    <Avatar alt={userInfo.state.username} src="/static/images/avatar/2.jpg" />
-                                                </IconButton>
+                                                <AccountMenu username={userInfo.state.username}/>
                                             </li>
 
 
