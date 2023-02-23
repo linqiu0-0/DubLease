@@ -18,13 +18,11 @@ const Profile = () => {
 
 
     const handlePhoneChange = (newValue) => {
-        // if(matchIsValidTel(newValue)) {
         setPhone(newValue)
     }
 
     const handleSubmit = () => {
         if (!matchIsValidTel(phone)) {
-            // eslint-disable-next-line no-undef
             alert("invalid phone number");
         }
     }
