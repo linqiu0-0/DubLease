@@ -58,11 +58,13 @@ const SignUp = () => {
     }
 
     function handleError(error) {
-        alert(error);
+        console.log(error);
+        // alert(error);
     }
 
     function checkStatus(response) {
         if (!response.ok) {
+            response.text().then(txt => {alert(txt);});
             throw Error("Error in request: " + response.statusText);
         }
         return response;
