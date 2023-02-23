@@ -22,7 +22,6 @@ const Profile = () => {
     }
 
     const handleSubmit = () => {
-        console.log(userInfo.state.username);
         if (!matchIsValidTel(phone)) {
             // eslint-disable-next-line no-undef
             alert("invalid phone number");
@@ -150,16 +149,16 @@ const Profile = () => {
                                 </Text>
                                 <div className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
 
-                                    <Text className="text-black_900 font-bold text-left w-[auto]" variant="body3">
+                                    {/* <Text className="text-black_900 font-bold text-left w-[auto]" variant="body3">
                                         Avatar
-                                    </Text>
-                                    <div className="flex flex-row gap-[24px] items-center justify-between w-[100%]">
-                                        <Img
+                                    </Text> */}
+                                    {/* <div className="flex flex-row gap-[24px] items-center justify-between w-[100%]"> */}
+                                        {/* <Img
                                             src="images/img_changeprofilepic.svg"
                                             className="h-[100px] w-[100px]"
                                             alt="user"
-                                        />
-                                        <div className="flex flex-row gap-[16px] items-center justify-start w-[auto]">
+                                        /> */}
+                                        {/* <div className="flex flex-row gap-[16px] items-center justify-start w-[auto]">
                                             <Button
                                                 className="cursor-pointer font-bold min-w-[105px] text-[16px] text-center text-white_A700 w-[auto]"
                                                 shape="RoundedBorder8"
@@ -177,8 +176,8 @@ const Profile = () => {
                                             >
                                                 Remove
                                             </Button>
-                                        </div>
-                                    </div>
+                                        </div> */}
+                                    {/* </div> */}
                                 </div>
                             </div>
                             <Line className="bg-deep_purple_50 h-[1px] w-[100%]" />
