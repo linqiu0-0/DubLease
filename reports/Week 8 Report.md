@@ -27,18 +27,18 @@ Plans for next week:
 **Ryan Li**
 
 From Last Week:
-- Implement the backend logic for storing images.
+- Complete the backend logic for storing images.
 
 This Week:
 
 - working tasks:
-    - Set up the docker deployment pipeline on AWS EC2.
-    - Implement the ranking algorithm for lease searches.
+    - Implement the backend for editing user profile.
+    - Implement other features supporting lease info & lease posting
 - blockers:
     None
 
 Plan for next week:
-- Implement the backend for editing user profile.
+- Implement the ranking algorithm for lease searches.
 
     
     
@@ -66,14 +66,15 @@ From Last Week:
 This Week:
 
 - working tasks:
-    - Complete the user center pages and merge to main branch 
+    - Work on the listing page together with Crystal
     - Refine the theme and code styles
+    - connect user center page with backend router
 - blockers:
     - None for now
 
 Plan for next week: 
 
-- Take a look on the listing page
+- Check other depolyment service, such as google cloud and firebase
 
 **Crystal Li**
 
