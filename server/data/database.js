@@ -52,7 +52,6 @@ exports.get_user = async function(email) {
 
 exports.check_user_id = async function(userid) {
     const sql = 'SELECT COUNT(*) as count FROM User WHERE UserID = ?';
-    console.log(userid);
     return new Promise((resolve, reject) => {
         connection.query(sql, userid, function(error, results, fields) {
             if (error) {
@@ -93,8 +92,8 @@ exports.update_user = async function(update_statements, values) {
 //  list of filtered subleases (could be empty)
 exports.filter_sublease = async function(sql_conditions, condition_values) {
     const sql = 'SELECT * FROM Sublease' + sql_conditions;
-    console.log(sql);
-    console.log(condition_values);
+    // console.log(sql);
+    // console.log(condition_values);
     return new Promise((resolve, reject) => {
         connection.query(sql, condition_values, function(error, results, fields) {
             subleases = [];
@@ -143,6 +142,19 @@ exports.check_lease_exists = async function(id) {
             }
             var count = results[0].count;
             return resolve(count > 0);
+        });
+    });
+}
+
+exports.list_sublease_by_user_id = async function(userid) {
+    const sql = 'SELECT * FROM Sublease WHERE UserID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, userid, function(error, results, fields) {
+            subleases = [];
+            for (let row in results) {
+                subleases.push(JSON.parse(JSON.stringify(results[row])));
+            }
+            return error ? reject(error) : resolve(subleases);
         });
     });
 }

@@ -57,7 +57,7 @@ app.get('/home', async (req, res) => {
    var max_price = req.query["max-price"];
    var bed = req.query.bed;
    var gender = req.query.gender;
-   console.log(name + ", " + start_date + ", " + end_date + ", " + min_price + ", " + max_price + ", " + bed + ", " + gender);
+   // console.log(name + ", " + start_date + ", " + end_date + ", " + min_price + ", " + max_price + ", " + bed + ", " + gender);
  
    // if (!name && !start_date && !end_date && !min_price && !max_price
    //     && !bed && !gender) {
@@ -102,6 +102,22 @@ app.get('/home', async (req, res) => {
        res.status(500).send(new Error("internal server error"));
     }
  });
+
+ app.get('/list', async(req, res) => {
+   const userid = req.query.id;
+   if (!userid) {
+      res.status(400).send("user id is required");
+      return;
+   }
+
+   try {
+      const {code, msg} = await search.list_sublease(userid);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+ })
 
 
 /*________________________Post Requests_________________________*/
