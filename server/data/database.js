@@ -50,6 +50,42 @@ exports.get_user = async function(email) {
     });
 }
 
+exports.check_user_id = async function(userid) {
+    const sql = 'SELECT COUNT(*) as count FROM User WHERE UserID = ?';
+    console.log(userid);
+    return new Promise((resolve, reject) => {
+        connection.query(sql, userid, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            var count = results[0].count;
+            return resolve(count > 0);
+        });
+    });
+};
+
+exports.get_user_by_id = async function(userid) {
+    const sql = 'SELECT UserName as username, UserEmail as email, Phone as phone FROM User WHERE UserID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, userid, function(error, results, fields) {
+            return error ? reject(error) : resolve(results[0]);
+        });
+    });
+};
+
+exports.update_user = async function(update_statements, values) {
+    const sql = "UPDATE User " + update_statements + " WHERE UserID = ?";
+    console.log(sql);
+    return new Promise((resolve, reject) => {
+        connection.query(sql, values, function(error, results, fields) {
+            console.log(results);
+            // console.log("subleases: \n", subleases);
+            return error ? reject(error) : resolve(results);
+        });
+    });
+}
+
+
 // Params:
 //  sql_conditions: basically what's after the WHERE clause (e.g. "name = ? AND MIN_PRICE < ? AND ...")
 //  condition_values: values corresponding to the specified conditions. Orders must match exactly

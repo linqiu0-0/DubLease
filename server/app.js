@@ -31,7 +31,24 @@ app.get('/', function (req, res) {
 /*_________________________End Points__________________________*/
 
 /*________________________Get Requests_________________________*/
-// Main page: search filtering
+// User Profile
+app.get('/profile', async(req, res) => {
+   const userid = req.query.id;
+   if (!userid) {
+      res.status(400).send("user id is required");
+      return;
+   }
+
+   try {
+      const {code, msg} = await account.get_user_profile(userid);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+})
+
+// Main page & lease info
 app.get('/home', async (req, res) => {
    var name = req.query.name;
    var start_date = req.query["start-date"];
@@ -125,7 +142,30 @@ app.post('/login', async (req, res) => {
    }
 });
 
-app.post('/rent')
+app.post('/edit_profile', async (req, res) => {
+   var user_id = req.body.id;
+   var username = req.body.username;
+   var email = req.body.email;
+   var phone = req.body.phone;
+
+   if (!user_id) {
+      res.status(400).send("user id is required");
+      return;
+   }
+
+   if (!username && !email && !phone) {
+      res.status(200).send("nothing to change");
+      return;
+   }
+
+   try {
+      const {code, msg} = await account.edit_profile(user_id, username, email, phone);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+})
 
 
 var server = app.listen(8000, function () {

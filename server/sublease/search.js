@@ -27,7 +27,7 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
     }
     
     // initial filtering on conditions besides dates
-    const sql_conditions = conditions.length? " WHERE status = 1 AND " + conditions.join(" AND ") : conditions.join(" AND ");
+    const sql_conditions = conditions.length? " WHERE status = 1 AND " + conditions.join(" AND ") : " WHERE status = 1";
     const subleases = await db.filter_sublease(sql_conditions, values);
     // console.log(subleases);
     var result = [];
