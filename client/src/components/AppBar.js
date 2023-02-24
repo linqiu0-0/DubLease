@@ -15,7 +15,8 @@ import {AccountMenu} from "./AccountMenu"
 const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function MainAppBar({ username }) {
+function MainAppBar({ username, userId }) {
+    console.log("app bar" + userId)
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
@@ -76,7 +77,7 @@ function MainAppBar({ username }) {
                             {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 {/* <Avatar alt={username} src="/static/images/avatar/2.jpg" /> */}
-                                <AccountMenu username={username}/>
+                                <AccountMenu username={username} userId={userId}/>
                             </IconButton>
                         </Box>
                     </Toolbar>

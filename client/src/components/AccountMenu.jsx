@@ -13,7 +13,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom";
 
-export default function AccountMenu({ username }) {
+export default function AccountMenu({ username, userId}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
@@ -35,9 +35,11 @@ export default function AccountMenu({ username }) {
     };
 
     const handleProfile = () => {
+        console.log(userId)
         navigate('/profile', {
             state: {
-                username: username
+                username: username,
+                userId: userId
             }
         });
     };

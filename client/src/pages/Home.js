@@ -76,6 +76,8 @@ const Home = () => {
     const [leaseData, setLeaseData] = React.useState([]);
     const userInfo = useLocation();
 
+
+
     const chooseFilterCallback = (para) => (filterValue) => {
         const newFilters = [...filters];
         const filter = filters.find(
@@ -123,7 +125,7 @@ const Home = () => {
     return (
         <ThemeProvider theme={theme}>
         <>
-            <MainAppBar username={userInfo.state.username}/>
+            <MainAppBar username={userInfo.state.username} userId={userInfo.state.userId}/>
             <Box marginX={4}>
                 <Grid container spacing={3} mt={2}>
                     <Grid xs={6}>
