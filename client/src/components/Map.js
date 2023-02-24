@@ -6,6 +6,7 @@ const center = { lat: 47.659662, lng: -122.31 };
 let propertyData;
 
 function Map({leaseData}) {
+    console.log("use map");
     propertyData = leaseData;
 
     useEffect(() => {

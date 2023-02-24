@@ -1,0 +1,46 @@
+[
+  {
+    "label": "Status",
+    "text": "Available"
+  },
+  {
+    "label": "Price",
+    "text": "1500$/month"
+  },
+  {
+    "label": "Start Date",
+    "text": "02/20/2023"
+  },
+  {
+    "label": "End Date",
+    "text": "05/30/2023"
+  },
+  {
+    "label": "Category",
+    "text": "Apartment"
+  },
+  {
+    "label": "Room Type",
+    "text": "2B2B"
+  },
+  {
+    "label": "Roommate",
+    "text": "2"
+  },
+  {
+    "label": "Space",
+    "text": "500sqft"
+  },
+  {
+    "label": "Gender Constraint",
+    "text": "Male Only"
+  },
+  {
+    "label": "Pet Friendly",
+    "text": "Yes"
+  },
+  {
+    "label": "Parking Area",
+    "text": "No"
+  }
+]

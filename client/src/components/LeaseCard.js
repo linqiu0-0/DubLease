@@ -7,11 +7,21 @@ import { ReactComponent as BedIcon } from '../assets/images/BedIcon.svg';
 import { ReactComponent as SizeIcon } from '../assets/images/SizeIcon.svg';
 import { ReactComponent as BathIcon } from '../assets/images/BathIcon.svg';
 import "../styles/App.css"
+import {useNavigate} from "react-router-dom";
 
 
 function LeaseCard({ leaseCardData }) {
+
+    const navigate = useNavigate();
+
+    const browseSubleaseDeatail = (event) => {
+        console.log(leaseCardData);
+        navigate("/sublease/" + leaseCardData.post_id, {});
+    }
+
+
     return (
-        <Paper variant="outlined">
+        <Paper variant="outlined" onClick={browseSubleaseDeatail}>
             <Grid container spacing={1}>
                 <Grid xs={5}>
                     <img
