@@ -9,6 +9,8 @@ exports.get_lease = async function(lease_id) {
     const sublease = await db.get_lease_by_id(lease_id);
     // console.log(sublease);
     const image_keys = await db.get_sublease_images(lease_id);
+    const user_id = sublease.UserID;
+    const user = await db.get_user_by_id(user_id);
     const status = sublease.status == 1 ? 'Available' : 'Unavailable';
     let gender = "";
     if (sublease.GenderLimit == 0) {
@@ -29,6 +31,9 @@ exports.get_lease = async function(lease_id) {
         address: sublease.PropertyAddress,
         longitude: sublease["Longitude"],
         latitude: sublease["Latitude"],
+        username: user.username,
+        user_email: user.email,
+        user_phone: user.phone,
         rental_features: [
             {
                 label: "Status",
