@@ -10,13 +10,18 @@ import "../styles/App.css"
 import {useNavigate} from "react-router-dom";
 
 
-function LeaseCard({ leaseCardData }) {
+function LeaseCard({ leaseCardData, username }) {
 
     const navigate = useNavigate();
 
     const browseSubleaseDeatail = (event) => {
         console.log(leaseCardData);
-        navigate("/sublease/" + leaseCardData.post_id, {});
+        navigate("/sublease/" + leaseCardData.post_id, {
+            state: {
+                post_id: leaseCardData.post_id,
+                username: username
+            }
+        });
     }
 
 
