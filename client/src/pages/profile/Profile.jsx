@@ -5,16 +5,18 @@ import { Line } from "../../components/Line";
 import { Img } from "../../components/Img";
 import { ReactComponent as Logo } from '../../assets/images/DubLeaseLogo.svg';
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
-import { TextField, Button} from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AccountMenu } from "../../components/AccountMenu";
+import EditIcon from '@mui/icons-material/Edit';
+import Grid from "@mui/material/Unstable_Grid2";
 
 const Profile = () => {
 
     const [phone, setPhone] = React.useState('')
+    const [edit, setEdit] = React.useState(false)
     const navigate = useNavigate();
     const userInfo = useLocation();
-
 
 
     const handlePhoneChange = (newValue) => {
@@ -23,7 +25,10 @@ const Profile = () => {
 
     const handleSubmit = () => {
         if (!matchIsValidTel(phone)) {
+            // eslint-disable-next-line no-undef
             alert("invalid phone number");
+        } else {
+            setEdit(false)
         }
     }
 
@@ -31,9 +36,11 @@ const Profile = () => {
 
 
 
+
+
     return (
         <>
-            <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[80px] w-[100%]">
+            <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[200px] h-[100%] w-[100%]">
                 <div className="flex flex-col gap-[23px] justify-center w-[100%]">
                     <div className="h-[165px] md:h-[96px] sm:h-[96px] relative w-[100%]">
                         <header className="flex items-center justify-center mb-[-1.5px] mx-[auto] w-[100%] z-[1]">
@@ -76,7 +83,7 @@ const Profile = () => {
                                                 <Line className="bg-black_900_63 h-[40px] w-[1px]" />
                                             </li>
                                             <li className="w-[40px] my-[4px]">
-                                                <AccountMenu username={userInfo.state.username}/>
+                                                <AccountMenu username={userInfo.state.username} />
                                             </li>
 
 
@@ -139,25 +146,46 @@ const Profile = () => {
                             </div>
                         </div>
                         <div className="bg-white_A700 border border-indigo_50 border-solid flex md:flex-1 sm:flex-1 flex-col gap-[24px] justify-end py-[24px] rounded-radius8 md:w-[100%] sm:w-[100%] w-[auto]">
-                            <div className="flex flex-col gap-[24px] items-start justify-start md:ml-[0] sm:ml-[0] ml-[24px] mr-[248px] mt-[4px] md:w-[100%] sm:w-[100%] w-[57%]">
-                                <Text
-                                    className="font-bold text-black_900 text-left w-[auto]"
-                                    variant="body2"
-                                >
-                                    Personal Info
-                                </Text>
+                            <div className=" ml-[24px] mr-[24px] mt-[14px]">
+                                <Grid container spacing={3} mt={1} justifyContent="space-between">
+                                    <Grid xs={5}>
+                                        <Text
+                                            className="font-bold text-black_900 text-left w-[auto]"
+                                            variant="body2"
+                                        >
+                                            Personal Info
+                                        </Text>
+                                    </Grid>
+                                    <Grid xs={2}>
+                                        <Button
+                                            className="flex h-[40px] items-right justify-end min-w-[] w-[40px]"
+                                            shape="icbRoundedBorder8"
+                                            size="mdIcn"
+                                            variant="icbFillGray50"
+                                            onClick={() => { setEdit(true); }}
+                                        >
+                                            <Text
+                                                className="font-bold text-black_900 text-left w-[auto]"
+                                                variant="body4"
+                                            > Edit </Text>
+
+                                            <EditIcon />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
                                 <div className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
 
                                     {/* <Text className="text-black_900 font-bold text-left w-[auto]" variant="body3">
                                         Avatar
                                     </Text> */}
                                     {/* <div className="flex flex-row gap-[24px] items-center justify-between w-[100%]"> */}
-                                        {/* <Img
+                                    {/* <Img
                                             src="images/img_changeprofilepic.svg"
                                             className="h-[100px] w-[100px]"
                                             alt="user"
                                         /> */}
-                                        {/* <div className="flex flex-row gap-[16px] items-center justify-start w-[auto]">
+                                    {/* <div className="flex flex-row gap-[16px] items-center justify-start w-[auto]">
                                             <Button
                                                 className="cursor-pointer font-bold min-w-[105px] text-[16px] text-center text-white_A700 w-[auto]"
                                                 shape="RoundedBorder8"
@@ -181,7 +209,7 @@ const Profile = () => {
                             </div>
                             <Line className="bg-deep_purple_50 h-[1px] w-[100%]" />
                             <div className="flex flex-col items-center justify-start  ml-[24px] mr-[24px] ">
-                                
+
                                 <div className="flex sm:flex-col flex-row gap-[24px] items-start justify-between  sm:w-[100%] w-[580px]">
                                     <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[270px]">
                                         <Text
@@ -201,6 +229,7 @@ const Profile = () => {
                                             name="Frame"
                                             placeholder={userInfo.state.username}
                                             shape="RoundedBorder8"
+                                            disabled={!edit}
                                         ></TextField>
                                     </div>
                                     <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[270px]">
@@ -221,6 +250,7 @@ const Profile = () => {
                                             name="Frame One"
                                             placeholder={userInfo.state.username}
                                             shape="RoundedBorder8"
+                                            disabled={!edit}
                                         ></TextField>
                                     </div>
                                 </div>
@@ -230,7 +260,29 @@ const Profile = () => {
                                     </Text>
                                     <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={phone} onChange={handlePhoneChange} />
                                 </div>
-                                <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-center justify-center mt-[24px] sm:w-[100%] w-[580px]">
+                                <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start mt-[24px] sm:w-[100%] w-[580px]">
+                                    <Text className="text-black_900 text-[14px] font-plusjakartasans">
+                                        Email
+                                    </Text>
+                                    <TextField
+                                        className="font-medium p-[0] text-[16px] placeholder:text-black_900 text-black_900 text-left w-[100%]"
+                                        wrapClassName="w-[100%]"
+                                        name="Frame One"
+                                        placeholder={"your email"}
+                                        shape="RoundedBorder8"
+                                        disabled={!edit}
+                                    ></TextField>                                </div>
+                                {edit && <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-center justify-center mt-[24px] sm:w-[100%] w-[580px]">
+                                    <Button
+                                        className="cursor-pointer font-bold text-[16px] text-center text-white_A700 w-[352px] bg-deep_purple_A200_75 text-white_A700"
+                                        shape="RoundedBorder8"
+                                        size="3xl"
+                                        variant="outlined"
+                                        color="secondary"
+                                        onClick={() => { setEdit(false) }}
+                                    >
+                                        Dicard Changes
+                                    </Button>
                                     <Button
                                         className="cursor-pointer font-bold text-[16px] text-center text-white_A700 w-[352px] bg-deep_purple_A200_75 text-white_A700"
                                         shape="RoundedBorder8"
@@ -241,7 +293,7 @@ const Profile = () => {
                                     >
                                         Save changes
                                     </Button>
-                                </div>
+                                </div>}
                             </div>
                         </div>
                     </div>
