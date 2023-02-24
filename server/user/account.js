@@ -48,3 +48,7 @@ exports.verify_login = async function(email, password) {
         }
     };
 };
+
+exports.get_user_profile = async function(user_id) {
+
+};

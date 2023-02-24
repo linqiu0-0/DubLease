@@ -27,7 +27,7 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
     }
     
     // initial filtering on conditions besides dates
-    const sql_conditions = conditions.length? " WHERE " + conditions.join(" AND ") : conditions.join(" AND ");
+    const sql_conditions = conditions.length? " WHERE status = 1 AND " + conditions.join(" AND ") : conditions.join(" AND ");
     const subleases = await db.filter_sublease(sql_conditions, values);
     // console.log(subleases);
     var result = [];
@@ -35,12 +35,10 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
         var sublease = subleases[id];
         // filter on date period
         if (period_match(sublease.SubleasePeriodStart, sublease.SubleasePeriodEnd, start_date, end_date)) {
+            const image_keys = await db.get_sublease_images(sublease.PostID);
             result.push({
                 post_id: sublease.PostID,
-                coverImg: {
-                    src: get_cover_img(sublease.PostID),
-                    alt: sublease.PropertyName + " photo"
-                },
+                image_keys: image_keys,
                 name: sublease.PropertyName,
                 category: sublease.PropertyCategory,
                 address: sublease.PropertyAddress,
@@ -56,7 +54,8 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
                 parking: sublease.ParkingAvailable,
                 deposit: sublease.Deposit,
                 longitude: sublease["Longitude"],
-                latitude: sublease["Latitude"]
+                latitude: sublease["Latitude"],
+                status: sublease.status,
             });
         }
     }
@@ -89,10 +88,4 @@ function period_match(SubleasePeriodStart, SubleasePeriodEnd, start_date, end_da
                 || (filter_end_year == sublease_end_year && filter_end_month < sublease_end_month);
     }
     return result;
-}
-
-// TODO: connect to the file storage service
-// returns the corresponding cover image of the post of the given id
-function get_cover_img(PostID) {
-    return "https://images1.apartments.com/i2/WCQqdTdOx7whsIN4SXA0qt-msh5dw_VGIju9PzqlhX4/111/hub-u-district-seattle-seattle-wa-primary-photo.jpg";
 }

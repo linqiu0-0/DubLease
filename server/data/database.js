@@ -65,8 +65,48 @@ exports.filter_sublease = async function(sql_conditions, condition_values) {
             for (let row in results) {
                 subleases.push(JSON.parse(JSON.stringify(results[row])));
             }
-            console.log("subleases: \n", subleases);
+            // console.log("subleases: \n", subleases);
             return error ? reject(error) : resolve(subleases);
+        });
+    });
+}
+
+
+exports.get_sublease_images = async function(lease_id) {
+    const sql = 'SELECT ImageKey FROM Sublease_Images WHERE LeaseID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, lease_id, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            var image_keys = [];
+            // console.log(results);
+            for (let row in results) {
+                image_keys.push(results[row].ImageKey);
+            }
+            return resolve(image_keys);
+        });
+    });
+}
+
+exports.get_lease_by_id = async function(id) {
+    const sql = 'SELECT * FROM Sublease WHERE PostID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, id, function(error, results, fields) {
+            return error ? reject(error) : resolve(results[0]);
+        });
+    });
+}
+
+exports.check_lease_exists = async function(id) {
+    const sql = 'SELECT COUNT(*) FROM Sublease WHERE PostID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, id, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            var count = results[0].count;
+            return resolve(count > 0);
         });
     });
 }
