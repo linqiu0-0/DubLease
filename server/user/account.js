@@ -41,10 +41,59 @@ exports.verify_login = async function(email, password) {
     }
 
     return {
-        code : 200,
-        msg : {
+        code: 200,
+        msg: {
             username: username,
             userid: userid,
         }
     };
 };
+
+exports.get_user_profile = async function(user_id) {
+    const exist = await db.check_user_id(user_id);
+    if (!exist) {
+        return {code: 400, msg: "User does not exist"};
+    }
+
+    const {username, email, phone} = await db.get_user_by_id(user_id);
+    return {
+        code: 200,
+        msg: {
+            username: username,
+            email: email,
+            phone: phone,
+        }
+    };
+};
+
+exports.edit_profile = async function(user_id, username, email, phone) {
+    const exist = await db.check_user_id(user_id);
+    if (!exist) {
+        return {code: 400, msg: "User does not exist"};
+    }
+    const statements = []
+    const values = [];
+
+    if (username) {
+        statements.push("UserName = ?");
+        values.push(username);
+    }
+
+    if (email) {
+        statements.push("UserEmail = ?");
+        values.push(email);
+    }
+
+    if (phone) {
+        statements.push("Phone = ?");
+        values.push(phone);
+    }
+
+    var update_statements = "SET " + statements.join(", ");
+    values.push(parseInt(user_id));
+    await db.update_user(update_statements, values);
+    return {
+        code: 200,
+        msg: "Success",
+    }
+}
