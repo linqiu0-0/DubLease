@@ -8,9 +8,11 @@ import { ReactComponent as SizeIcon } from '../assets/images/SizeIcon.svg';
 import { ReactComponent as BathIcon } from '../assets/images/BathIcon.svg';
 import "../styles/App.css"
 import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 
 function LeaseCard({ leaseCardData, username }) {
+    const [image, setImage] = React.useState([]);
 
     const navigate = useNavigate();
 
@@ -24,14 +26,53 @@ function LeaseCard({ leaseCardData, username }) {
         });
     }
 
+    const headers = { 'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*"};
+    const fetchImage = async (imageKey) => {
+        console.log(imageKey);
+        if (imageKey == null) {
+            return;
+        }
+        try {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey,
+                {headers})
+            let data = await response.json();
+            if (!response.ok) {
+                // get error message from body or default to response statusText
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+            }
+            let imageBytes = data.Body.data;
+            imageBytes = _arrayBufferToBase64(imageBytes);
+            let imageUrl = "data:image/png;base64," + imageBytes;
+            setImage(imageUrl);
+            console.log(image);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const _arrayBufferToBase64=(buffer) => {
+        var binary = '';
+        var bytes = new Uint8Array( buffer );
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode( bytes[ i ] );
+        }
+        return window.btoa( binary );
+    }
+
+    useEffect(() => {
+        fetchImage(leaseCardData.image_keys[0]);
+    }, []);
 
     return (
         <Paper variant="outlined" onClick={browseSubleaseDeatail}>
             <Grid container spacing={1}>
                 <Grid xs={5}>
                     <img
-                        src={leaseCardData.coverImg.src}
-                        alt={leaseCardData.coverImg.alt}
+                        src={image}
+                        alt={leaseCardData.name + " cover image"}
                         className="img"
                     />
                 </Grid>

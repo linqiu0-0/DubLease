@@ -12,7 +12,6 @@ const SubleaseInfo = () => {
     const [subleaseInfoData, setSubleaseInfoData] = React.useState([]);
     const [images, setImages] = React.useState([]);
     const [rentalFeatures, setRentalFeatures] = React.useState([]);
-    const [loaded, setLoaded] = React.useState(false);
 
     const navigate = useNavigate();
     const subleaseInfoMeta = useLocation();
@@ -20,50 +19,27 @@ const SubleaseInfo = () => {
     const headers = { 'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*"};
 
-    const fetchImage = async (imageKey, images_tmp) => {
-        let response = await fetch(process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey,
-            {headers})
-        let data = await response.json();
+    const fetchImage = async (imageKey) => {
+        try {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey,
+                {headers})
+            let data = await response.json();
+            if (!response.ok) {
+                // get error message from body or default to response statusText
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+            }
             let imageBytes = data.Body.data;
             imageBytes = _arrayBufferToBase64(imageBytes);
-            var imageUrl = "data:image/png;base64," + imageBytes;
-            // setImages([
-            //     { src: imageUrl },
-            //     ...images
-            // ])
-            images_tmp.push({ src: imageUrl });
-            return imageUrl;
-
-            // .then(async response => {
-            //     const data = await response.json();
-            //     // check for error response
-            //     if (!response.ok) {
-            //         // get error message from body or default to response statusText
-            //         const error = (data && data.message) || response.statusText;
-            //         return Promise.reject(error);
-            //     }
-            //     let imageBytes = data.Body.data;
-            //     imageBytes = _arrayBufferToBase64(imageBytes);
-            //     var imageUrl = "data:image/png;base64," + imageBytes;
-            //     // setImages([
-            //     //     { src: imageUrl },
-            //     //     ...images
-            //     // ])
-            //     images_tmp.push({ src: imageUrl });
-            //     // setImages(
-            //     //     images
-            //     // );
-            //     console.log(images);
-            //     if (subleaseInfoData.length != 0 && rentalFeatures.length != 0 && images.length != 0) {
-            //         setLoaded(true);
-            //     }
-            //     return imageUrl;
-            // })
-            // .catch(error => {
-            //     console.error('There was an error!', error);
-            // });
+            let imageUrl = "data:image/png;base64," + imageBytes;
+            images.push({ src: imageUrl });
+            console.log(images);
+        } catch (e) {
+            console.log(e);
+        }
     };
-    function _arrayBufferToBase64( buffer ) {
+
+    const _arrayBufferToBase64=(buffer) => {
         var binary = '';
         var bytes = new Uint8Array( buffer );
         var len = bytes.byteLength;
@@ -88,31 +64,20 @@ const SubleaseInfo = () => {
                     const error = (data && data.message) || response.statusText;
                     return Promise.reject(error);
                 }
-                let images_tmp = []
                 for (let i = 0; i < data.image_keys.length; i++) {
-                    console.log(data.image_keys[i]);
-                    await fetchImage(data.image_keys[i], images_tmp);
+                    await fetchImage(data.image_keys[i]);
                 }
-                setImages(images_tmp);
                 data.user_phone = (data.user_phone === null || data.user_phone === "") ? "N/A": data.user_phone;
                 setSubleaseInfoData(data);
                 setRentalFeatures(data.rental_features);
-                if (subleaseInfoData.length != 0 && rentalFeatures.length != 0 && images.length != 0) {
-                    setLoaded(true);
-                }
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
     }
 
-
     useEffect(() => {
-        console.log(1);
         fetchSublaseInfo();
-        // if (!loaded) {
-        //
-        // }
     }, []);
 
     return (
