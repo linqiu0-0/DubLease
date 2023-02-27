@@ -12,8 +12,8 @@ import NotFound from "./pages/NotFound";
 
 function RequireAuth({ children }) {
     const { authed } = useAuth();
-
-    return authed === true ? children : <Navigate to="/" replace />;
+    console.log("authed value " + authed)
+    return authed == true ? children : <Navigate to="/" replace />;
 }
 
 

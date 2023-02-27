@@ -18,7 +18,7 @@ const Profile = () => {
     const [email, setEmail] = React.useState('')
 
     const navigate = useNavigate();
-    const {userId} = useAuth();
+    const {userId, updateName} = useAuth();
 
 
 
@@ -46,20 +46,12 @@ const Profile = () => {
                 })
             };
             
-            fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
+            updateName(name)
+            .fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
                 .then(response => response.json())
-                .then(data => {
-                    // log user id
-                    console.log(data.phone);
-                    console.log(data.email);
-                    console.log(data.email);
-                    navigate('/home', {
-                        state: {
-                            username: data.username,
-                            userId: data.userid
-                        }
-                    });
+                .then((data) => {               
+                    console.log(data)
                 })
                 .catch(handleError);
         }
@@ -233,6 +225,8 @@ const Profile = () => {
                                             wrapClassName="w-[100%]"
                                             name="Frame One"
                                             placeholder={userData.username}
+                                            disabled={!edit}
+                                            onChange={(e) => { setName(e.target.value) }}
                                             shape="RoundedBorder8"
                                         ></TextField>
                                     </div>
