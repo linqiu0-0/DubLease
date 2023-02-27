@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+<<<<<<< HEAD
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,21 @@ function AccountMenu({ username, userId}) {
     const navigate = useNavigate();
     const { authed, logout } = useAuth();
  
+=======
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import { useNavigate } from "react-router-dom";
+
+export default function AccountMenu({ username }) {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const navigate = useNavigate();
+
+
+>>>>>>> frontend
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -27,13 +43,22 @@ function AccountMenu({ username, userId}) {
     };
 
     const handleLogout = () => {
+<<<<<<< HEAD
         logout();
         navigate('/');
+=======
+        navigate('/', {
+            state: {
+                username: data.username
+            }
+        });
+>>>>>>> frontend
     };
 
     const handleProfile = () => {
         navigate('/profile', {
             state: {
+<<<<<<< HEAD
                 username: username,
                 userId: userId
             }
@@ -45,6 +70,9 @@ function AccountMenu({ username, userId}) {
             state: {
                 username: username,
                 userId: userId
+=======
+                username: username
+>>>>>>> frontend
             }
         });
     };
@@ -109,11 +137,16 @@ function AccountMenu({ username, userId}) {
                 <MenuItem onClick={handleProfile}>
                     <Avatar /> Profile
                 </MenuItem>
+<<<<<<< HEAD
                 <MenuItem onClick={handleListings}>
                 <ListItemIcon>
                     <FormatListBulletedIcon fontSize="small" /> 
                     </ListItemIcon>
                       My Listings
+=======
+                <MenuItem onClick={handleClose}>
+                    <Avatar /> My Listings
+>>>>>>> frontend
                 </MenuItem>
                 <Divider />
 
@@ -121,7 +154,11 @@ function AccountMenu({ username, userId}) {
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
+<<<<<<< HEAD
                     Log out
+=======
+                    Logout
+>>>>>>> frontend
                 </MenuItem>
             </Menu>
         </React.Fragment>

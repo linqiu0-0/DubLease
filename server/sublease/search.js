@@ -1,35 +1,3 @@
-// CREATE TABLE Persons (
-//     PostID int,
-//     PropertyName varchar(255),
-//     PropertyCategory varchar(255),
-//     PropertyAddress varchar(255),
-//     PropertyPrice int,
-//     RoomSize int,
-//     RoomType varchar(255),               xByB
-//     GenderLimit int,                     0, 1, 2
-//     IsPetFriendly int,                   0, 1
-//     SubleasePeriodStart varchar(255),    yyyy-mm-dd
-//     SubleasePeriodEnd varchar(255),      yyyy-mm-dd
-//     PropertyDescription varchar(255),
-//     ParkingAvailable int,                0, 1
-//     Deposit int
-// );
-// INSERT INTO Sublease VALUES (
-// 	1,
-//     'Hub U District',
-//     'Apartment',
-//     '5000 University Way NE',
-//     1500,
-//     1300,
-//     '4B4B',
-//     0,
-// 	0,
-//     '2023-01-03',
-//     '2023-06-08',
-// 	'This is Hub',
-//     1,
-//     0
-// );
 const db = require('../data/database');
 
 exports.search_sublease = async function(name, start_date, end_date, min_price, max_price, bed, gender) {
@@ -59,37 +27,16 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
     }
     
     // initial filtering on conditions besides dates
-    const sql_conditions = conditions.length? " WHERE " + conditions.join(" AND ") : conditions.join(" AND ");
+    const sql_conditions = conditions.length? " WHERE status = 1 AND " + conditions.join(" AND ") : " WHERE status = 1";
     const subleases = await db.filter_sublease(sql_conditions, values);
     // console.log(subleases);
-    var result = [];
+    const result = [];
     for (let id in subleases) {
-        var sublease = subleases[id];
+        const sublease = subleases[id];
         // filter on date period
         if (period_match(sublease.SubleasePeriodStart, sublease.SubleasePeriodEnd, start_date, end_date)) {
-            result.push({
-                post_id: sublease.PostID,
-                coverImg: {
-                    src: get_cover_img(sublease.PostID),
-                    alt: sublease.PropertyName + " photo"
-                },
-                name: sublease.PropertyName,
-                category: sublease.PropertyCategory,
-                address: sublease.PropertyAddress,
-                price: sublease.PropertyPrice,
-                space: sublease.RoomSize,
-                bedNum: sublease.RoomType.split("B")[0],
-                bathNum: sublease.RoomType.split("B")[1],
-                gender: sublease.GenderLimit,
-                petOK: sublease.IsPetFriendly,
-                periodStart: sublease.SubleasePeriodStart,
-                periodEnd: sublease.SubleasePeriodEnd,
-                description: sublease.PropertyDescription,
-                parking: sublease.ParkingAvailable,
-                deposit: sublease.Deposit,
-                longitude: sublease["Longitude"],
-                latitude: sublease["Latitude"]
-            });
+            const image_keys = await db.get_sublease_images(sublease.PostID);
+            result.push(format_search_result(sublease, image_keys));
         }
     }
     // if (!result) {
@@ -101,6 +48,26 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
     };
 };
 
+// list all postings from a given user
+exports.list_sublease = async function(userid) {
+    const exist = db.check_user_id(userid);
+    if (!exist) {
+        return {code: 400, msg: "User does not exist"};
+    }
+    const subleases = await db.list_sublease_by_user_id(userid);
+    const result = [];
+    for (let id in subleases) {
+        const sublease = subleases[id];
+        const image_keys = await db.get_sublease_images(sublease.PostID);
+        result.push(format_search_result(sublease, image_keys));
+    }
+
+    return {
+        code : 200,
+        msg : result
+    };
+}
+
 // returns whether the given sublease period includes the period from start_date to end_date
 function period_match(SubleasePeriodStart, SubleasePeriodEnd, start_date, end_date) {
     var result = true;
@@ -110,7 +77,7 @@ function period_match(SubleasePeriodStart, SubleasePeriodEnd, start_date, end_da
         filter_start_year = parseInt(start_date.split("-")[0]);
         filter_start_month = parseInt(start_date.split("-")[1]);
         result &= sublease_start_year < filter_start_year
-                || (sublease_start_year == filter_start_year && sublease_start_month < filter_start_month)
+                || (sublease_start_year == filter_start_year && sublease_start_month <= filter_start_month)
     }
     if (end_date) {
         sublease_end_year = parseInt(SubleasePeriodEnd.split("-")[0]);
@@ -118,13 +85,31 @@ function period_match(SubleasePeriodStart, SubleasePeriodEnd, start_date, end_da
         filter_end_year = parseInt(end_date.split("-")[0]);
         filter_end_month = parseInt(end_date.split("-")[1]);
         result &= filter_end_year < sublease_end_year
-                || (filter_end_year == sublease_end_year && filter_end_month < sublease_end_month);
+                || (filter_end_year == sublease_end_year && filter_end_month <= sublease_end_month);
     }
     return result;
 }
 
-// TODO: connect to the file storage service
-// returns the corresponding cover image of the post of the given id
-function get_cover_img(PostID) {
-    return "https://images1.apartments.com/i2/WCQqdTdOx7whsIN4SXA0qt-msh5dw_VGIju9PzqlhX4/111/hub-u-district-seattle-seattle-wa-primary-photo.jpg";
+function format_search_result(sublease, image_keys) {
+    return {
+        post_id: sublease.PostID,
+        image_keys: image_keys,
+        name: sublease.PropertyName,
+        category: sublease.PropertyCategory,
+        address: sublease.PropertyAddress,
+        price: sublease.PropertyPrice,
+        space: sublease.RoomSize,
+        bedNum: sublease.RoomType.split("B")[0],
+        bathNum: sublease.RoomType.split("B")[1],
+        gender: sublease.GenderLimit,
+        petOK: sublease.IsPetFriendly,
+        periodStart: sublease.SubleasePeriodStart,
+        periodEnd: sublease.SubleasePeriodEnd,
+        description: sublease.PropertyDescription,
+        parking: sublease.ParkingAvailable,
+        deposit: sublease.Deposit,
+        longitude: sublease["Longitude"],
+        latitude: sublease["Latitude"],
+        status: sublease.status,
+    }
 }
