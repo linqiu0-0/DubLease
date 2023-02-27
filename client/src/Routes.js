@@ -6,7 +6,7 @@ import SignUp from "./pages/login/SignUp";
 import { Profile } from "./pages/profile/Profile";
 import { Listings } from "./pages/listings/Listings";
 import SubleaseInfo from "./pages/SubleaseInfo";
-import  useAuth  from "./hooks/useAuth";
+import useAuth from "./hooks/useAuth";
 
 import NotFound from "./pages/NotFound";
 
@@ -31,8 +31,14 @@ const ProjectRoutes = () => {
                 <Route path="/profile" element={
                     <RequireAuth> <Profile /></RequireAuth>
                 } />
-                <Route path="/listings" element={<RequireAuth><Listings /></RequireAuth>} />
-                <Route path="/sublease/:id" element={<RequireAuth><SubleaseInfo /></RequireAuth>} />
+                <Route path="/listings" element={
+                    <RequireAuth>
+                        <Listings />
+                    </RequireAuth>} />
+                <Route path="/sublease/:id" element={
+                    <RequireAuth>
+                        <SubleaseInfo />
+                    </RequireAuth>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
