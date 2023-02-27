@@ -18,7 +18,7 @@ const Profile = () => {
     const [email, setEmail] = React.useState('')
 
     const navigate = useNavigate();
-    const {userId, username} = useAuth();
+    const {userId} = useAuth();
 
 
 
@@ -46,9 +46,7 @@ const Profile = () => {
                 })
             };
             
-            // fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
-            fetch("http://10.19.189.36:8000/" + "edit_profile", requestOptions)
-
+            fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
                 .then(response => response.json())
                 .then(data => {
