@@ -163,7 +163,7 @@ const Home = () => {
                             overflow: "auto"
                         }}>
                             {leaseData.map((singleLease) => (
-                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} />
+                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} username={userInfo.state.username}/>
                             ))}
                         </Stack>
                     </Grid>
