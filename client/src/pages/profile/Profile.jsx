@@ -56,12 +56,7 @@ const Profile = () => {
                     console.log(data.phone);
                     console.log(data.email);
                     console.log(data.email);
-                    navigate('/home', {
-                        state: {
-                            username: data.username,
-                            userId: data.userid
-                        }
-                    });
+
                 })
                 .catch(handleError);
         }
@@ -72,7 +67,6 @@ const Profile = () => {
             method: 'Get',
             headers: { 'Content-Type': 'application/json' },
         };
-        // http://10.19.189.36:8000/profile?id=1
 
         let queryUrl = "?id=" + userInfo.state.userId
         fetch(process.env.REACT_APP_SERVER_URL + "profile" + queryUrl, requestOptions)
@@ -164,7 +158,8 @@ const Profile = () => {
                                         onClick={() =>
                                             navigate('/home', {
                                                 state: {
-                                                    username: userInfo.state.username
+                                                    username: userInfo.state.username,
+                                                    userId: userInfo.state.userId
                                                 }
                                             })}
                                         alt="arrowleft"
