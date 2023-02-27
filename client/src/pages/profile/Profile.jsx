@@ -19,7 +19,6 @@ const Profile = () => {
     const [email, setEmail] = React.useState('')
 
     const navigate = useNavigate();
-
     const userInfo = useLocation();
 
 

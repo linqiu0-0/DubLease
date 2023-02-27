@@ -18,13 +18,11 @@ const Listings = () => {
       'Content-Type': 'application/json',
       "Access-Control-Allow-Origin": "*"
     };
-    console.log(process.env.REACT_APP_SERVER_URL + "list" + queryUrl);
 
     fetch(process.env.REACT_APP_SERVER_URL + "list" + queryUrl,
       { headers })
       .then(async response => {
         const data = await response.json();
-        console.log(data);
         // check for error response
         if (!response.ok) {
           // get error message from body or default to response statusText
@@ -41,8 +39,7 @@ const Listings = () => {
 
   useEffect(() => {
     getLeaseData();
-  });
-
+  }, []);
 
 
   return (
@@ -115,7 +112,7 @@ const Listings = () => {
       </div >
     </>
 
-  );
-};
-
+  ); 
+}; 
+  
 export { Listings }
