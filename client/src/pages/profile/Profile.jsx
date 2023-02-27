@@ -48,9 +48,7 @@ const Profile = () => {
                 })
             };
             
-            // fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
-            fetch("http://10.19.189.36:8000/" + "edit_profile", requestOptions)
-
+            fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
                 .then(response => response.json())
                 .then(data => {
@@ -77,10 +75,7 @@ const Profile = () => {
         // http://10.19.189.36:8000/profile?id=1
 
         let queryUrl = "?id=" + userInfo.state.userId
-        // fetch(process.env.REACT_APP_SERVER_URL + "profile" + queryUrl, requestOptions)
-        fetch("http://10.19.189.36:8000/" + "profile" + queryUrl, requestOptions)
-
-
+        fetch(process.env.REACT_APP_SERVER_URL + "profile" + queryUrl, requestOptions)
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
