@@ -43,7 +43,7 @@ const SignIn = () => {
       // log user id
       console.log(data.username);
       console.log(data.userid);
-      auth.login().then(() => {
+      auth.login(data.username, data.userid).then(() => {
         navigate('/home', {
           state: {
             username: data.username,

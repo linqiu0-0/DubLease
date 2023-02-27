@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import Grid from "@mui/material/Unstable_Grid2";
 import { ProfileHeader } from "./ProfileHeader";
+import useAuth from "../../hooks/useAuth.jsx";
 
 const Profile = () => {
     const [userData, setUserData] = React.useState('')
@@ -17,8 +18,7 @@ const Profile = () => {
     const [email, setEmail] = React.useState('')
 
     const navigate = useNavigate();
-
-    const userInfo = useLocation();
+    const {userId, username} = useAuth();
 
 
 
@@ -39,7 +39,7 @@ const Profile = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    "id": userInfo.state.userId,
+                    "id": userId,
                     "email": email,
                     "username": name,
                     "phone": phone
@@ -72,11 +72,9 @@ const Profile = () => {
             method: 'Get',
             headers: { 'Content-Type': 'application/json' },
         };
-        // http://10.19.189.36:8000/profile?id=1
 
-        let queryUrl = "?id=" + userInfo.state.userId
-        // fetch(process.env.REACT_APP_SERVER_URL + "profile" + queryUrl, requestOptions)
-        fetch("http://10.19.189.36:8000/" + "profile" + queryUrl, requestOptions)
+        let queryUrl = "?id=" + userId
+        fetch(process.env.REACT_APP_SERVER_URL + "profile" + queryUrl, requestOptions)
 
 
             .then(checkStatus)
@@ -105,7 +103,7 @@ const Profile = () => {
         <>
             <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[200px] h-[100%] w-[100%]">
                 <div className="flex flex-col gap-[23px] justify-center w-[100%]">
-                <ProfileHeader username={userInfo.state.username} userId={userInfo.state.userId} />
+                <ProfileHeader/>
                     <div className="flex md:flex-col sm:flex-col flex-row md:gap-[40px] sm:gap-[40px] items-start justify-center max-w-[1020px] mx-[auto] md:px-[20px] sm:px-[20px] w-[100%]">
                         <div className="flex flex-col items-start justify-start w-[auto]">
                             <div className="flex flex-col items-center justify-start md:w-[100%] sm:w-[100%] w-[75%]">

@@ -13,11 +13,11 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import useAuth from "../hooks/useAuth";
 
 
-function AccountMenu({ username, userId}) {
+function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
-    const { authed, logout } = useAuth();
+    const {userId, username, logout } = useAuth();
  
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -32,21 +32,11 @@ function AccountMenu({ username, userId}) {
     };
 
     const handleProfile = () => {
-        navigate('/profile', {
-            state: {
-                username: username,
-                userId: userId
-            }
-        });
+        navigate('/profile');
     };
 
     const handleListings = () => {
-        navigate('/listings', {
-            state: {
-                username: username,
-                userId: userId
-            }
-        });
+        navigate('/listings');
     };
 
 

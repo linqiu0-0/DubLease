@@ -7,17 +7,18 @@ import { useLocation } from "react-router-dom";
 import { ListingHeader } from "./ListingHeader";
 import { LeaseCardVertical } from "../../components/LeaseCardVertical/LeaseCardVertical";
 import { handleBreakpoints } from "@mui/system";
+import useAuth from "../../hooks/useAuth.jsx";
 
 const Listings = () => {
-  const userInfo = useLocation();
+  const {userId, username} = useAuth();
+
   const [selected, setSelected] = React.useState('10');
 
   return (
-
     <>
       <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[150px] h-[100%] w-[100%]">
         <div className="flex flex-col gap-[10px] justify-center w-[100%]">
-          <ListingHeader username={userInfo.state.username} userId={userInfo.state.userId} />
+          <ListingHeader/>
 
           <div className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[100%]">
             {/* <Paper className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[85%]" variant="outlined">

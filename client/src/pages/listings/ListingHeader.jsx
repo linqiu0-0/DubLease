@@ -7,11 +7,14 @@ import { Text } from "../../components/Text";
 import { Line } from "../../components/Line";
 import { Img } from "../../components/Img";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.jsx";
 
 
 
-const ListingHeader = ({ username, userId }) => {
+const ListingHeader = () => {
     const navigate = useNavigate();
+    const {userId, username} = useAuth();
+
 
     return (
         <div className="h-[130px] md:h-[96px] sm:h-[96px] relative w-[100%]">
