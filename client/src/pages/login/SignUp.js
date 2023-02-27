@@ -48,7 +48,9 @@ const SignUp = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                auth.login(data.username, data.userid).then(() => {
+                window.sessionStorage.setItem("username", data.username);
+                window.sessionStorage.setItem("userId", data.userid);          
+                auth.login().then(() => {
                     navigate('/home', {
                       state: {
                         username: data.username,

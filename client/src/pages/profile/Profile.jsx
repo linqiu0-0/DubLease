@@ -4,11 +4,9 @@ import { Text } from "../../components/Text";
 import { Line } from "../../components/Line";
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
 import { TextField, Button } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import Grid from "@mui/material/Unstable_Grid2";
 import { ProfileHeader } from "./ProfileHeader";
-import useAuth from "../../hooks/useAuth.jsx";
 
 const Profile = () => {
     const [userData, setUserData] = React.useState('')
@@ -17,17 +15,11 @@ const Profile = () => {
     const [name, setName] = React.useState('')
     const [email, setEmail] = React.useState('')
 
-    const navigate = useNavigate();
-    const {userId, updateName} = useAuth();
-
-
-
+    const userId = window.sessionStorage.getItem("userId")
 
     const handlePhoneChange = (newValue) => {
         setPhone(newValue)
     }
-
-
 
     const handleSubmit = () => {
         if (!matchIsValidTel(phone)) {
@@ -46,8 +38,8 @@ const Profile = () => {
                 })
             };
             
-            updateName(name)
-            .fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
+            window.sessionStorage.setItem("username", name)
+            fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
                 .then(response => response.json())
                 .then((data) => {               
@@ -65,8 +57,6 @@ const Profile = () => {
 
         let queryUrl = "?id=" + userId
         fetch(process.env.REACT_APP_SERVER_URL + "profile" + queryUrl, requestOptions)
-
-
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {

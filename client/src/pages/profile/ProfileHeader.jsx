@@ -7,13 +7,13 @@ import { Text } from "../../components/Text";
 import { Line } from "../../components/Line";
 import { Img } from "../../components/Img";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth.jsx";
 
 
 
 const ProfileHeader = () => {
     const navigate = useNavigate();
-    const {userId, username} = useAuth();
+    const username = window.sessionStorage.getItem("username")
+    const userId = window.sessionStorage.getItem("userId")
 
     return (
         <div className="h-[180px] md:h-[96px] sm:h-[96px] relative w-[100%]">

@@ -18,19 +18,14 @@ function useAuth() {
   };
 
   const [authed, setAuthed] = React.useState(getToken() != null);
-  const [username, setUsername] = React.useState("");
-  const [userId, setUserId] = React.useState("");
+
 
   return {
     authed,
-    username,
-    userId,
-    login(name, Id) {
+    login() {
       return new Promise((res) => {
         saveToken();
         setAuthed(true);
-        setUsername(name);
-        setUserId(Id);
         res();
       });
     },
@@ -38,13 +33,6 @@ function useAuth() {
       return new Promise((res) => {
         window.sessionStorage.clear()
         setAuthed(false);
-        setUsername("");
-        setUserId("");
-        res();
-      });
-    }, updateName(name) {
-      return new Promise((res) => {
-        setUsername(name);
         res();
       });
     }

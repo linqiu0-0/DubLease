@@ -43,7 +43,9 @@ const SignIn = () => {
       // log user id
       console.log(data.username);
       console.log(data.userid);
-      auth.login(data.username, data.userid).then(() => {
+      window.sessionStorage.setItem("username", data.username);
+      window.sessionStorage.setItem("userId", data.userid);
+      auth.login().then(() => {
         navigate('/home', {
           state: {
             username: data.username,

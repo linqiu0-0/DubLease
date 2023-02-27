@@ -17,7 +17,9 @@ function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
-    const { username, logout } = useAuth();
+    const { logout } = useAuth();
+    const username = window.sessionStorage.getItem("username")
+
  
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
