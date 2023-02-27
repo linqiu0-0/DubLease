@@ -11,10 +11,13 @@ import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
-function AccountMenu({ username, userId}) {
+function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
+    const username = window.sessionStorage.getItem("username")
+    const userId = window.sessionStorage.getItem("userId")
+ 
  
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -24,6 +27,7 @@ function AccountMenu({ username, userId}) {
     };
 
     const handleLogout = () => {
+        window.sessionStorage.clear()
         navigate('/');
     };
 

@@ -11,11 +11,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 
-function CardDropDown({post_id}) {
+function CardDropDown({ post_id }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
- 
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -24,21 +24,30 @@ function CardDropDown({post_id}) {
     };
 
     const handleLogout = () => {
-         navigate("/sublease/" + post_id, {});
+        navigate("/sublease/" + post_id, {
+            state: {
+                post_id: post_id,
+                username: window.sessionStorage.getItem("username")
+            }
+        });
     };
 
 
     const handleListings = () => {
-        navigate("/sublease/" + post_id, {});
+        navigate("/sublease/" + post_id, {
+            state: {
+                post_id: post_id,
+                username: window.sessionStorage.getItem("username")
+            }
+        });
     };
-
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
 
                 <Tooltip title="Manage Properties">
-                <IconButton
-                 onClick={handleClick}>
+                    <IconButton
+                        onClick={handleClick}>
                         <MoreVertIcon />
                     </IconButton>
                 </Tooltip>
@@ -79,10 +88,10 @@ function CardDropDown({post_id}) {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <MenuItem onClick={handleListings}>
-                <ListItemIcon>
-                    <HolidayVillageIcon fontSize="small" /> 
+                    <ListItemIcon>
+                        <HolidayVillageIcon fontSize="small" />
                     </ListItemIcon>
-                      View Properties
+                    View Properties
                 </MenuItem>
                 <Divider />
 

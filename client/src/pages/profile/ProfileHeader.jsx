@@ -10,8 +10,11 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const ProfileHeader = ({ username, userId }) => {
+const ProfileHeader = () => {
     const navigate = useNavigate();
+    const username = window.sessionStorage.getItem("username")
+    const userId = window.sessionStorage.getItem("userId")
+
 
     return (
         <div className="h-[180px] md:h-[96px] sm:h-[96px] relative w-[100%]">

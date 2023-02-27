@@ -10,7 +10,10 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const ListingHeader = ({ username, userId }) => {
+const ListingHeader = () => {
+    const username = window.sessionStorage.getItem("username")
+    const userId = window.sessionStorage.getItem("userId")
+
     const navigate = useNavigate();
 
     return (

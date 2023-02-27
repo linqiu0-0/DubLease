@@ -1,19 +1,15 @@
 import React, { useEffect } from "react";
-import { TextField, Button, Grid, Box, MenuItem, FormControl, InputLabel, Select, Paper } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import {  Grid, Box} from "@mui/material";
 import { ListingHeader } from "./ListingHeader";
 import { LeaseCardVertical } from "../../components/LeaseCardVertical/LeaseCardVertical";
 import { Text } from "../../components/Text";
 
 const Listings = () => {
-  const userInfo = useLocation();
   const [leaseData, setLeaseData] = React.useState([]);
-  // const [selected, setSelected] = React.useState('10');
-  console.log("listing page")
-  console.log(userInfo)
+  const [loading, setLoading] = React.useState(true);
 
   const getLeaseData = () => {
-    let queryUrl = "?id=" + userInfo.state.userId;
+    let queryUrl = "?id=" + window.sessionStorage.getItem("userId") ;
     let headers = {
       'Content-Type': 'application/json',
       "Access-Control-Allow-Origin": "*"
@@ -30,6 +26,7 @@ const Listings = () => {
           return Promise.reject(error);
         }
         setLeaseData(data);
+        setLoading(false)
       })
       .catch(error => {
         console.error('There was an error!', error);
@@ -46,7 +43,7 @@ const Listings = () => {
     <>
       <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[150px] h-[100%] w-[100%]">
         <div className="flex flex-col gap-[10px] justify-center w-[100%]">
-          <ListingHeader username={userInfo.state.username} userId={userInfo.state.userId} />
+          <ListingHeader />
           <div className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[100%]">
             {/* <Paper className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[85%]" variant="outlined">
               <Box sx={{
@@ -92,7 +89,7 @@ const Listings = () => {
               p: 1,
               m: 1
             }} >
-              {leaseData.length != 0 ?
+              {!loading && (leaseData.length != 0 ?
                 <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                   {leaseData.map((singleLease) => (
                     <Grid item xs={4}>
@@ -105,7 +102,7 @@ const Listings = () => {
                   variant="body3"
                 >
                   You have not posted any properties yet.
-                </Text>}
+                </Text>)}
             </Box>
           </div>
         </div >

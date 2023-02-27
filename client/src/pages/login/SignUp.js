@@ -43,11 +43,14 @@ const SignUp = () => {
             body: JSON.stringify({ "email": email, "password": password, "username": username })
         };
         console.log(requestOptions.body);
+
         fetch(process.env.REACT_APP_SERVER_URL + "signup", requestOptions)
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                window.sessionStorage.setItem("username", data.username);
+                window.sessionStorage.setItem("userId", data.userid);
                 navigate('/home', {
                     state: {
                         username: data.username,
@@ -142,7 +145,7 @@ const SignUp = () => {
                                 >
                                     Password
                                 </Text>
-                                <FormControl sx={{ m: 0, width: '30ch' }} color="secondary" variant="outlined">
+                                <FormControl sx={{ m: 0, width: '39ch' }} color="secondary" variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                     <OutlinedInput
                                         required
@@ -176,7 +179,7 @@ const SignUp = () => {
                             >
                                 Reter Enter Password
                             </Text>
-                            <FormControl sx={{ m: 0, width: '30ch' }} color="secondary" variant="outlined">
+                            <FormControl sx={{ m: 0, width: '39ch' }} color="secondary" variant="outlined">
                                 <InputLabel htmlFor="outlined-adornment-password">Reter Enter Password</InputLabel>
                                 <OutlinedInput
                                     required
