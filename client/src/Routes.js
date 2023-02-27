@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/login/SignIn";
 import SignUp from "./pages/login/SignUp";
 import {Profile} from "./pages/profile/Profile";
+import {Listings} from "./pages/listings/Listings";
 import SubleaseInfo from "./pages/SubleaseInfo";
 
 import NotFound from "./pages/NotFound";
@@ -16,6 +17,7 @@ const ProjectRoutes = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/listings" element={<Listings />} />
                 <Route path="/sublease/:id" element={<SubleaseInfo />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

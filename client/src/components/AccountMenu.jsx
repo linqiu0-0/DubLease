@@ -6,19 +6,16 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom";
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
-export default function AccountMenu({ username, userId}) {
+function AccountMenu({ username, userId}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
-
-
+ 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -27,16 +24,20 @@ export default function AccountMenu({ username, userId}) {
     };
 
     const handleLogout = () => {
-        navigate('/', {
+        navigate('/');
+    };
+
+    const handleProfile = () => {
+        navigate('/profile', {
             state: {
-                username: data.username
+                username: username,
+                userId: userId
             }
         });
     };
 
-    const handleProfile = () => {
-        console.log(userId)
-        navigate('/profile', {
+    const handleListings = () => {
+        navigate('/listings', {
             state: {
                 username: username,
                 userId: userId
@@ -104,8 +105,11 @@ export default function AccountMenu({ username, userId}) {
                 <MenuItem onClick={handleProfile}>
                     <Avatar /> Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <Avatar /> My Listings
+                <MenuItem onClick={handleListings}>
+                <ListItemIcon>
+                    <FormatListBulletedIcon fontSize="small" /> 
+                    </ListItemIcon>
+                      My Listings
                 </MenuItem>
                 <Divider />
 
@@ -113,7 +117,7 @@ export default function AccountMenu({ username, userId}) {
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
-                    Logout
+                    Log out
                 </MenuItem>
             </Menu>
         </React.Fragment>

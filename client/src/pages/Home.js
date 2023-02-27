@@ -76,7 +76,8 @@ const Home = () => {
     const [leaseData, setLeaseData] = React.useState([]);
     const userInfo = useLocation();
 
-
+    console.log("userInfo")
+    console.log( userInfo)
 
     const chooseFilterCallback = (para) => (filterValue) => {
         const newFilters = [...filters];
