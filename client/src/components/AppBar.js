@@ -36,6 +36,8 @@ function MainAppBar({ username, userId }) {
 
 
 
+
+
     const customTheme = createTheme({
         palette: {
             secondary: {
