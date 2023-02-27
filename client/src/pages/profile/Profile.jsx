@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import React, { useEffect } from "react";
 
 import { Text } from "../../components/Text";
 import { Line } from "../../components/Line";
@@ -14,22 +13,14 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 const Profile = () => {
     const [userData, setUserData] = React.useState('')
-    const [userData, setUserData] = React.useState('')
     const [edit, setEdit] = React.useState(false)
-    const [phone, setPhone] = React.useState('')
-    const [name, setName] = React.useState('')
-    const [email, setEmail] = React.useState('')
-
     const [phone, setPhone] = React.useState('')
     const [name, setName] = React.useState('')
     const [email, setEmail] = React.useState('')
 
     const navigate = useNavigate();
 
-
     const userInfo = useLocation();
-
-
 
 
 
@@ -86,34 +77,11 @@ const Profile = () => {
             })
             .catch(handleError);
     })
-    useEffect(() => {
-        const requestOptions = {
-            method: 'Get',
-            headers: { 'Content-Type': 'application/json' },
-        };
-        // http://10.19.189.36:8000/profile?id=1
-
-        let queryUrl = "?id=" + userInfo.state.userId
-        fetch(process.env.REACT_APP_SERVER_URL + "profile" + queryUrl, requestOptions)
-            .then(checkStatus)
-            .then(response => response.json())
-            .then(data => {
-                setUserData(data)
-            })
-            .catch(handleError);
-    })
 
     function handleError(error) {
         console.log(error);
     }
 
-    function checkStatus(response) {
-        if (!response.ok) {
-            response.text().then(txt => { alert(txt); });
-            throw Error("Error in request: " + response.statusText);
-        }
-        return response;
-    }
     function checkStatus(response) {
         if (!response.ok) {
             response.text().then(txt => { alert(txt); });
@@ -338,7 +306,6 @@ const Profile = () => {
                                             wrapClassName="w-[100%]"
                                             name="Frame One"
                                             placeholder={userData.username}
-                                            placeholder={userData.username}
                                             shape="RoundedBorder8"
                                         ></TextField>
                                     </div>
@@ -349,10 +316,7 @@ const Profile = () => {
                                     </Text>
                                     {!edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={userData.phone} disabled />}
                                     {edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={phone} onChange={handlePhoneChange} />}
-                                    {!edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={userData.phone} disabled />}
-                                    {edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={phone} onChange={handlePhoneChange} />}
                                 </div>
-                                <div className="flex flex-col gap-[8px] h-[120px] md:h-[auto] sm:h-[auto] items-start justify-start mt-[24px] sm:w-[100%] w-[580px]">
                                 <div className="flex flex-col gap-[8px] h-[120px] md:h-[auto] sm:h-[auto] items-start justify-start mt-[24px] sm:w-[100%] w-[580px]">
                                     <Text className="text-black_900 text-[14px] font-plusjakartasans">
                                         Email
@@ -362,17 +326,9 @@ const Profile = () => {
                                         wrapClassName="w-[100%]"
                                         name="Frame One"
                                         placeholder={userData.email}
-                                        placeholder={userData.email}
                                         shape="RoundedBorder8"
                                         onChange={(e) => { setEmail(e.target.value) }}
-                                        onChange={(e) => { setEmail(e.target.value) }}
                                         disabled={!edit}
-
-                                    ></TextField>
-                                    {edit && <Text className="text-black_900 text-[14px] font-plusjakartasans">
-                                        * Edit this wouldn't change the login email address. This is only used for contact.
-                                    </Text> }                               
-                                    </div>
 
                                     ></TextField>
                                     {edit && <Text className="text-black_900 text-[14px] font-plusjakartasans">
