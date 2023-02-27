@@ -28,6 +28,7 @@ function AccountMenu({ username, userId}) {
     };
 
     const handleProfile = () => {
+        console.log(userId)
         navigate('/profile', {
             state: {
                 username: username,
