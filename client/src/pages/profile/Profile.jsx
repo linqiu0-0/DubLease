@@ -319,8 +319,8 @@ const Profile = () => {
                                     <Text className="text-black_900 text-[14px] font-plusjakartasans">
                                         Phone Number
                                     </Text>
-                                    {!edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={userData.phone} onChange={handlePhoneChange} disabled />}
-                                    {edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" onChange={handlePhoneChange} />}
+                                    {!edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={userData.phone} disabled />}
+                                    {edit && <MuiTelInput className="sm:w-[100%] w-[580px]" defaultCountry="US" value={phone} onChange={handlePhoneChange} />}
                                 </div>
                                 <div className="flex flex-col gap-[8px] h-[120px] md:h-[auto] sm:h-[auto] items-start justify-start mt-[24px] sm:w-[100%] w-[580px]">
                                     <Text className="text-black_900 text-[14px] font-plusjakartasans">

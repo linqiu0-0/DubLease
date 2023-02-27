@@ -50,6 +50,41 @@ exports.get_user = async function(email) {
     });
 }
 
+exports.check_user_id = async function(userid) {
+    const sql = 'SELECT COUNT(*) as count FROM User WHERE UserID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, userid, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            var count = results[0].count;
+            return resolve(count > 0);
+        });
+    });
+};
+
+exports.get_user_by_id = async function(userid) {
+    const sql = 'SELECT UserName as username, UserEmail as email, Phone as phone FROM User WHERE UserID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, userid, function(error, results, fields) {
+            return error ? reject(error) : resolve(results[0]);
+        });
+    });
+};
+
+exports.update_user = async function(update_statements, values) {
+    const sql = "UPDATE User " + update_statements + " WHERE UserID = ?";
+    console.log(sql);
+    return new Promise((resolve, reject) => {
+        connection.query(sql, values, function(error, results, fields) {
+            console.log(results);
+            // console.log("subleases: \n", subleases);
+            return error ? reject(error) : resolve(results);
+        });
+    });
+}
+
+
 // Params:
 //  sql_conditions: basically what's after the WHERE clause (e.g. "name = ? AND MIN_PRICE < ? AND ...")
 //  condition_values: values corresponding to the specified conditions. Orders must match exactly
@@ -57,15 +92,68 @@ exports.get_user = async function(email) {
 //  list of filtered subleases (could be empty)
 exports.filter_sublease = async function(sql_conditions, condition_values) {
     const sql = 'SELECT * FROM Sublease' + sql_conditions;
-    console.log(sql);
-    console.log(condition_values);
+    // console.log(sql);
+    // console.log(condition_values);
     return new Promise((resolve, reject) => {
         connection.query(sql, condition_values, function(error, results, fields) {
             subleases = [];
             for (let row in results) {
                 subleases.push(JSON.parse(JSON.stringify(results[row])));
             }
-            console.log("subleases: \n", subleases);
+            // console.log("subleases: \n", subleases);
+            return error ? reject(error) : resolve(subleases);
+        });
+    });
+}
+
+
+exports.get_sublease_images = async function(lease_id) {
+    const sql = 'SELECT ImageKey FROM Sublease_Images WHERE LeaseID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, lease_id, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            var image_keys = [];
+            // console.log(results);
+            for (let row in results) {
+                image_keys.push(results[row].ImageKey);
+            }
+            return resolve(image_keys);
+        });
+    });
+}
+
+exports.get_lease_by_id = async function(id) {
+    const sql = 'SELECT * FROM Sublease WHERE PostID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, id, function(error, results, fields) {
+            return error ? reject(error) : resolve(results[0]);
+        });
+    });
+}
+
+exports.check_lease_exists = async function(id) {
+    const sql = 'SELECT COUNT(*) FROM Sublease WHERE PostID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, id, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            var count = results[0].count;
+            return resolve(count > 0);
+        });
+    });
+}
+
+exports.list_sublease_by_user_id = async function(userid) {
+    const sql = 'SELECT * FROM Sublease WHERE UserID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, userid, function(error, results, fields) {
+            subleases = [];
+            for (let row in results) {
+                subleases.push(JSON.parse(JSON.stringify(results[row])));
+            }
             return error ? reject(error) : resolve(subleases);
         });
     });
