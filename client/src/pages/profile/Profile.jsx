@@ -56,12 +56,6 @@ const Profile = () => {
                     console.log(data.phone);
                     console.log(data.email);
                     console.log(data.email);
-                    navigate('/home', {
-                        state: {
-                            username: data.username,
-                            userId: data.userid
-                        }
-                    });
                 })
                 .catch(handleError);
         }
@@ -164,7 +158,8 @@ const Profile = () => {
                                         onClick={() =>
                                             navigate('/home', {
                                                 state: {
-                                                    username: userInfo.state.username
+                                                    username: userInfo.state.username,
+                                                    userId: userInfo.state.userId
                                                 }
                                             })}
                                         alt="arrowleft"
