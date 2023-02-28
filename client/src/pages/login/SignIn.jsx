@@ -68,7 +68,6 @@ const SignIn = () => {
   const handleSignUpEvent = () => {
     if(formRef.current.reportValidity() ) {
       checkLoginStatus()
-
     }
 };
 
