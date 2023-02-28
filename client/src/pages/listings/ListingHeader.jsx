@@ -11,10 +11,9 @@ import { useNavigate } from "react-router-dom";
 
 
 const ListingHeader = () => {
+    const navigate = useNavigate();
     const username = window.sessionStorage.getItem("username")
     const userId = window.sessionStorage.getItem("userId")
-
-    const navigate = useNavigate();
 
     return (
         <div className="h-[130px] md:h-[96px] sm:h-[96px] relative w-[100%]">
@@ -34,6 +33,7 @@ const ListingHeader = () => {
                                     </Button>
                                     <Text
                                         className="font-bold mb-[2px] mt-[8px] text-indigo_900 text-left"
+                                        as="body2"
                                         variant="body2"
                                     >
                                         My Listings
@@ -41,7 +41,7 @@ const ListingHeader = () => {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <ul className="flex flex-row gap-[10px] sm:hidden items-center justify-right md:ml-[0] ml-[70%] common-row-list common-row-list">
-                                        <li key="itm1" className="w-[40px] my-[4px]">
+                                        <li className="w-[40px] my-[4px]">
                                             <Button
                                                 className="flex h-[40px] items-center justify-center min-w-[] w-[40px]"
                                                 shape="icbRoundedBorder8"
@@ -55,12 +55,12 @@ const ListingHeader = () => {
                                                 />
                                             </Button>
                                         </li>
-                                        <li key="itm2" className="sm:w-[100%] sm:my-[10px] w-[1%] my-[4px]">
+                                        <li className="sm:w-[100%] sm:my-[10px] w-[1%] my-[4px]">
                                         </li>
-                                        <li key="itm3" className="sm:w-[100%] sm:my-[10px] w-[1%] my-[4px]">
+                                        <li className="sm:w-[100%] sm:my-[10px] w-[1%] my-[4px]">
                                             <Line className="bg-black_900_63 h-[40px] w-[1px]" />
                                         </li>
-                                        <li key="itm4" className="w-[40px] my-[4px]">
+                                        <li className="w-[40px] my-[4px]">
                                             <AccountMenu username={username} userId={userId} />
                                         </li>
                                     </ul>

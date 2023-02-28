@@ -4,11 +4,11 @@ import { Text } from "../../components/Text";
 import { Line } from "../../components/Line";
 // import { Img } from "../../components/Img";
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
-import { TextField, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { TextField, Button, Box } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import Grid from "@mui/material/Unstable_Grid2";
 import { ProfileHeader } from "./ProfileHeader";
+import FormControl, { useFormControl } from '@mui/material/FormControl';
 
 const Profile = () => {
     const [userData, setUserData] = React.useState('')
@@ -18,8 +18,6 @@ const Profile = () => {
     const [email, setEmail] = React.useState('')
 
     const userId = window.sessionStorage.getItem("userId")
-
-
 
 
     const handlePhoneChange = (newValue) => {
@@ -185,7 +183,7 @@ const Profile = () => {
                             </div>
                             <Line className="bg-deep_purple_50 h-[1px] w-[100%]" />
                             <div className="flex flex-col items-center justify-start  ml-[24px] mr-[24px] ">
-
+                            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                                 <div className="flex sm:flex-col flex-row gap-[24px] items-start justify-between  sm:w-[100%] w-[580px]">
                                     <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[270px]">
                                         <Text
@@ -245,6 +243,7 @@ const Profile = () => {
                                         className="font-medium p-[0] text-[16px] placeholder:text-black_900 text-black_900 text-left w-[100%]"
                                         wrapClassName="w-[100%]"
                                         name="Frame One"
+                                        type="email"
                                         placeholder={userData.email}
                                         shape="RoundedBorder8"
                                         onChange={(e) => { setEmail(e.target.value) }}
@@ -272,11 +271,12 @@ const Profile = () => {
                                         size="3xl"
                                         variant="contained"
                                         color="secondary"
-                                        onClick={handleSubmit}
+                                        type="submit"
                                     >
                                         Save changes
                                     </Button>
                                 </div>}
+                                </Box>
                             </div>
                         </div>
                     </div>

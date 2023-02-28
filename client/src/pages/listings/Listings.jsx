@@ -93,7 +93,7 @@ const Listings = () => {
                 <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                   {leaseData.map((singleLease) => (
                     <Grid item xs={4}>
-                      <LeaseCardVertical leaseCardData={singleLease} />
+                      <LeaseCardVertical key={singleLease.post_id} leaseCardData={singleLease} />
                     </Grid>
                   ))}
                 </Grid> :
