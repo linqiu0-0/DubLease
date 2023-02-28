@@ -5,6 +5,7 @@ const cors = require('cors');
 const search = require('./sublease/search');
 const account = require('./user/account');
 const lease = require('./sublease/lease_info');
+const database = require('./data/database');
 const imageHandler = require('./data/file_storage');
 
 const app = express();
@@ -190,3 +191,5 @@ var server = app.listen(8000, function () {
    
    console.log("App listening at port %s", port);
 });
+
+database.connect_to_db();
