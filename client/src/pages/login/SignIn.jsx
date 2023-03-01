@@ -40,9 +40,11 @@ const SignIn = () => {
     .then(data => {
       // log user id
       console.log(data.username);
+      console.log(data.userid);
       navigate('/home', {
         state: {
-          username: data.username
+          username: data.username,
+          userId: data.userid
         }
       });
     })
