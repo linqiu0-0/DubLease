@@ -48,11 +48,16 @@ const SignUp = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                navigate('/home', {
-                    state: {
-                        username: data.username
-                    }
-                });
+                window.sessionStorage.setItem("username", data.username);
+                window.sessionStorage.setItem("userId", data.userid);          
+                auth.login().then(() => {
+                    navigate('/home', {
+                      state: {
+                        username: data.username,
+                        userId: data.userid
+                      }
+                    });
+                  });
             })
             .catch(handleError);
     }
