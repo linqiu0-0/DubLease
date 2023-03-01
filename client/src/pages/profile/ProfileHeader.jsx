@@ -15,7 +15,6 @@ const ProfileHeader = () => {
     const username = window.sessionStorage.getItem("username")
     const userId = window.sessionStorage.getItem("userId")
 
-
     return (
         <div className="h-[180px] md:h-[96px] sm:h-[96px] relative w-[100%]">
             <header className="flex items-center justify-center mb-[-1.5px] mx-[auto] w-[100%] z-[1]">

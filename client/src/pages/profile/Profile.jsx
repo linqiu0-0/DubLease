@@ -50,9 +50,14 @@ const Profile = () => {
                     "phone": phone
                 })
             };
-
+            
+            window.sessionStorage.setItem("username", name)
             fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
+                .then(response => response.json())
+                .then((data) => {               
+                    console.log(data)
+                })
                 .catch(handleError);
         }
     }
