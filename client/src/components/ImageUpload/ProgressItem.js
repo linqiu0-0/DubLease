@@ -1,12 +1,13 @@
 import { CheckCircleOutline } from '@mui/icons-material';
-import { Box, ImageListItem } from '@mui/material';
+import {Box, ImageListItem, ListItem, ListItemText, Paper} from '@mui/material';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import CircularProgressWithLabel from './CircularProgressWithLabel';
+import {styled} from "@mui/material/styles";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const ProgressItem = ({ file }) => {
     const [progress, setProgress] = useState(50);
-    const [imageURL, setImageURL] = useState(null);
+    const [imageName, setImageName] = useState(null);
 
     useEffect(() => {
         console.log(file);
@@ -19,38 +20,18 @@ const ProgressItem = ({ file }) => {
         reader.onerror = error => {
             console.log("Error: ", error);
         };
-        setImageURL(URL.createObjectURL(file));
+        // setImageURL(URL.createObjectURL(file));
+        setImageName(file.name);
     }, [file]);
 
-
     return (
-        imageURL && (
-            <ImageListItem cols={1} rows={1}>
-                <img src={imageURL} alt="images gallery" loading="lazy" />
-                <Box sx={backDrop}>
-                    {progress < 100 ? (
-                        <CircularProgressWithLabel value={progress} />
-                    ) : (
-                        <CheckCircleOutline
-                            sx={{ width: 60, height: 60, color: 'lightgreen' }}
-                        />
-                    )}
-                </Box>
-            </ImageListItem>
+        imageName && (
+            <Box>
+                {imageName}
+                <CheckCircleIcon color="success"/>
+            </Box>
         )
     );
 };
 
 export default ProgressItem;
-
-const backDrop = {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: 'rgba(0,0,0,.5)',
-};

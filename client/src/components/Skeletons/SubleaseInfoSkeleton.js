@@ -4,10 +4,11 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate} from "react-router-dom";
 import Map from "../../components/Map";
 import Grid from "@mui/material/Unstable_Grid2";
+import Avatar from "@mui/material/Avatar";
 
 export default function SubleaseInfoSkeleton() {
     const navigate = useNavigate();
-    const rentalFeatures = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const rentalFeatures = [...Array(11).keys()];
 
     return (
         <Container fixed>
@@ -15,20 +16,23 @@ export default function SubleaseInfoSkeleton() {
                 sx={{mt: 2, p: 0, px: 1}}
                 size="medium"
                 color="secondary"
-                variant="contained" onClick={
-                () => {
+                variant="contained"
+                onClick={() => {
                     navigate(-1);
-                }
-            }>
+                }}
+            >
                 <ArrowBackIcon />
                 <Typography variant="button" component="span" p={1}>
                     Back Home
                 </Typography>
             </Button>
 
-            <Skeleton variant="h4" sx={{p: 1}}/>
-            <Skeleton variant="subtitle1" sx={{p: 1}}/>
-
+            <Typography variant="h2" component="h1">
+                <Skeleton width={"30%"}/>
+            </Typography>
+            <Typography variant="h5" component="div">
+                <Skeleton width={"20%"}/>
+            </Typography>
 
             <Box marginTop={2} sx={{height: 550 }}>
                 <Skeleton variant="rectangular" height={550}/>
@@ -45,7 +49,7 @@ export default function SubleaseInfoSkeleton() {
                 {
                     rentalFeatures.map((holder, index) => (
                         <Grid key={index} item xs={6}>
-                            <Skeleton variant="body" height={30}/>
+                            <Skeleton variant="rectangular" height={30}/>
                             {/*<Box sx={{display: 'flex', justifyContent: 'space-between'}}>*/}
                             {/*    <Typography align="left" variant="body" component="div">*/}
                             {/*        {features.label}*/}
@@ -66,16 +70,18 @@ export default function SubleaseInfoSkeleton() {
                 </Typography>
 
                 <Box sx={{ display: "flex", px:2 , alignItems: 'center'}}>
-                    <Skeleton variant="circular" width={40} height={40}/>
+                    <Skeleton variant="circular">
+                        <Avatar/>
+                    </Skeleton>
                     <Grid container justifyContent="space-between" sx={{flexGrow: 1}}>
                         <Grid xs={3}>
-                            <Skeleton variant="body" sx={{p: 2}}/>
+                            <Skeleton variant="rounded" sx={{m: 2}}/>
                         </Grid>
                         <Grid xs={3}>
-                            <Skeleton variant="body" sx={{p: 2}}/>
+                            <Skeleton variant="rounded" sx={{m: 2}}/>
                         </Grid>
                         <Grid xs={3}>
-                            <Skeleton variant="body" sx={{p: 2, textAlign: 'right'}}/>
+                            <Skeleton variant="rounded" sx={{m: 2, textAlign: 'right'}}/>
                         </Grid>
                     </Grid>
                 </Box>

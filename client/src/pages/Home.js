@@ -77,15 +77,12 @@ const Home = () => {
     const [alert, setAlert] = React.useState("");
     const userInfo = useLocation();
 
-
-
     const chooseFilterCallback = (para) => (filterValue) => {
         const newFilters = [...filters];
         const filter = filters.find(
             f => f.filterQuery === para
         )
         filter.value = filterValue;
-        console.log(newFilters);
         setFilters(newFilters);
     }
 
@@ -99,6 +96,7 @@ const Home = () => {
         }
         // reset Alert
         setAlert("");
+
         let queryUrl = "?";
         filters.map((filter) => {
             if (filter.value !== "" && (filter.value !== "0" || filter.filterQuery === "name")) {
@@ -106,7 +104,6 @@ const Home = () => {
             }
         });
         queryUrl = queryUrl.slice(0, -1);
-        console.log(process.env.REACT_APP_SERVER_URL + "home" + queryUrl);
 
         fetch(process.env.REACT_APP_SERVER_URL + "home" + queryUrl,
         {headers})
@@ -124,6 +121,7 @@ const Home = () => {
             })
             .catch(error => {
                 console.error('There was an error!', error);
+                setAlert({severity: "error", content: "There is an internal error."});
             });
     }
 
@@ -143,19 +141,23 @@ const Home = () => {
                     </Grid>
                     {/*sublease search*/}
                     <Grid xs={6}>
-                        <Typography variant="h5" component="h1" p={1}>
+                        <Typography variant="h5" component="h1" p={1} pb={0}>
                             Search Properties
                         </Typography>
                         <Typography variant="subtitle1" component="div" p={1}>
                             {Object.keys(leaseData).length} Results found
                         </Typography>
+
                         <Box sx={{display: "flex"}}>
                             <SearchBar
                                 chooseFilterCallback={chooseFilterCallback("name")}
                                 searchWithFilters={searchWithFilters}/>
                             <Button variant="contained" color="primary" onClick={searchWithFilters}>Apply Filter</Button>
                         </Box>
+
+                        {/* Display alert message if there is one. */}
                         {(alert === "") ? <></> : <Alert severity={alert.severity}>{alert.content}</Alert>}
+
                         <MonthPicker
                             prefix={monthPicker[0].prefix}
                             chooseFilterCallback={chooseFilterCallback(monthPicker[0].queryPara)}/>
@@ -169,7 +171,7 @@ const Home = () => {
                             ))}
                         </React.Fragment>
 
-                        <Stack spacing={2} mt={1}
+                        <Stack spacing={2} mt={1} px={1}
                         sx={{
                             height: "800px",
                             overflow: "auto"
