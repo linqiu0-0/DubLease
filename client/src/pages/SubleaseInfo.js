@@ -7,9 +7,10 @@ import Map from "../components/Map";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImagesCarousel from "../components/ImagesCarousel";
+import SubleaseInfoSkeleton from "../components/Skeletons/SubleaseInfoSkeleton";
 
 const SubleaseInfo = () => {
-    const [subleaseInfoData, setSubleaseInfoData] = React.useState([]);
+    const [subleaseInfoData, setSubleaseInfoData] = React.useState("");
     const [images, setImages] = React.useState([]);
     const [rentalFeatures, setRentalFeatures] = React.useState([]);
 
@@ -70,6 +71,7 @@ const SubleaseInfo = () => {
                 data.user_phone = (data.user_phone === null || data.user_phone === "") ? "N/A": data.user_phone;
                 setSubleaseInfoData(data);
                 setRentalFeatures(data.rental_features);
+                console.log(subleaseInfoData);
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -83,6 +85,7 @@ const SubleaseInfo = () => {
     return (
         <React.Fragment>
             <MainAppBar username={subleaseInfoMeta.state.username}/>
+            {subleaseInfoData === "" ? <SubleaseInfoSkeleton/> :
             <Container fixed>
 
                 <Button
@@ -172,7 +175,7 @@ const SubleaseInfo = () => {
                 </Box>
                 <Box height={100}>
                 </Box>
-            </Container>
+            </Container>}
         </React.Fragment>
     );
 };

@@ -5,7 +5,7 @@ import LeaseCard from "../components/LeaseCard";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import SearchBar from "../components/SearchBar";
-import {createTheme, Stack, ThemeProvider} from "@mui/material";
+import {Alert, createTheme, Stack, ThemeProvider} from "@mui/material";
 import DropDownSelect from "../components/DropDownSelect";
 import Map from "../components/Map";
 import BasicFilters from "../assets/static/filter.json";
@@ -74,6 +74,7 @@ const theme = createTheme({
 const Home = () => {
     const [filters, setFilters] = React.useState(initialFilters);
     const [leaseData, setLeaseData] = React.useState([]);
+    const [alert, setAlert] = React.useState("");
     const userInfo = useLocation();
 
     const chooseFilterCallback = (para) => (filterValue) => {
@@ -82,11 +83,20 @@ const Home = () => {
             f => f.filterQuery === para
         )
         filter.value = filterValue;
+        console.log(newFilters);
         setFilters(newFilters);
-        // console.log(filters);
     }
 
     const searchWithFilters = (event) => {
+        if (filters[1].value !== "" && filters[2].value !== "" && filters[1].value.localeCompare(filters[2].value) > 0) {
+            setAlert({severity: "warning", content: "Start Date must be earlier than End Date"});
+            return;
+        } else if (filters[3].value !== "" && filters[4].value !== "" && filters[3].value.localeCompare(filters[4].value) > 0) {
+            setAlert({severity: "warning", content: "Max Price must be bigger than Min Price"});
+            return;
+        }
+        // reset Alert
+        setAlert("");
         let queryUrl = "?";
         filters.map((filter) => {
             if (filter.value !== "" && (filter.value !== "0" || filter.filterQuery === "name")) {
@@ -115,7 +125,6 @@ const Home = () => {
             });
     }
 
-
     useEffect(() => {
         searchWithFilters();
     }, []);
@@ -126,9 +135,11 @@ const Home = () => {
             <MainAppBar username={userInfo.state.username}/>
             <Box marginX={4}>
                 <Grid container spacing={3} mt={2}>
+                    {/*map view*/}
                     <Grid xs={6}>
                         <Map leaseData={leaseData}/>
                     </Grid>
+                    {/*sublease search*/}
                     <Grid xs={6}>
                         <Typography variant="h5" component="h1" p={1}>
                             Search Properties
@@ -142,6 +153,7 @@ const Home = () => {
                                 searchWithFilters={searchWithFilters}/>
                             <Button variant="contained" color="primary" onClick={searchWithFilters}>Apply Filter</Button>
                         </Box>
+                        {(alert === "") ? <></> : <Alert severity={alert.severity}>{alert.content}</Alert>}
                         <MonthPicker
                             prefix={monthPicker[0].prefix}
                             chooseFilterCallback={chooseFilterCallback(monthPicker[0].queryPara)}/>
@@ -154,6 +166,7 @@ const Home = () => {
                                                 chooseFilterCallback={chooseFilterCallback(filter.queryPara)}/>
                             ))}
                         </React.Fragment>
+
                         <Stack spacing={2} mt={1}
                         sx={{
                             height: "800px",
