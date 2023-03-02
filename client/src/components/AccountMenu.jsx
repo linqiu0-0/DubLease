@@ -19,7 +19,7 @@ function AccountMenu() {
     const { logout } = useAuth();
     const username = window.sessionStorage.getItem("username")
 
- 
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
