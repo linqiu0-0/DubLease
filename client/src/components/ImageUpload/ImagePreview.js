@@ -24,17 +24,21 @@ const ImagePreview = ({ file, onClick, getFileData}) => {
     };
 
     const handleFileUpload = async (e) => {
-        const base64 = await convertToBase64(file);
-        console.log(base64.indexOf("data:image\/\w+;base64,"));
-        let fileData = {
-            name: file.name,
-            encoding: "base64",
-            type: "image/png",
-            data: base64,
-        };
-        console.log(fileData);
-        getFileData(fileData);
-        setImageURL(URL.createObjectURL(file));
+        try {
+            const base64 = await convertToBase64(file);
+            let type = base64.slice(5, base64.indexOf(";base64,"));
+            let fileData = {
+                name: file.name,
+                encoding: "base64",
+                type: type,
+                data: base64,
+            };
+            // console.log(fileData);
+            getFileData(fileData);
+            setImageURL(URL.createObjectURL(file));
+        } catch (error) {
+            console.log(error);
+        }
     };
 
 
@@ -52,7 +56,7 @@ const ImagePreview = ({ file, onClick, getFileData}) => {
                         justifyContent: "center",
                         position: "relative"
                 }}>
-                    <IconButton aria-label="delete" size="small" sx={{position: "absolute", top: 0, right: 0}} onClick={onClick}>
+                    <IconButton aria-label="delete" size="small" sx={{position: "absolute", top: 0, right: 0, color: "secondary"}} onClick={onClick}>
                         <CancelIcon fontSize="inherit"/>
                     </IconButton>
                     <img src={imageURL} alt="images gallery" loading="lazy" className={"upload_img"} />
