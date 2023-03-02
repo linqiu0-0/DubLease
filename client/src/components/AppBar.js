@@ -53,6 +53,10 @@ function MainAppBar({ username, userId }) {
         setAnchorElUser(null);
     };
 
+
+
+
+
     const customTheme = createTheme({
         palette: {
             secondary: {
