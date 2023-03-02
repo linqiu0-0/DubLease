@@ -37,7 +37,7 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
         if (period_match(sublease.SubleasePeriodStart, sublease.SubleasePeriodEnd, start_date, end_date)) {
             const image_keys = await db.get_sublease_images(sublease.PostID);
             if (sublease.RoomType.toLowerCase() == "studio") {
-                sublease.RoomType = "1B1B";
+                sublease.RoomType = "0B1B";
             }
             result.push(format_search_result(sublease, image_keys));
         }
@@ -62,6 +62,9 @@ exports.list_sublease = async function(userid) {
     for (let id in subleases) {
         const sublease = subleases[id];
         const image_keys = await db.get_sublease_images(sublease.PostID);
+        if (sublease.RoomType.toLowerCase() == "studio") {
+            sublease.RoomType = "0B1B";
+        }
         result.push(format_search_result(sublease, image_keys));
     }
 
