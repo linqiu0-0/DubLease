@@ -1,16 +1,21 @@
-import { useState } from 'react';
-import { Add } from '@mui/icons-material';
+import React, { useState } from 'react';
 import {Button, Input} from '@mui/material';
-import { useRef } from 'react';
 import Box from "@mui/material/Box";
-import ProgressList from "./ProgressList";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import Grid from "@mui/material/Unstable_Grid2";
+import ImagePreview from "./ImagePreview";
 
 const Upload = () => {
     const [files, setFiles] = useState([]);
 
     const handleChange = (e) => {
-        setFiles([...e.target.files]);
+        let newFiles = [...e.target.files];
+        setFiles([...files, ...newFiles]);
+    };
+    const handleClick = (index) => (e) => {
+        setFiles(oldValues => {
+            return oldValues.filter((_, i) => i !== index)
+        })
     };
 
     return (
@@ -20,7 +25,11 @@ const Upload = () => {
                 <input hidden accept="image/*" multiple type="file" onChange={handleChange} />
             </Button>
 
-            <ProgressList files={files} />
+            <Grid container spacing={2} sx={{width: 400}}>
+                {files.map((file, index) => (
+                    <ImagePreview file={file} key={index} onClick={handleClick(index)}/>
+                ))}
+            </Grid>
         </Box>
     );
 };

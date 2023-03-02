@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Box, Button, Container, Divider, Paper, Typography} from '@mui/material';
+import {Box, Button, Container, Typography} from '@mui/material';
 import MainAppBar from "../components/AppBar";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useLocation, useNavigate} from "react-router-dom";
@@ -8,12 +8,14 @@ import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImagesCarousel from "../components/ImagesCarousel";
 import SubleaseInfoSkeleton from "../components/Skeletons/SubleaseInfoSkeleton";
+import GeneralError from "../components/GeneralError";
 
 const SubleaseInfo = () => {
     const [subleaseInfoData, setSubleaseInfoData] = React.useState("");
     const [images, setImages] = React.useState([]);
     const [rentalFeatures, setRentalFeatures] = React.useState([]);
     const [mapData, setMapData] = React.useState([]);
+    const [open, setOpen] = React.useState(false);
 
     const navigate = useNavigate();
     const subleaseInfoMeta = useLocation();
@@ -22,20 +24,19 @@ const SubleaseInfo = () => {
         "Access-Control-Allow-Origin": "*"};
 
     const fetchImage = async (imageKey) => {
+        let query = process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey;
         try {
-            let response = await fetch(process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey,
-                {headers})
-            let data = await response.json();
+            let response = await fetch(query, {headers});
             if (!response.ok) {
                 // get error message from body or default to response statusText
                 const error = (data && data.message) || response.statusText;
                 return Promise.reject(error);
             }
+            let data = await response.json();
             let imageBytes = data.Body.data;
             imageBytes = _arrayBufferToBase64(imageBytes);
             let imageUrl = "data:image/png;base64," + imageBytes;
-            images.push({ src: imageUrl });
-            console.log(images);
+            images.push({ src: imageUrl }); // have to use push since multiple images may change state at the same time
         } catch (e) {
             console.log(e);
         }
@@ -52,40 +53,47 @@ const SubleaseInfo = () => {
     }
 
     const fetchSublaseInfo = async (event) => {
-        let url = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + subleaseInfoMeta.state.post_id;
-        console.log(url);
+        let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + subleaseInfoMeta.state.post_id;
+        console.log(query);
+        try {
+            let response = await fetch(query, {headers});
+            if (!response.ok) {
+                // get error message from body or default to response statusText
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+            }
 
-        fetch(url,
-            {headers})
-            .then(async response => {
-                const data = await response.json();
-                console.log(data);
-                // check for error response
-                if (!response.ok) {
-                    // get error message from body or default to response statusText
-                    const error = (data && data.message) || response.statusText;
-                    return Promise.reject(error);
-                }
-                for (let i = 0; i < data.image_keys.length; i++) {
-                    await fetchImage(data.image_keys[i]);
-                }
-                data.user_phone = (data.user_phone === null || data.user_phone === "") ? "N/A": data.user_phone;
-                setSubleaseInfoData(data);
-                setRentalFeatures(data.rental_features);
+            const data = await response.json();
+            console.log(data);
 
-                const category = data.rental_features.find(
-                    f => f.label === ("Category")
-                )
-                setMapData([{latitude: data.latitude, longitude: data.longitude, category: category.text}])
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+            for (let i = 0; i < data.image_keys.length; i++) {
+                await fetchImage(data.image_keys[i]);
+            }
+            data.user_phone = (data.user_phone === null || data.user_phone === "") ? "N/A": data.user_phone;
+            setSubleaseInfoData(data);
+            setRentalFeatures(data.rental_features);
+
+            const category = data.rental_features.find(
+                f => f.label === ("Category")
+            )
+            setMapData([{latitude: data.latitude, longitude: data.longitude, category: category.text}])
+        } catch (error) {
+            console.error('There was an error!', error);
+            setOpen(true);
+        }
     }
 
     useEffect(() => {
         fetchSublaseInfo();
     }, []);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     return (
         <React.Fragment>
@@ -189,6 +197,7 @@ const SubleaseInfo = () => {
                     </Box>
                 </Container>
             }
+            <GeneralError open={open} onClose={handleClose}/>
         </React.Fragment>
     );
 };

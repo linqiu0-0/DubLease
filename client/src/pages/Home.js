@@ -97,15 +97,15 @@ const Home = () => {
         // reset Alert
         setAlert("");
 
-        let queryUrl = "?";
+        let query = "?";
         filters.map((filter) => {
             if (filter.value !== "" && (filter.value !== "0" || filter.filterQuery === "name")) {
-                queryUrl += filter.filterQuery + "=" + filter.value + "&";
+                query += filter.filterQuery + "=" + filter.value + "&";
             }
         });
-        queryUrl = queryUrl.slice(0, -1);
+        query = process.env.REACT_APP_SERVER_URL + "home" + query.slice(0, -1);
 
-        fetch(process.env.REACT_APP_SERVER_URL + "home" + queryUrl,
+        fetch(query,
         {headers})
             .then(async response => {
                 const data = await response.json();
