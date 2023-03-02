@@ -100,102 +100,102 @@ const SubleaseInfo = () => {
             <MainAppBar username={window.sessionStorage.getItem("username")}/>
             {
                 subleaseInfoData === "" ?
-                <SubleaseInfoSkeleton/>
-                :
-                <Container fixed>
+                    <SubleaseInfoSkeleton/>
+                    :
+                    <Container fixed>
 
-                    <Button
-                        sx={{mt: 2, p: 0, px: 1}}
-                        size="medium"
-                        color="secondary"
-                        variant="contained"
-                        onClick={() => {
-                            navigate(-1);
-                        }}
-                    >
-                        <ArrowBackIcon />
-                        <Typography variant="button" component="span" p={1}>
-                            Back Home
+                        <Button
+                            sx={{mt: 2, p: 0, px: 1}}
+                            size="medium"
+                            color="secondary"
+                            variant="contained"
+                            onClick={() => {
+                                navigate(-1);
+                            }}
+                        >
+                            <ArrowBackIcon />
+                            <Typography variant="button" component="span" p={1}>
+                                Back Home
+                            </Typography>
+                        </Button>
+
+                        <Typography variant="h4" component="h1" pb={1} pt={2}>
+                            {subleaseInfoData.name}
                         </Typography>
-                    </Button>
-
-                    <Typography variant="h4" component="h1" pb={1} pt={2}>
-                        {subleaseInfoData.name}
-                    </Typography>
-                    <Typography variant="subtitle1" component="div" py={1}>
-                        {subleaseInfoData.address}
-                    </Typography>
-                    <Box sx={{height: 550 }}>
-                        <ImagesCarousel images={images}/>
-                    </Box>
-                    <Typography variant="h6" component="div" p={1}>
-                        Description
-                    </Typography>
-                    <Typography variant="body" component="div" p={1}>
-                        {subleaseInfoData.description}
-                    </Typography>
-
-                    {/* Rental Features */}
-                    <Typography variant="h6" component="div" p={1}>
-                        Rental Features
-                    </Typography>
-                    <Grid container rowSpacing={2} columnSpacing={3} mx={1}>
-                        {
-                            rentalFeatures.map((features) => (
-                                <Grid key={features.label} item xs={6}>
-                                    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-                                        <Typography align="left" variant="body" component="div">
-                                            {features.label}
-                                        </Typography>
-                                        <Typography align="right" variant="body" component="div" >
-                                            {features.text}
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                            ))
-                        }
-                    </Grid>
-
-                    {/* leaser info / contact */}
-                    <Box sx={{ bgcolor: '#cfe8fc', mt: 2, borderRadius: '16px'}}>
-                        <Typography variant="subtitle1" component="div" p={2} pb={1}>
-                            Leaser Info / Contact
+                        <Typography variant="subtitle1" component="div" py={1}>
+                            {subleaseInfoData.address}
                         </Typography>
-
-                        <Box sx={{ display: "flex", px:2 , alignItems: 'center'}}>
-                            <Avatar alt={subleaseInfoData.username} src="/static/images/avatar/2.jpg" />
-                            <Grid container justifyContent="space-between" sx={{flexGrow: 1}}>
-                                <Grid xs={3}>
-                                    <Typography variant="body" component="div" p={2}>
-                                        {subleaseInfoData.username}
-                                    </Typography>
-                                </Grid>
-                                <Grid xs={3}>
-                                    <Typography variant="body" component="div" p={2}>
-                                        Email: {subleaseInfoData.user_email}
-                                    </Typography>
-                                </Grid>
-                                <Grid xs={3}>
-                                    <Typography variant="body" component="div" p={2} sx={{ textAlign: 'right' }}>
-                                        Phone: {subleaseInfoData.user_phone}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                        <Box sx={{height: 550 }}>
+                            <ImagesCarousel images={images}/>
                         </Box>
-                    </Box>
-
-                    {/* Map View */}
-                    <Box height={350}>
                         <Typography variant="h6" component="div" p={1}>
-                            Map
+                            Description
                         </Typography>
-                        <Map leaseData={mapData}/>
-                    </Box>
+                        <Typography variant="body" component="div" p={1}>
+                            {subleaseInfoData.description}
+                        </Typography>
 
-                    {/* Bottom Margin*/}
-                    <Box height={100}>
-                    </Box>
-                </Container>
+                        {/* Rental Features */}
+                        <Typography variant="h6" component="div" p={1}>
+                            Rental Features
+                        </Typography>
+                        <Grid container rowSpacing={2} columnSpacing={3} mx={1}>
+                            {
+                                rentalFeatures.map((features) => (
+                                    <Grid key={features.label} item xs={6}>
+                                        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                            <Typography align="left" variant="body" component="div">
+                                                {features.label}
+                                            </Typography>
+                                            <Typography align="right" variant="body" component="div" >
+                                                {features.text}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                ))
+                            }
+                        </Grid>
+
+                        {/* leaser info / contact */}
+                        <Box sx={{ bgcolor: '#cfe8fc', mt: 2, borderRadius: '16px'}}>
+                            <Typography variant="subtitle1" component="div" p={2} pb={1}>
+                                Leaser Info / Contact
+                            </Typography>
+
+                            <Box sx={{ display: "flex", px:2 , alignItems: 'center'}}>
+                                <Avatar alt={subleaseInfoData.username} src="/static/images/avatar/2.jpg" />
+                                <Grid container justifyContent="space-between" sx={{flexGrow: 1}}>
+                                    <Grid xs={3}>
+                                        <Typography variant="body" component="div" p={2}>
+                                            {subleaseInfoData.username}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid xs={3}>
+                                        <Typography variant="body" component="div" p={2}>
+                                            Email: {subleaseInfoData.user_email}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid xs={3}>
+                                        <Typography variant="body" component="div" p={2} sx={{ textAlign: 'right' }}>
+                                            Phone: {subleaseInfoData.user_phone}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </Box>
+
+                        {/* Map View */}
+                        <Box height={350}>
+                            <Typography variant="h6" component="div" p={1}>
+                                Map
+                            </Typography>
+                            <Map leaseData={mapData}/>
+                        </Box>
+
+                        {/* Bottom Margin*/}
+                        <Box height={100}>
+                        </Box>
+                    </Container>
             }
             <GeneralError open={open} onClose={handleClose}/>
         </React.Fragment>
@@ -203,4 +203,3 @@ const SubleaseInfo = () => {
 };
 
 export default SubleaseInfo;
-
