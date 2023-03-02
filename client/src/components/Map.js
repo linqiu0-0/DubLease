@@ -6,10 +6,14 @@ const center = { lat: 47.659662, lng: -122.31 };
 let propertyData;
 
 function Map({leaseData}) {
-    console.log("use map");
     propertyData = leaseData;
+    console.log(leaseData);
 
     useEffect(() => {
+        if (propertyData.length === 1 && !propertyData[0].category) {
+            console.log("no data for map");
+            return;
+        }
         initMap();
     }, [leaseData]);
 
