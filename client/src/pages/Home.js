@@ -11,7 +11,6 @@ import Map from "../components/Map";
 import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
-import {useLocation} from "react-router-dom";
 
 const monthPicker = [
     {
@@ -77,10 +76,6 @@ const Home = () => {
     const [alert, setAlert] = React.useState("");
     const username = window.sessionStorage.getItem("username")
     const userId = window.sessionStorage.getItem("userId")
-    // const userInfo = useLocation();
-    //
-    // console.log("userInfo")
-    // console.log( userInfo)
 
     const chooseFilterCallback = (para) => (filterValue) => {
         const newFilters = [...filters];

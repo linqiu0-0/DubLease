@@ -7,6 +7,7 @@ import { Profile } from "./pages/profile/Profile";
 import { Listings } from "./pages/listings/Listings";
 import SubleaseInfo from "./pages/SubleaseInfo";
 import useAuth from "./hooks/useAuth";
+import Upload from "./components/ImageUpload/Upload";
 
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const ProjectRoutes = () => {
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/upload" element={<Upload />} />
                 <Route path="/home" element={
                     <RequireAuth>
                         <Home />

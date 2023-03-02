@@ -7,27 +7,39 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Unstable_Grid2";
 
-const ImagePreview = ({ file, onClick}) => {
+const ImagePreview = ({ file, onClick, getFileData}) => {
     const [imageURL, setImageURL] = useState(null);
 
-    useEffect(() => {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        let result = null;
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
-        reader.onload = () => {
-            //console.log(reader.result); //base64encoded string
-            result = reader.result;
-            console.log({
-                imgName: file.name,
-                body: result,
-                format: "base64"
-            })
+    const handleFileUpload = async (e) => {
+        const base64 = await convertToBase64(file);
+        console.log(base64.indexOf("data:image\/\w+;base64,"));
+        let fileData = {
+            name: file.name,
+            encoding: "base64",
+            type: "image/png",
+            data: base64,
         };
-        reader.onerror = error => {
-            console.log("Error: ", error);
-        };
+        console.log(fileData);
+        getFileData(fileData);
         setImageURL(URL.createObjectURL(file));
+    };
+
+
+    useEffect(() => {
+        handleFileUpload();
     }, [file]);
 
     return (
