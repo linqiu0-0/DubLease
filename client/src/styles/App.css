@@ -1,9 +1,17 @@
 .img {
   width: 400px;
   height: 200px;
+  object-fit: cover;
 }
 
 .sublease_info_img {
   width: 800px;
   height: 550px;
+}
+
+.upload_img {
+  max-height: 90px;
+  max-width: 120px;
+  width: auto;
+  height: auto;
 }

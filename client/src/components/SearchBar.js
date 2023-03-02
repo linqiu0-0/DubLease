@@ -52,7 +52,6 @@ function SearchBar({chooseFilterCallback, searchWithFilters}) {
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            // console.log(searchWithFilters);
             searchWithFilters();
         }
     }

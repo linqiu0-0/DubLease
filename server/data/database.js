@@ -64,7 +64,7 @@ exports._delete_test_user = async function() {
             return error ? reject(error) : resolve(results.affectedRows);
         });
     });
-}
+};
 
 // private 
 exports._delete_test_user = async function() {
