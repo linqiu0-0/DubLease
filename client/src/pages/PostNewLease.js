@@ -53,8 +53,8 @@ const PostNewLease = () => {
     const [gender, setGender] = React.useState("");
     const [pet, setPet] = React.useState("");
     const [parking, setParking] = React.useState("");
-    const [latitude, setLatitude] = React.useState(0);
-    const [longitude, setLongitude] = React.useState(0);
+    const [latitude, setLatitude] = React.useState("");
+    const [longitude, setLongitude] = React.useState("");
     const formRef = React.useRef();
 
     const handleSubmit = () => {
@@ -227,7 +227,7 @@ const PostNewLease = () => {
                             </Grid>
                         </Grid>
 
-                        <Grid container spacing={3} mt={2} paddingBottom="5%">
+                        <Grid container spacing={3} mt={2}>
                             <Grid xs={10}>
                                 <Typography variant="h6" p={1}>
                                     Listing Information
@@ -268,7 +268,7 @@ const PostNewLease = () => {
                             </Grid>
                             <Grid xs={6}>
                                 <Typography variant="body1" component="h3" p={1}>
-                                    Room Size *
+                                    Room Size (sqrt ft) *
                                 </Typography>
                                 <TextField
                                     required
@@ -278,6 +278,37 @@ const PostNewLease = () => {
                                     size="30ch"
                                     variant="outlined"
                                     onChange={(e) => setArea(e.target.value)}
+
+                                ></TextField>
+                            </Grid>
+
+                            <Grid xs={6}>
+                                <Typography variant="body1" p={1}>
+                                    Property Latitude *
+                                </Typography>
+                                <TextField
+                                    required
+                                    id="latitude"
+                                    type="number"
+                                    className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
+                                    size="30ch"
+                                    variant="outlined"
+                                    onChange={(e) => setLatitude(e.target.value)}
+
+                                ></TextField>
+                            </Grid>
+                            <Grid xs={6}>
+                                <Typography variant="body1" p={1}>
+                                    Property Longitude *
+                                </Typography>
+                                <TextField
+                                    required
+                                    id="longitude"
+                                    type="number"
+                                    className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
+                                    size="30ch"
+                                    variant="outlined"
+                                    onChange={(e) => setLongitude(e.target.value)}
 
                                 ></TextField>
                             </Grid>
@@ -426,36 +457,13 @@ const PostNewLease = () => {
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>
+                        </Grid>
 
-                            <Grid xs={6}>
-                                <Typography variant="body1" p={1}>
-                                    Property Latitude *
+                        <Grid container spacing={3} mt={2} paddingBottom="5%">
+                            <Grid xs={10}>
+                                <Typography variant="h6" p={1}>
+                                    Property/Room Image
                                 </Typography>
-                                <TextField
-                                    required
-                                    id="latitude"
-                                    type="number"
-                                    className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
-                                    size="30ch"
-                                    variant="outlined"
-                                    onChange={(e) => setLatitude(e.target.value)}
-
-                                ></TextField>
-                            </Grid>
-                            <Grid xs={6}>
-                                <Typography variant="body1" p={1}>
-                                    Property Longitude *
-                                </Typography>
-                                <TextField
-                                    required
-                                    id="longitude"
-                                    type="number"
-                                    className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
-                                    size="30ch"
-                                    variant="outlined"
-                                    onChange={(e) => setLongitude(e.target.value)}
-
-                                ></TextField>
                             </Grid>
                         </Grid>
 
