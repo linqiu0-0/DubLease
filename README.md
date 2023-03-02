@@ -1,5 +1,9 @@
 # DubLease
 
+[User Manual](./UserManual.md)
+
+[Developer Guidelines](./DeveloperGuide.md)
+
 ## Project Description
 Most UW students decide to live near the school like the dorm, off-campus apartments and houses so that they can get on campus more conveniently. And depending on different leasing terms and personal needs, there are high demands of sublease throughout the year especially the summer. Currently, most of the related sublease information are posted on different social media like facebook and reddit, but they are not well organized and hard to use for UW students. Therefore, we propose the project of sublease web application, Dub Lease, that specifically targets UW students. With the Dub Lease, UW students can easily post and find the sublease that satisfies their needs.
 
