@@ -19,7 +19,7 @@ function AccountMenu() {
     const { logout } = useAuth();
     const username = window.sessionStorage.getItem("username")
 
- 
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -101,10 +101,10 @@ function AccountMenu() {
                     <Avatar /> Profile
                 </MenuItem>
                 <MenuItem onClick={handleListings}>
-                <ListItemIcon>
-                    <FormatListBulletedIcon fontSize="small" /> 
+                    <ListItemIcon>
+                        <FormatListBulletedIcon fontSize="small" />
                     </ListItemIcon>
-                      My Listings
+                    My Listings
                 </MenuItem>
                 <Divider />
 
