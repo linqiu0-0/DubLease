@@ -50,7 +50,8 @@ const SignUp = () => {
                 console.log(data);
                 navigate('/home', {
                     state: {
-                        username: data.username
+                        username: data.username,
+                        userId: data.userid
                     }
                 });
             })

@@ -3,18 +3,21 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import {createTheme, SvgIcon} from "@mui/material";
 import { ReactComponent as Logo } from '../assets/images/DubLeaseLogo.svg';
 import {ThemeProvider} from "@emotion/react";
+import { useNavigate } from "react-router-dom";
+import {AccountMenu} from "./AccountMenu"
 
 const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function MainAppBar({ username }) {
+function MainAppBar({ username, userId }) {
+    console.log("app bar" + userId)
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -30,6 +33,10 @@ function MainAppBar({ username }) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+
+
+
 
     const customTheme = createTheme({
         palette: {
@@ -67,9 +74,11 @@ function MainAppBar({ username }) {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            <Button variant="contained" sx={{mr: 3}}>View Profile</Button>
+                            {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
+                            {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={username} src="/static/images/avatar/2.jpg" />
+                                {/* <Avatar alt={username} src="/static/images/avatar/2.jpg" /> */}
+                                <AccountMenu username={username} userId={userId}/>
                             </IconButton>
                         </Box>
                     </Toolbar>
