@@ -7,15 +7,30 @@ var connection = mysql.createConnection({
    database : 'dublease'
 });
 
-// connects to the database on start
-connection.connect(function(err){
-    if(!err) {
-        console.log("Database is connected ... ");    
-    } else {
-        console.log("Error connecting database ... ");   
-        console.log(err);
-    }
-});
+// connects to the database (should be called on start of app)
+exports.connect_to_db = function() {
+    connection.connect(function(err){
+        if(!err) {
+            console.log("Database is connected ... ");
+        } else {
+            console.log("Error connecting database ... ");   
+            console.log(err);
+            throw err;
+        }
+    });
+}
+
+exports.disconnect_db = function() {
+    connection.end(function(err){
+        if(!err) {
+            console.log("Database is disconnected");    
+        } else {
+            console.log("Error disconnecting database:");   
+            console.log(err);
+            throw err;
+        }
+    });
+}
 
 // returns true if the email exists
 exports.check_email = async function(email) {
@@ -40,6 +55,16 @@ exports.add_user = async function(username, email, password_hash) {
         });
     });
 };
+
+// private 
+exports._delete_test_user = async function() {
+    const sql = 'DELETE FROM User WHERE UserName like ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, "test_%", function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+}
 
 exports.get_user = async function(email) {
     const sql = 'SELECT UserID as userid, UserName as username, PasswordHash as password_hash FROM User WHERE UserEmail = ?';

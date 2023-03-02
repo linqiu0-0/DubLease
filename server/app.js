@@ -256,3 +256,5 @@ var server = app.listen(8000, function () {
    
    console.log("App listening at port %s", port);
 });
+
+database.connect_to_db();
