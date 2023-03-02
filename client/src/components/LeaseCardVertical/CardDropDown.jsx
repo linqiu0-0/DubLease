@@ -1,25 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom";
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import useAuth from "../hooks/useAuth";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
+import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 
-function AccountMenu() {
+function CardDropDown({ post_id }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
-    const { logout } = useAuth();
-    const username = window.sessionStorage.getItem("username")
 
- 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -28,37 +24,31 @@ function AccountMenu() {
     };
 
     const handleLogout = () => {
-        logout();
-        navigate('/');
+        navigate("/sublease/" + post_id, {
+            state: {
+                post_id: post_id,
+                username: window.sessionStorage.getItem("username")
+            }
+        });
     };
 
-    const handleProfile = () => {
-        navigate('/profile');
-    };
 
     const handleListings = () => {
-        navigate('/listings');
+        navigate("/sublease/" + post_id, {
+            state: {
+                post_id: post_id,
+                username: window.sessionStorage.getItem("username")
+            }
+        });
     };
-
-
-
-
-
-
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
 
-                <Tooltip title="Account settings">
+                <Tooltip title="Manage Properties">
                     <IconButton
-                        onClick={handleClick}
-                        size="small"
-                        sx={{ ml: 0 }}
-                        aria-controls={open ? 'account-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                    >
-                        <Avatar alt={username} src="/static/images/avatar/2.jpg" />
+                        onClick={handleClick}>
+                        <MoreVertIcon />
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -97,26 +87,23 @@ function AccountMenu() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem onClick={handleProfile}>
-                    <Avatar /> Profile
-                </MenuItem>
                 <MenuItem onClick={handleListings}>
-                <ListItemIcon>
-                    <FormatListBulletedIcon fontSize="small" /> 
+                    <ListItemIcon>
+                        <HolidayVillageIcon fontSize="small" />
                     </ListItemIcon>
-                      My Listings
+                    View Properties
                 </MenuItem>
                 <Divider />
 
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
-                        <Logout fontSize="small" />
+                        <EditIcon fontSize="small" />
                     </ListItemIcon>
-                    Log out
+                    Edit Properties
                 </MenuItem>
             </Menu>
         </React.Fragment>
     );
 }
 
-export { AccountMenu }
+export { CardDropDown }

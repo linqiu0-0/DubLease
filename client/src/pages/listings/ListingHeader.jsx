@@ -13,8 +13,8 @@ import useAuth from "../../hooks/useAuth.jsx";
 
 const ListingHeader = () => {
     const navigate = useNavigate();
-    const {userId, username} = useAuth();
-
+    const username = window.sessionStorage.getItem("username")
+    const userId = window.sessionStorage.getItem("userId")
 
     return (
         <div className="h-[130px] md:h-[96px] sm:h-[96px] relative w-[100%]">

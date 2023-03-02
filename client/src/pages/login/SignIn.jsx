@@ -72,7 +72,6 @@ const SignIn = () => {
   const handleSignUpEvent = () => {
     if(formRef.current.reportValidity() ) {
       checkLoginStatus()
-
     }
 };
 
@@ -111,7 +110,7 @@ const SignIn = () => {
                 className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                 type="email"
                 label="hi@example.com"
-                size="30ch"
+                size="md"
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
 
@@ -125,7 +124,7 @@ const SignIn = () => {
                 >
                   Password
                 </Text>
-                <FormControl sx={{ m: 0, width: '30ch' }} color="secondary" variant="outlined" required>
+                <FormControl sx={{ m: 0, width: '39ch' }} color="secondary" variant="outlined" required>
                   <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                   <OutlinedInput
 

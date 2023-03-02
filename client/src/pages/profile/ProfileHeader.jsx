@@ -33,7 +33,6 @@ const ProfileHeader = () => {
                                 </Button>
                                 <Text
                                     className="font-bold mb-[2px] mt-[8px] text-indigo_900 text-left"
-                                    as="body2"
                                     variant="body2"
                                 >
                                     My Profile
