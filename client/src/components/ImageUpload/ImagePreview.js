@@ -7,27 +7,43 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Unstable_Grid2";
 
-const ImagePreview = ({ file, onClick}) => {
+const ImagePreview = ({ file, onClick, getFileData}) => {
     const [imageURL, setImageURL] = useState(null);
 
-    useEffect(() => {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        let result = null;
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
-        reader.onload = () => {
-            //console.log(reader.result); //base64encoded string
-            result = reader.result;
-            console.log({
-                imgName: file.name,
-                body: result,
-                format: "base64"
-            })
-        };
-        reader.onerror = error => {
-            console.log("Error: ", error);
-        };
-        setImageURL(URL.createObjectURL(file));
+    const handleFileUpload = async (e) => {
+        try {
+            const base64 = await convertToBase64(file);
+            let type = base64.slice(5, base64.indexOf(";base64,"));
+            let fileData = {
+                name: file.name,
+                encoding: "base64",
+                type: type,
+                data: base64,
+            };
+            // console.log(fileData);
+            getFileData(fileData);
+            setImageURL(URL.createObjectURL(file));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+    useEffect(() => {
+        handleFileUpload();
     }, [file]);
 
     return (
@@ -39,8 +55,8 @@ const ImagePreview = ({ file, onClick}) => {
                         alignItems: "center",
                         justifyContent: "center",
                         position: "relative"
-                }}>
-                    <IconButton aria-label="delete" size="small" sx={{position: "absolute", top: 0, right: 0}} onClick={onClick}>
+                    }}>
+                    <IconButton aria-label="delete" size="small" sx={{position: "absolute", top: 0, right: 0, color: "secondary"}} onClick={onClick}>
                         <CancelIcon fontSize="inherit"/>
                     </IconButton>
                     <img src={imageURL} alt="images gallery" loading="lazy" className={"upload_img"} />
@@ -51,4 +67,3 @@ const ImagePreview = ({ file, onClick}) => {
 };
 
 export default ImagePreview;
-

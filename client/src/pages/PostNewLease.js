@@ -13,6 +13,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Upload from "../components/ImageUpload/Upload";
 
 const theme = createTheme({
     typography: {
@@ -55,6 +56,7 @@ const PostNewLease = () => {
     const [parking, setParking] = React.useState("");
     const [latitude, setLatitude] = React.useState("");
     const [longitude, setLongitude] = React.useState("");
+    const [images, setImages] = React.useState("");
     const formRef = React.useRef();
 
     const handleSubmit = () => {
@@ -74,7 +76,7 @@ const PostNewLease = () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                "user_id": 1,
+                "user_id": userInfo.state.userId,
                 "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
                 "category": category,
                 "propertyName": propertyName,
@@ -90,11 +92,11 @@ const PostNewLease = () => {
                 "parking": parkingInt,
                 "latitude": latitudeFloat,
                 "longitude": longitudeFloat,
-                "image": null
+                "image": images
             })
         };
         console.log(requestOptions.body);
-        fetch(process.env.REACT_APP_SERVER_URL + "addLease", requestOptions)
+        fetch(process.env.REACT_APP_SERVER_URL + "add_lease", requestOptions)
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
@@ -289,7 +291,6 @@ const PostNewLease = () => {
                                 <TextField
                                     required
                                     id="latitude"
-                                    type="number"
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
@@ -304,7 +305,6 @@ const PostNewLease = () => {
                                 <TextField
                                     required
                                     id="longitude"
-                                    type="number"
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
@@ -462,9 +462,17 @@ const PostNewLease = () => {
                         <Grid container spacing={3} mt={2} paddingBottom="5%">
                             <Grid xs={10}>
                                 <Typography variant="h6" p={1}>
-                                    Property/Room Image
+                                    Property/Room Images
                                 </Typography>
                             </Grid>
+                            <Grid xs={10}>
+                                <Upload photos={photoData => {
+                                    setImages(photoData);
+                                    console.log(photoData);
+                                }}/>
+                            </Grid>
+
+
                         </Grid>
 
                         <Button
