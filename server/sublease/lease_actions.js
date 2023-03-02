@@ -143,7 +143,7 @@ exports.add_lease = async function(user_id, images, address = "", category = "",
             const image_key = lease_id + "-" + name;
 
             // Store the lease & the image to the database
-            const duplicate = db.check_lease_id_and_image_key_exists(lease_id, image_key);
+            const duplicate = await db.check_lease_id_and_image_key_exists(lease_id, image_key);
             // Only add a new database entry if we didn't find a duplicated image key under the same lease.
             // By default, Amazon S3 will override the previous object if a new object with the same key is uploaded.
             if (!duplicate) {
