@@ -50,12 +50,12 @@ const Profile = () => {
                     "phone": phone
                 })
             };
-            
+
             window.sessionStorage.setItem("username", name)
             fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
                 .then(response => response.json())
-                .then((data) => {               
+                .then((data) => {
                     console.log(data)
                 })
                 .catch(handleError);
@@ -242,11 +242,11 @@ const Profile = () => {
                                             Phone Number
                                         </Text>
                                         <MuiTelInput className="sm:w-[100%] w-[580px]"
-                                            defaultCountry="US" value={phone}
-                                            onChange={handlePhoneChange}
-                                            helperText={!validPhone ? 'Invalid phone number!' : ' '}
-                                            error={!validPhone}
-                                            disabled={!edit}
+                                                     defaultCountry="US" value={phone}
+                                                     onChange={handlePhoneChange}
+                                                     helperText={!validPhone ? 'Invalid phone number!' : ' '}
+                                                     error={!validPhone}
+                                                     disabled={!edit}
                                         />
                                     </div>
                                     <div className="flex flex-col gap-[8px] h-[120px] md:h-[auto] sm:h-[auto] items-start justify-start mt-[24px] sm:w-[100%] w-[580px]">
@@ -271,7 +271,7 @@ const Profile = () => {
                                         {edit && <Text className="text-black_900 text-[14px] font-plusjakartasans">
                                             * Edit this wouldn't change the login email address. This is only used for contact.
                                         </Text>}
-                                       
+
                                     </div>
                                     {edit && <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-center justify-center mt-[24px] sm:w-[100%] w-[580px]">
                                         <Button
