@@ -11,13 +11,15 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import {useNavigate } from "react-router-dom";
 
-
 import { PromotionRight } from "./Promotion.jsx";
 import { Text } from "../../components/Text";
+import useAuth from "../../hooks/useAuth.jsx";
+
 
 const SignIn = () => {
   const formRef = React.useRef();
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [email, setEmail] = React.useState("");
@@ -41,11 +43,10 @@ const SignIn = () => {
       // log user id
       console.log(data.username);
       console.log(data.userid);
-      navigate('/home', {
-        state: {
-          username: data.username,
-          userId: data.userid
-        }
+      window.sessionStorage.setItem("username", data.username);
+      window.sessionStorage.setItem("userId", data.userid);
+      auth.login().then(() => {
+        navigate('/home');
       });
     })
     .catch(handleError);
@@ -66,7 +67,6 @@ const SignIn = () => {
   const handleSignUpEvent = () => {
     if(formRef.current.reportValidity() ) {
       checkLoginStatus()
-
     }
 };
 
@@ -105,7 +105,7 @@ const SignIn = () => {
                 className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                 type="email"
                 label="hi@example.com"
-                size="30ch"
+                size="md"
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
 
@@ -119,7 +119,7 @@ const SignIn = () => {
                 >
                   Password
                 </Text>
-                <FormControl sx={{ m: 0, width: '30ch' }} color="secondary" variant="outlined" required>
+                <FormControl sx={{ m: 0, width: '39ch' }} color="secondary" variant="outlined" required>
                   <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                   <OutlinedInput
 

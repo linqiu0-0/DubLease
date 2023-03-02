@@ -18,11 +18,9 @@ function LeaseCard({ leaseCardData, username }) {
     const navigate = useNavigate();
 
     const browseSubleaseDetail = (event) => {
-        // console.log(leaseCardData);
         navigate("/sublease/" + leaseCardData.post_id, {
             state: {
                 post_id: leaseCardData.post_id,
-                username: username
             }
         });
     }

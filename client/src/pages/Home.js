@@ -75,7 +75,12 @@ const Home = () => {
     const [filters, setFilters] = React.useState(initialFilters);
     const [leaseData, setLeaseData] = React.useState([]);
     const [alert, setAlert] = React.useState("");
-    const userInfo = useLocation();
+    const username = window.sessionStorage.getItem("username")
+    const userId = window.sessionStorage.getItem("userId")
+    // const userInfo = useLocation();
+    //
+    // console.log("userInfo")
+    // console.log( userInfo)
 
     const chooseFilterCallback = (para) => (filterValue) => {
         const newFilters = [...filters];
@@ -132,7 +137,7 @@ const Home = () => {
     return (
         <ThemeProvider theme={theme}>
         <>
-            <MainAppBar username={userInfo.state.username} userId={userInfo.state.userId}/>
+            <MainAppBar username={username} userId={userId}/>
             <Box marginX={4}>
                 <Grid container spacing={3} mt={2}>
                     {/*map view*/}
@@ -177,7 +182,7 @@ const Home = () => {
                             overflow: "auto"
                         }}>
                             {leaseData.map((singleLease) => (
-                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} username={userInfo.state.username}/>
+                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} username={username}/>
                             ))}
                         </Stack>
                     </Grid>

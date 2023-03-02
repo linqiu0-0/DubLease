@@ -18,7 +18,7 @@ const SubleaseInfo = () => {
     const [open, setOpen] = React.useState(false);
 
     const navigate = useNavigate();
-    const subleaseInfoMeta = useLocation();
+    const postId = useLocation();
 
     const headers = { 'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*"};
@@ -53,7 +53,7 @@ const SubleaseInfo = () => {
     }
 
     const fetchSublaseInfo = async (event) => {
-        let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + subleaseInfoMeta.state.post_id;
+        let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + postId.state.post_id;
         console.log(query);
         try {
             let response = await fetch(query, {headers});
@@ -97,7 +97,7 @@ const SubleaseInfo = () => {
 
     return (
         <React.Fragment>
-            <MainAppBar username={subleaseInfoMeta.state.username}/>
+            <MainAppBar username={window.sessionStorage.getItem("username")}/>
             {
                 subleaseInfoData === "" ?
                 <SubleaseInfoSkeleton/>
