@@ -64,6 +64,16 @@ exports._delete_test_user = async function() {
             return error ? reject(error) : resolve(results.affectedRows);
         });
     });
+};
+
+// private 
+exports._delete_test_user = async function() {
+    const sql = 'DELETE FROM User WHERE UserName like ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, "test_%", function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
 }
 
 exports.get_user = async function(email) {
