@@ -16,11 +16,12 @@ exports.getObject = async function(key) {
   }
 };
 
-exports.uploadObject = async function(key, body, type='image/png', encoding='') {
+exports.uploadObject = async function(key, body, type='image/png', encoding=null) {
+  var buf = Buffer.from(body.replace(/^data:image\/\w+;base64,/, ""), encoding);
   const params = {
     Bucket : bucket,
     Key : key,
-    Body : body,
+    Body : buf,
     ContentEncoding: encoding,
     ContentType : type,
   }
