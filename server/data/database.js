@@ -173,3 +173,25 @@ exports.lease_insert = async function(value_map) {
         });
     });
 }
+
+exports.check_lease_id_and_image_key_exists = async function(lease_id, image_key) {
+    const sql = 'SELECT COUNT(*) AS count FROM Sublease_Images WHERE LeaseID = ? AND ImageKey = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, [lease_id, image_key], function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            var count = results[0].count;
+            return resolve(count > 0);
+        });
+    });
+}
+
+exports.add_lease_id_and_image_key = async function(lease_id, image_key) {
+    const sql = "INSERT INTO Sublease_Images SET ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, {LeaseID: lease_id, ImageKey: image_key}, function(error, results, fields) {
+            return error ? reject(error) : resolve(results);
+        });
+    });
+}

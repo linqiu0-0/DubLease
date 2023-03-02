@@ -1,4 +1,5 @@
 const db = require('../data/database');
+const imageHandler = require('../data/file_storage');
 
 exports.get_lease = async function(lease_id) {
     const has_lease = db.check_lease_exists(lease_id);
@@ -125,15 +126,46 @@ exports.add_lease = async function(user_id, images, address = "", category = "",
     }
 
     const lease_id = await db.lease_insert(value_map);
+    const image_keys = []
 
     if (images) {
         // upload images
+        for (let image of images) {
+            const name = image.name;
+            const data = image.data;
+            const type = image.type;
+            const encoding = image.encoding;
+            if (!name || !data) {
+                return {
+                    code: 400, msg: "invalid image format; image name & data are required"
+                };
+            }
+            const image_key = lease_id + "-" + name;
+
+            // Store the lease & the image to the database
+            const duplicate = db.check_lease_id_and_image_key_exists(lease_id, image_key);
+            // Only add a new database entry if we didn't find a duplicated image key under the same lease.
+            // By default, Amazon S3 will override the previous object if a new object with the same key is uploaded.
+            if (!duplicate) {
+                await db.add_lease_id_and_image_key(lease_id, image_key);
+            }
+
+            // Upload the image to S3
+            location = await imageHandler.uploadObject(image_key, data, type, encoding);
+            if (!location) {
+                return {
+                    code: 500, msg: new Error("failed to upload the image")
+                }
+            }
+            image_keys.push(image_key);
+        }
     }
 
     return {
         code : 200,
         msg : {
-            lease_id: lease_id
+            lease_id: lease_id,
+            image_keys: image_keys,
         },
     };
 };

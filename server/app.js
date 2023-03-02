@@ -84,6 +84,7 @@ app.get('/home', async (req, res) => {
     const data = await imageHandler.getObject(key);
     if (!data) {
        res.status(500).send(new Error("failed to retrieve image"));
+       return;
     }
     res.status(200).send(data);
  });
@@ -183,6 +184,8 @@ app.post('/edit_profile', async (req, res) => {
    }
 });
 
+
+// leasing module
 app.post('/add_lease', async (req, res) => {
    const user_id = req.body.user_id;
    const address = req.body.address;
@@ -211,6 +214,33 @@ app.post('/add_lease', async (req, res) => {
       const {code, msg} = await lease.add_lease(user_id, images, address, category, property_name, area, room_type, price, deposit, 
                                                 description, start_date, end_date, gender, pet, parking, longitude, latitude);
       res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
+// uploads an image to the file storage system; **DOESN'T** store any lease or user information related to the image
+app.post('/upload_image', async(req, res) => {
+   const name = req.body.name;
+   const data = req.body.data;
+   const type = req.body.type;
+   const encoding = req.body.encoding;
+
+   if (!name || !data) {
+      res.status(400).send("image's name and data must not be empty")
+      return;
+   }
+
+   try {
+      location = await imageHandler.uploadObject(name, data, type, encoding);
+      if (location) {
+         res.status(200).send({
+            location: location,
+         });
+      } else {
+         res.status(500).send(new Error("internal server error"));
+      }
    } catch (e) {
       console.log(e);
       res.status(500).send(new Error("internal server error"));

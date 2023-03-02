@@ -14,19 +14,20 @@ exports.getObject = async function(key) {
   } catch (err) {
     console.error(err);
   }
-}
+};
 
-exports.uploadObject = async function(key, body, type='image/png') {
+exports.uploadObject = async function(key, body, type='image/png', encoding='') {
   const params = {
     Bucket : bucket,
     Key : key,
     Body : body,
+    ContentEncoding: encoding,
     ContentType : type,
   }
   try {
     const results = await s3.upload(params).promise();
     return results.Location;
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-}
+};
