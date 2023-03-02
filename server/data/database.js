@@ -29,7 +29,7 @@ exports.check_email = async function(email) {
             return resolve(count > 0);
         });
     });
-}
+};
 
 exports.add_user = async function(username, email, password_hash) {
     const sql = 'INSERT INTO User (UserName, UserEmail, PasswordHash) VALUES (?)';
@@ -39,7 +39,7 @@ exports.add_user = async function(username, email, password_hash) {
             return error ? reject(error) : resolve(results.insertId);
         });
     });
-}
+};
 
 exports.get_user = async function(email) {
     const sql = 'SELECT UserID as userid, UserName as username, PasswordHash as password_hash FROM User WHERE UserEmail = ?';
@@ -48,7 +48,7 @@ exports.get_user = async function(email) {
             return error ? reject(error) : resolve(results[0]);
         });
     });
-}
+};
 
 exports.check_user_id = async function(userid) {
     const sql = 'SELECT COUNT(*) as count FROM User WHERE UserID = ?';
@@ -82,7 +82,7 @@ exports.update_user = async function(update_statements, values) {
             return error ? reject(error) : resolve(results);
         });
     });
-}
+};
 
 
 // Params:
@@ -96,15 +96,18 @@ exports.filter_sublease = async function(sql_conditions, condition_values) {
     // console.log(condition_values);
     return new Promise((resolve, reject) => {
         connection.query(sql, condition_values, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
             subleases = [];
             for (let row in results) {
                 subleases.push(JSON.parse(JSON.stringify(results[row])));
             }
             // console.log("subleases: \n", subleases);
-            return error ? reject(error) : resolve(subleases);
+            return resolve(subleases);
         });
     });
-}
+};
 
 
 exports.get_sublease_images = async function(lease_id) {
@@ -122,7 +125,7 @@ exports.get_sublease_images = async function(lease_id) {
             return resolve(image_keys);
         });
     });
-}
+};
 
 exports.get_lease_by_id = async function(id) {
     const sql = 'SELECT * FROM Sublease WHERE PostID = ?';
@@ -131,7 +134,7 @@ exports.get_lease_by_id = async function(id) {
             return error ? reject(error) : resolve(results[0]);
         });
     });
-}
+};
 
 exports.check_lease_exists = async function(id) {
     const sql = 'SELECT COUNT(*) FROM Sublease WHERE PostID = ?';
@@ -144,17 +147,29 @@ exports.check_lease_exists = async function(id) {
             return resolve(count > 0);
         });
     });
-}
+};
 
 exports.list_sublease_by_user_id = async function(userid) {
     const sql = 'SELECT * FROM Sublease WHERE UserID = ?';
     return new Promise((resolve, reject) => {
         connection.query(sql, userid, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
             subleases = [];
             for (let row in results) {
                 subleases.push(JSON.parse(JSON.stringify(results[row])));
             }
-            return error ? reject(error) : resolve(subleases);
+            return resolve(subleases);
+        });
+    });
+};
+
+exports.lease_insert = async function(value_map) {
+    const sql = "INSERT INTO Sublease SET ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, value_map, function(error, results, fields) {
+            return error ? reject(error) : resolve(results.insertId);
         });
     });
 }

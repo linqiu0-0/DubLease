@@ -17,8 +17,10 @@ exports.get_lease = async function(lease_id) {
         gender = "Any";
     } else if (sublease.GenderLimit == 1) {
         gender = "Male Only";
-    } else {
+    } else if(sublease.GenderLimit == 2) {
         gender = "Female Only";
+    } else {
+        gender = "Other";
     }
     const petOK = sublease.IsPetFriendly == 1 ? "Yes" : "No";
     const parking = sublease.ParkingAvailable == 1 ? "Yes" : "No";
@@ -87,3 +89,51 @@ exports.get_lease = async function(lease_id) {
         msg : result,
     };
 }
+
+exports.add_lease = async function(user_id, images, address = "", category = "", property_name = "", area = 0, room_type = "1B1B", price = 0, deposit = 0, description = "",
+                                    start_date = "0000-00-00", end_date = "0000-00-00", gender = 0, pet = 0, parking = 0, longitude = 0.0, latitude = 0.0, status = 1) {
+    const user_exists = await db.check_user_id(user_id);
+    if (!user_exists) {
+        return {code: 400, msg: "User does not exist"};
+    }
+    // TODO: add additional credential checks
+
+    // const statement = "(PropertyName, PropertyCategory, PropertyAddress, PropertyPrice, RoomSize, RoomType, GenderLimit, IsPetFriendly,"
+    //                  + " SubleasePeriodStart, SubleasePeriodEnd, PropertyDescription, ParkingAvailable, Deposit, Latitude, Longitude, status, UserID)"
+    //                  + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // const values = [property_name, category, address, price, area, room_type, gender, pet, start_date, end_date, description, 
+    //                 parking, deposit, latitude, longitude, status, user_id];
+    
+    const value_map = {
+        PropertyName: property_name,
+        PropertyCategory: category,
+        PropertyAddress: address,
+        PropertyPrice: price,
+        RoomSize: area,
+        RoomType: room_type,
+        GenderLimit: gender,
+        IsPetFriendly: pet,
+        SubleasePeriodStart: start_date,
+        SubleasePeriodEnd: end_date,
+        PropertyDescription: description,
+        ParkingAvailable: parking,
+        Deposit: deposit,
+        Latitude: latitude,
+        Longitude: longitude,
+        status: status,
+        UserID: user_id
+    }
+
+    const lease_id = await db.lease_insert(value_map);
+
+    if (images) {
+        // upload images
+    }
+
+    return {
+        code : 200,
+        msg : {
+            lease_id: lease_id
+        },
+    };
+};

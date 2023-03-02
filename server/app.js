@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const search = require('./sublease/search');
 const account = require('./user/account');
-const lease = require('./sublease/lease_info');
+const lease = require('./sublease/lease_actions');
 const imageHandler = require('./data/file_storage');
 
 const app = express();
@@ -176,6 +176,40 @@ app.post('/edit_profile', async (req, res) => {
 
    try {
       const {code, msg} = await account.edit_profile(user_id, username, email, phone);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
+app.post('/add_lease', async (req, res) => {
+   const user_id = req.body.user_id;
+   const address = req.body.address;
+   const category = req.body.category;
+   const property_name = req.body.propertyName;
+   const area = req.body.area;
+   const room_type = req.body.roomType;
+   const price = req.body.price;
+   const deposit = req.body.deposit;
+   const description = req.body.description;
+   const start_date = req.body.dateAvailable;
+   const end_date = req.body.dateEnd;
+   const gender = req.body.gender;
+   const pet = req.body.pet;
+   const parking = req.body.parking;
+   const longitude = req.body.longitude;
+   const latitude = req.body.latitude;
+   const images = req.body.images;
+   
+   if (!user_id) {
+      res.status(400).send("user id is required");
+      return;
+   }
+
+   try {
+      const {code, msg} = await lease.add_lease(user_id, images, address, category, property_name, area, room_type, price, deposit, 
+                                                description, start_date, end_date, gender, pet, parking, longitude, latitude);
       res.status(code).send(msg);
    } catch (e) {
       console.log(e);
