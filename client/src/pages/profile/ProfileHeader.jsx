@@ -28,6 +28,7 @@ const ProfileHeader = () => {
                                     shape="icbRoundedBorder8"
                                     size="smIcn"
                                     variant="icbFillDeeppurpleA200"
+                                    href="/home"
                                 >
                                     <Logo />
                                 </Button>

@@ -40,10 +40,6 @@ function AccountMenu() {
         navigate('/listings');
     };
 
-    const handleListings = () => {
-        navigate('/listings');
-    };
-
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

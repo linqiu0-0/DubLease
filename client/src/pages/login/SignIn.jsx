@@ -15,13 +15,10 @@ import { PromotionRight } from "./Promotion.jsx";
 import { Text } from "../../components/Text";
 import useAuth from "../../hooks/useAuth.jsx";
 
-import useAuth from "../../hooks/useAuth.jsx";
-
 
 const SignIn = () => {
   const formRef = React.useRef();
   const navigate = useNavigate();
-  const auth = useAuth();
   const auth = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
