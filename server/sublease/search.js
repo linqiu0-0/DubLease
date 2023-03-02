@@ -16,11 +16,6 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
         conditions.push("PropertyPrice <= ?");
         values.push(parseInt(max_price));
     }
-    // TODO: filter for bedroom number
-    // if (bed) {
-    //     conditions.push("RoomType = ?");
-    //     values.push(parseInt(bed));
-    // }
     if (gender && gender != 0) {
         conditions.push("GenderLimit = ?");
         values.push(parseInt(gender));
@@ -39,12 +34,17 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
             if (sublease.RoomType.toLowerCase() == "studio") {
                 sublease.RoomType = "0B1B";
             }
-            result.push(format_search_result(sublease, image_keys));
+            const formatted = format_search_result(sublease, image_keys);
+            // filtering for bedroom number
+            if (!bed) {
+                // we don't need to format, append the result
+                result.push(formatted);
+            } else if (bed == formatted.bedNum) {
+                result.push(formatted);
+            }
         }
     }
-    // if (!result) {
-    //     return {code: 400, msg: "No matches"};
-    // }
+
     return {
         code : 200,
         msg : result
