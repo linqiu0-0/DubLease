@@ -40,10 +40,9 @@ function AccountMenu() {
         navigate('/listings');
     };
 
-
-
-
-
+    const handleListings = () => {
+        navigate('/listings');
+    };
 
     return (
         <React.Fragment>
@@ -101,10 +100,10 @@ function AccountMenu() {
                     <Avatar /> Profile
                 </MenuItem>
                 <MenuItem onClick={handleListings}>
-                <ListItemIcon>
-                    <FormatListBulletedIcon fontSize="small" /> 
+                    <ListItemIcon>
+                        <FormatListBulletedIcon fontSize="small" />
                     </ListItemIcon>
-                      My Listings
+                    My Listings
                 </MenuItem>
                 <Divider />
 

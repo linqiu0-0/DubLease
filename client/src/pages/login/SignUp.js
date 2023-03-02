@@ -50,15 +50,10 @@ const SignUp = () => {
             .then(data => {
                 console.log(data);
                 window.sessionStorage.setItem("username", data.username);
-                window.sessionStorage.setItem("userId", data.userid);          
+                window.sessionStorage.setItem("userId", data.userid);
                 auth.login().then(() => {
-                    navigate('/home', {
-                      state: {
-                        username: data.username,
-                        userId: data.userid
-                      }
-                    });
-                  });
+                    navigate('/home');
+                });
             })
             .catch(handleError);
     }
