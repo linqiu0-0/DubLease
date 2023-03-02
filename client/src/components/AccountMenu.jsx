@@ -12,23 +12,13 @@ import { useNavigate } from "react-router-dom";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import useAuth from "../hooks/useAuth";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> frontend
 function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
-<<<<<<< HEAD
-    const username = window.sessionStorage.getItem("username")
-    const userId = window.sessionStorage.getItem("userId")
- 
-=======
     const { logout } = useAuth();
     const username = window.sessionStorage.getItem("username")
 
->>>>>>> frontend
  
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -38,39 +28,16 @@ function AccountMenu() {
     };
 
     const handleLogout = () => {
-<<<<<<< HEAD
-        window.sessionStorage.clear()
-=======
         logout();
->>>>>>> frontend
         navigate('/');
     };
 
     const handleProfile = () => {
-<<<<<<< HEAD
-        console.log(userId)
-        navigate('/profile', {
-            state: {
-                username: username,
-                userId: userId
-            }
-        });
-    };
-
-    const handleListings = () => {
-        navigate('/listings', {
-            state: {
-                username: username,
-                userId: userId
-            }
-        });
-=======
         navigate('/profile');
     };
 
     const handleListings = () => {
         navigate('/listings');
->>>>>>> frontend
     };
 
 
