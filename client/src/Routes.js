@@ -5,7 +5,7 @@ import SignIn from "./pages/login/SignIn";
 import SignUp from "./pages/login/SignUp";
 import {Profile} from "./pages/profile/Profile";
 import SubleaseInfo from "./pages/SubleaseInfo";
-
+import PostNewLease from "./pages/PostNewLease";
 import NotFound from "./pages/NotFound";
 
 const ProjectRoutes = () => {
@@ -17,6 +17,7 @@ const ProjectRoutes = () => {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/sublease/:id" element={<SubleaseInfo />} />
+                <Route path="/post" element={<PostNewLease />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
