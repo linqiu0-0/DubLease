@@ -66,6 +66,16 @@ exports._delete_test_user = async function() {
     });
 }
 
+// private 
+exports._delete_test_user = async function() {
+    const sql = 'DELETE FROM User WHERE UserName like ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, "test_%", function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+}
+
 exports.get_user = async function(email) {
     const sql = 'SELECT UserID as userid, UserName as username, PasswordHash as password_hash FROM User WHERE UserEmail = ?';
     return new Promise((resolve, reject) => {
