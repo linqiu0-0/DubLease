@@ -3,10 +3,11 @@ import '../styles/map.css';
 
 const center = { lat: 47.659662, lng: -122.31 };
 
-let propertyData;
+let propertyData, fromSubleaseInfo;
 
-function Map({leaseData}) {
+function Map({leaseData, isSubleaseInfo}) {
     propertyData = leaseData;
+    fromSubleaseInfo = isSubleaseInfo;
     console.log(leaseData);
 
     useEffect(() => {
@@ -85,17 +86,19 @@ export function initMap() {
             content: load(p)
         });
 
-        const ele = advancedMarkerView.element;
-        ["focus", "pointerenter"].forEach((event) => {
-            ele.addEventListener(event, () => {
-                hoverOver(advancedMarkerView);
+        if (!fromSubleaseInfo) {
+            const ele = advancedMarkerView.element;
+            ["focus", "pointerenter"].forEach((event) => {
+                ele.addEventListener(event, () => {
+                    hoverOver(advancedMarkerView);
+                });
             });
-        });
-        ["blur", "pointerleave"].forEach((event) => {
-            ele.addEventListener(event, () => {
-                unhover(advancedMarkerView);
+            ["blur", "pointerleave"].forEach((event) => {
+                ele.addEventListener(event, () => {
+                    unhover(advancedMarkerView);
+                });
             });
-        });
+        }
     }
 }
 
