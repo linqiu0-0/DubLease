@@ -33,6 +33,14 @@ const theme = createTheme({
     },
 });
 
+const states = [
+    'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', ' DC', 'FL', 'GA', 'HI', 'ID',
+    'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS',
+    'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK',
+    'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+    'WI', 'WY'
+];
+
 const PostNewLease = () => {
     const userInfo = useLocation();
     const navigate = useNavigate();
@@ -63,7 +71,7 @@ const PostNewLease = () => {
     const username = window.sessionStorage.getItem("username");
 
     const handleSubmit = () => {
-        if(!validLatitude) {
+        if (!validLatitude) {
             //need popup/alert
             console.log("Invalid latitude");
         } else if (!validLongitude) {
@@ -72,6 +80,7 @@ const PostNewLease = () => {
         } else if (dateEnd < dateAvailable) {
             console.log("End date is before start date");
         } else if (formRef.current.reportValidity()) {
+            document.getElementById("submitButton").disabled = true;
             const areaFloat = parseFloat(area);
             const rentFloat = parseFloat(rent);
             const depositInt = parseInt(deposit);
@@ -118,6 +127,7 @@ const PostNewLease = () => {
 
     function checkStatus(response) {
         if (!response.ok) {
+            document.getElementById("submitButton").disabled = false;
             response.text().then(txt => { alert(txt); });
             throw Error("Error in request: " + response.statusText);
         }
@@ -173,8 +183,7 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setStreetAddress(e.target.value)}
-
+                                    onChange={(e) => setStreetAddress(e.target.value.trim())}
                                 ></TextField>
                             </Grid>
                             <Grid xs={6}>
@@ -186,8 +195,7 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setUnitNum(e.target.value)}
-
+                                    onChange={(e) => setUnitNum(e.target.value.trim())}
                                 ></TextField>
                             </Grid>
 
@@ -201,23 +209,30 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setCityAddress(e.target.value)}
-
+                                    onChange={(e) => setCityAddress(e.target.value.trim())}
                                 ></TextField>
                             </Grid>
                             <Grid xs={4}>
                                 <Typography variant="body1" component="h1" p={1}>
                                     State *
                                 </Typography>
-                                <TextField
-                                    required
-                                    id="stateAddress"
-                                    className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
-                                    size="30ch"
-                                    variant="outlined"
-                                    onChange={(e) => setStateAddress(e.target.value)}
-
-                                ></TextField>
+                                <FormControl fullWidth>
+                                    <Select
+                                        required
+                                        id="stateAddress"
+                                        value={stateAddress}
+                                        onChange={(e) => setStateAddress(e.target.value)}
+                                    >
+                                        {states.map((state) => (
+                                            <MenuItem
+                                                key={state}
+                                                value={state}
+                                            >
+                                                {state}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid xs={4}>
                                 <Typography variant="body1" component="h1" p={1}>
@@ -228,7 +243,7 @@ const PostNewLease = () => {
                                     id="zipCode"
                                     type="number"
                                     InputProps={{
-                                        inputProps: { 
+                                        inputProps: {
                                             min: 0
                                         }
                                     }}
@@ -276,8 +291,7 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setPropertyName(e.target.value)}
-
+                                    onChange={(e) => setPropertyName(e.target.value.trim())}
                                 ></TextField>
                             </Grid>
                             <Grid xs={6}>
@@ -289,7 +303,7 @@ const PostNewLease = () => {
                                     id="area"
                                     type="number"
                                     InputProps={{
-                                        inputProps: { 
+                                        inputProps: {
                                             min: 0
                                         }
                                     }}
@@ -330,7 +344,6 @@ const PostNewLease = () => {
                                     onChange={(e) => {
                                         setLongitude(e.target.value); setValidLongitude(/^[-+]?[0-9]*\.?[0-9]+$/.test(e.target.value) || e.target.value.length == 0)
                                     }}
-
                                 ></TextField>
                             </Grid>
 
@@ -366,7 +379,7 @@ const PostNewLease = () => {
                                     id="rent"
                                     type="number"
                                     InputProps={{
-                                        inputProps: { 
+                                        inputProps: {
                                             min: 0
                                         }
                                     }}
@@ -394,7 +407,6 @@ const PostNewLease = () => {
                                     </Select>
                                 </FormControl>
                             </Grid>
-
 
                             <Grid xs={12}>
                                 <Typography variant="body1" component="h1" p={1}>
@@ -495,13 +507,12 @@ const PostNewLease = () => {
                                 <Upload photos={photoData => {
                                     setImages(photoData);
                                     console.log(photoData);
-                                }}/>
+                                }} />
                             </Grid>
-
-
                         </Grid>
 
                         <Button
+                            id="submitButton"
                             size="large"
                             variant="contained"
                             color="primary"
