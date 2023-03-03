@@ -9,6 +9,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import PasswordChecklist from "react-password-checklist"
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 
 import { PromotionRight } from "./Promotion.jsx";
@@ -43,16 +44,15 @@ const SignUp = () => {
             body: JSON.stringify({ "email": email, "password": password, "username": username })
         };
         console.log(requestOptions.body);
-
         fetch(process.env.REACT_APP_SERVER_URL + "signup", requestOptions)
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                window.sessionStorage.setItem("username", data.username);
-                window.sessionStorage.setItem("userId", data.userid);
-                auth.login().then(() => {
-                    navigate('/home');
+                navigate('/home', {
+                    state: {
+                        username: data.username
+                    }
                 });
             })
             .catch(handleError);
@@ -65,7 +65,7 @@ const SignUp = () => {
 
     function checkStatus(response) {
         if (!response.ok) {
-            response.text().then(txt => {alert(txt);});
+            response.text().then(txt => { alert(txt); });
             throw Error("Error in request: " + response.statusText);
         }
         return response;
@@ -81,21 +81,21 @@ const SignUp = () => {
 
     return (
         <>
-            <div className="bg-white_A700 font-plusjakartasans h-[950px] mx-[auto] relative w-[100%]">
-                <div className="absolute flex flex-col gap-[32px] gap-x-[32px] gap-y-[32px] h-[950px] items-start justify-start ml-[160px] mt-[0] md:pl-[20px] sm:pl-[20px] md:pr-[20px] sm:pr-[20px] top-[176px] w-[auto]">
+            <div className="bg-white_A700 font-plusjakartasans mx-[auto] relative w-[100%]">
+                <div className="absolute flex flex-col gap-[32px] gap-x-[32px] gap-y-[32px] items-start justify-start ml-[160px] mt-[0] md:pl-[20px] sm:pl-[20px] md:pr-[20px] sm:pr-[20px] top-[176px] w-[auto]">
                     <div className="flex flex-col gap-[8px] items-start justify-start w-[auto]">
                         <Text
                             className="text-black_901 text-left tracking-ls032 md:tracking-ls111 sm:tracking-ls111 w-[auto]"
                             as="h5"
                             variant="h5"
                         >
-                            Welcome back
+                            Welcome!
                         </Text>
                         <Text
                             className="font-normal text-black_900_87 text-left w-[auto]"
                             variant="body5"
                         >
-                            Welcome back! Please enter your details.
+                            Welcome! Please enter your details.
                         </Text>
                     </div>
                     <form ref={formRef} className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
@@ -113,7 +113,7 @@ const SignUp = () => {
                                 label="User Name"
                                 size="30ch"
                                 variant="outlined"
-                                onChange ={e => setUsername(e.target.value)}
+                                onChange={e => setUsername(e.target.value)}
                             ></TextField>
                         </div>
                         <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[352px]">
@@ -131,7 +131,7 @@ const SignUp = () => {
                                 label="hi@example.com"
                                 size="30ch"
                                 variant="outlined"
-                                onChange ={e => setEmail(e.target.value)}
+                                onChange={e => setEmail(e.target.value)}
                             ></TextField>
                         </div>
                         <div className="flex flex-col gap-[8px] h-[76px] md:h-[auto] sm:h-[auto] items-start justify-start w-[352px]">
@@ -233,6 +233,13 @@ const SignUp = () => {
                         className="font-normal text-gray_601 text-left w-[auto]"
                         variant="body6"
                     >
+                        <span className="text-gray_601 text-[14px] font-plusjakartasans">
+                            Already have an account?{" "}
+                        </span>
+                        <Link className="text-deep_purple_A200 text-[14px] font-plusjakartasans font-bold"
+                            to="../">
+                            Login
+                        </Link>
                     </Text>
                 </div>
                 <PromotionRight />
