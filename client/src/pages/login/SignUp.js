@@ -48,7 +48,6 @@ const SignUp = () => {
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 navigate('/home', {
                     state: {
                         username: data.username
@@ -60,12 +59,11 @@ const SignUp = () => {
 
     function handleError(error) {
         console.log(error);
-        // alert(error);
     }
 
     function checkStatus(response) {
         if (!response.ok) {
-            response.text().then(txt => { alert(txt); });
+            response.text().then(txt => { console.log(txt); });
             throw Error("Error in request: " + response.statusText);
         }
         return response;
@@ -211,11 +209,6 @@ const SignUp = () => {
                             valueAgain={passwordAgain}
                             onChange={(isValid) => { setPassValid(isValid) }}
                         />
-                        {/* <Text
-                      className="font-medium text-deep_purple_A200 text-left w-[auto]"
-                      variant="body6"
-                    >
-                    </Text> */}
                     </div>}
                     <div className="flex flex-col gap-[16px] items-start justify-start w-[auto]">
                         <Button

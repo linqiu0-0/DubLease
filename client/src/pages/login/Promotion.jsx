@@ -174,7 +174,7 @@ const PromotionRight = () => {
             variant="body7"
           >
             <span className="text-gray_601 text-[12px] font-plusjakartasans">
-              You agree to Dub Lease's
+              You agree to Dub Lease&apos;s
             </span>
             <span className="text-gray_601 text-[12px] font-plusjakartasans">
               {" "}
@@ -187,7 +187,7 @@ const PromotionRight = () => {
               .{" "}
             </span>
             <span className="text-gray_601 text-[12px] font-plusjakartasans">
-              You don't need to consent as a condition of renting any
+              You don&apos;t need to consent as a condition of renting any
               property, or buying any other goods or services.
             </span>
           </Text>

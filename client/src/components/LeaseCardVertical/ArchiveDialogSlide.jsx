@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -85,3 +86,12 @@ function ArchiveDialogSlide({ openArchive, setOpenArchive, post_id, lease_status
     );
 }
 export { ArchiveDialogSlide }
+
+
+ArchiveDialogSlide.propTypes = {
+    openArchive: PropTypes.bool,
+    setOpenArchive: PropTypes.func,
+    post_id: PropTypes.number,
+    lease_status: PropTypes.number,
+    setReloading: PropTypes.func,
+};

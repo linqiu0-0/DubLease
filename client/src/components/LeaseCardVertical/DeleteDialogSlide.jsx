@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import PropTypes from 'prop-types';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -66,3 +67,10 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id }) {
     );
 }
 export { DeleteDialogSlide }
+
+DeleteDialogSlide.propTypes = {
+    openDelete: PropTypes.bool,
+    setOpenDelete: PropTypes.func,
+    post_id: PropTypes.number,
+};
+

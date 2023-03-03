@@ -14,6 +14,7 @@ import { ArchiveDialogSlide } from './ArchiveDialogSlide';
 import { DeleteDialogSlide } from './DeleteDialogSlide';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ArchiveIcon from '@mui/icons-material/Archive';
+import PropTypes from 'prop-types';
 
 
 function CardDropDown({ post_id, lease_status, setReloading }) {
@@ -39,11 +40,6 @@ function CardDropDown({ post_id, lease_status, setReloading }) {
             }
         });
     };
-
-    const handleArchive = () => {
-        setOpenDialog(true);
-    }
-
 
 
     return (
@@ -125,3 +121,9 @@ function CardDropDown({ post_id, lease_status, setReloading }) {
 }
 
 export { CardDropDown }
+
+CardDropDown.propTypes = {
+    post_id: PropTypes.number,
+    lease_status: PropTypes.number,
+    setReloading: PropTypes.func,
+};

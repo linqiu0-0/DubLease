@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useEffect } from "react";
-import { Grid, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import { Box } from '@mui/material';
 import { Text } from "../Text";
 import { Img } from "../Img";
 import { Line } from "../Line";
 import { StatusButton } from "./StatusButton";
 import { CardDropDown } from './CardDropDown';
+import PropTypes from 'prop-types';
 
 
 function LeaseCardVertical({ leaseCardData, setReloading }) {
@@ -161,3 +162,9 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
 }
 
 export { LeaseCardVertical };
+
+
+LeaseCardVertical.propTypes = {
+    leaseCardData: PropTypes.object.isRequired,
+    setReloading: PropTypes.func.isRequired
+};

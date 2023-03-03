@@ -95,7 +95,7 @@ const Listings = () => {
               {!loading && (leaseData.length != 0 ?
                 <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                   {leaseData.map((singleLease) => (
-                    <Grid item xs={4}>
+                    <Grid item xs={4} key={singleLease.post_id}>
                       <LeaseCardVertical key={singleLease.post_id} leaseCardData={singleLease} setReloading={setReloading} />
                     </Grid>
                   ))}
