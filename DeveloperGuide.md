@@ -6,6 +6,17 @@ To get started, clone the repo:
 `$ git@github.com:linqiu0-0/DubLease.git`
 
 ## Start Developing
+### Prerequisites
+- npm: version 6.14.13+
+- node: version 14+
+
+You can download and install npm and nodeJS [here](https://nodejs.org/en/download/)
+
+- docker: 20.10.12+
+- docker-compose: 1.29.2+
+
+You can download the latest version of docker [here](https://www.docker.com/)
+
 ### Start containers
 Use the `docker-compose` tool from the root directory to start both the backend and frontend containers:
 1. First, build the system through `docker compose build `

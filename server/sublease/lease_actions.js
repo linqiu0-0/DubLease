@@ -98,12 +98,6 @@ exports.add_lease = async function(user_id, images, address = "", category = "",
         return {code: 400, msg: "User does not exist"};
     }
     // TODO: add additional credential checks
-
-    // const statement = "(PropertyName, PropertyCategory, PropertyAddress, PropertyPrice, RoomSize, RoomType, GenderLimit, IsPetFriendly,"
-    //                  + " SubleasePeriodStart, SubleasePeriodEnd, PropertyDescription, ParkingAvailable, Deposit, Latitude, Longitude, status, UserID)"
-    //                  + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    // const values = [property_name, category, address, price, area, room_type, gender, pet, start_date, end_date, description, 
-    //                 parking, deposit, latitude, longitude, status, user_id];
     
     const value_map = {
         PropertyName: property_name,

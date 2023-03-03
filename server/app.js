@@ -59,14 +59,7 @@ app.get('/home', async (req, res) => {
    var max_price = req.query["max-price"];
    var bed = req.query.bed;
    var gender = req.query.gender;
-   // console.log(name + ", " + start_date + ", " + end_date + ", " + min_price + ", " + max_price + ", " + bed + ", " + gender);
- 
-   // if (!name && !start_date && !end_date && !min_price && !max_price
-   //     && !bed && !gender) {
-   //    res.status(400).send("need to specify at least one condition");
-   //    return;
-   // }
- 
+
    try {
       const {code, msg} = await search.search_sublease(name, start_date, end_date, min_price, max_price, bed, gender);
       res.status(code).send(msg);
