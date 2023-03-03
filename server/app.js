@@ -215,6 +215,41 @@ app.post('/add_lease', async (req, res) => {
    }
 });
 
+app.post('/edit_lease', async(req, res) => {
+   const lease_id = req.body.lease_id;
+   const user_id = req.body.user_id;
+   const address = req.body.address;
+   const category = req.body.category;
+   const property_name = req.body.propertyName;
+   const area = req.body.area;
+   const room_type = req.body.roomType;
+   const price = req.body.price;
+   const deposit = req.body.deposit;
+   const description = req.body.description;
+   const start_date = req.body.dateAvailable;
+   const end_date = req.body.dateEnd;
+   const gender = req.body.gender;
+   const pet = req.body.pet;
+   const parking = req.body.parking;
+   const longitude = req.body.longitude;
+   const latitude = req.body.latitude;
+   const images = req.body.images;
+   const images_deleted = req.body.imagesDeleted;
+
+   if (!lease_id) {
+      res.status(400).send("lease id is required");
+      return;
+   }
+
+   try {
+      const {code, msg} = await lease.edit_lease(lease_id, user_id, images, images_deleted, address, category, property_name, area, room_type, price, deposit, description, start_date, end_date, gender, pet, parking, longitude, latitude);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
 // uploads an image to the file storage system; **DOESN'T** store any lease or user information related to the image
 app.post('/upload_image', async(req, res) => {
    const name = req.body.name;
@@ -240,7 +275,74 @@ app.post('/upload_image', async(req, res) => {
       console.log(e);
       res.status(500).send(new Error("internal server error"));
    }
-})
+});
+
+app.post('/delete_image', async(req, res) => {
+   const key = req.body.key;
+
+   if (!key) {
+      res.status(400).send("the image key must not be empty");
+      return;
+   }
+
+   try {
+      const msg = await imageHandler.deleteObject(key);
+      res.status(200).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
+app.post('/batch_delete_images', async(req, res) => {
+   const keys = req.body.keys;
+
+   if (!keys) {
+      res.status(400).send("the image keys cannot be empty");
+      return;
+   }
+
+   try {
+      const results = await imageHandler.batchDeleteObjects(keys);
+      res.status(200).send(results);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
+app.post('/archive_lease', async(req, res) => {
+   const lease_id = req.body.lease_id;
+   const status = req.body.status;
+   if (!lease_id) {
+      res.status(400).send("lease id is required")
+      return;
+   }
+
+   try {
+      const {code, msg} = await lease.archive_lease(lease_id, status);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
+app.post('/delete_lease', async(req, res) => {
+   const lease_id = req.body.lease_id;
+   if (!lease_id) {
+      res.status(400).send("lease id is required")
+      return;
+   }
+
+   try {
+      const {code, msg} = await lease.delete_lease(lease_id);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
 
 
 var server = app.listen(8000, function () {

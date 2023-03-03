@@ -18,7 +18,7 @@ exports.connect_to_db = function() {
             throw err;
         }
     });
-}
+};
 
 exports.disconnect_db = function() {
     connection.end(function(err){
@@ -30,7 +30,7 @@ exports.disconnect_db = function() {
             throw err;
         }
     });
-}
+};
 
 // returns true if the email exists
 exports.check_email = async function(email) {
@@ -74,7 +74,7 @@ exports._delete_test_user = async function() {
             return error ? reject(error) : resolve(results.affectedRows);
         });
     });
-}
+};
 
 exports.get_user = async function(email) {
     const sql = 'SELECT UserID as userid, UserName as username, PasswordHash as password_hash FROM User WHERE UserEmail = ?';
@@ -207,6 +207,15 @@ exports.lease_insert = async function(value_map) {
             return error ? reject(error) : resolve(results.insertId);
         });
     });
+};
+
+exports.lease_update = async function(value_map, lease_id) {
+    const sql = "Update Sublease SET ? WHERE PostID = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, [value_map, lease_id], function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
 }
 
 exports.check_lease_id_and_image_key_exists = async function(lease_id, image_key) {
@@ -220,13 +229,49 @@ exports.check_lease_id_and_image_key_exists = async function(lease_id, image_key
             return resolve(count > 0);
         });
     });
-}
+};
 
 exports.add_lease_id_and_image_key = async function(lease_id, image_key) {
     const sql = "INSERT INTO Sublease_Images SET ?";
     return new Promise((resolve, reject) => {
         connection.query(sql, {LeaseID: lease_id, ImageKey: image_key}, function(error, results, fields) {
-            return error ? reject(error) : resolve(results);
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+};
+
+exports.change_lease_status = async function(lease_id, status) {
+    const sql = "UPDATE Sublease SET status = ? WHERE PostID = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, [status, lease_id], function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+};
+
+exports.delete_image_keys_from_lease = async function(lease_id) {
+    const sql = "DELETE FROM Sublease_Images WHERE LeaseID = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, lease_id, function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+};
+
+exports.delete_lease = async function(lease_id) {
+    const sql = "DELETE FROM Sublease WHERE PostID = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, lease_id, function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+}
+
+exports.delete_one_image_key_from_lease = async function(lease_id, image_key) {
+    const sql = "DELETE FROM Sublease_Images WHERE LeaseID = ? AND ImageKey = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, [lease_id, image_key], function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
         });
     });
 }
