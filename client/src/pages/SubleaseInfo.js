@@ -189,7 +189,7 @@ const SubleaseInfo = () => {
                             <Typography variant="h6" component="div" p={1}>
                                 Map
                             </Typography>
-                            <Map leaseData={mapData}/>
+                            <Map leaseData={mapData} isSubleaseInfo={true}/>
                         </Box>
 
                         {/* Bottom Margin*/}
