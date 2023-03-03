@@ -12,6 +12,7 @@ exports.getObject = async function(key) {
     const results = await s3.getObject(params).promise();
     return results;
   } catch (err) {
+    console.log("encountered error while getting file " + key);
     console.error(err);
   }
 };

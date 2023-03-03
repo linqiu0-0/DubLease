@@ -246,7 +246,10 @@ exports.edit_lease = async function(lease_id, user_id, images, images_deleted, a
 
     return {
         code: 200,
-        image_keys: image_keys,
+        msg : {
+            lease_id: lease_id,
+            image_keys: image_keys,
+        },
     };
 }
 
