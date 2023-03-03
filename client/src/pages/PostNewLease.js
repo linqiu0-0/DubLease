@@ -13,6 +13,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Upload from "../components/ImageUpload/Upload";
 
 const theme = createTheme({
     typography: {
@@ -57,6 +58,7 @@ const PostNewLease = () => {
     const [longitude, setLongitude] = React.useState("");
     const [validLatitude, setValidLatitude] = React.useState(true);
     const [validLongitude, setValidLongitude] = React.useState(true);
+    const [images, setImages] = React.useState("");
     const formRef = React.useRef();
 
     const handleSubmit = () => {
@@ -66,9 +68,7 @@ const PostNewLease = () => {
         } else if (!validLongitude) {
             //need popup/alert
             console.log("Invalid longitude");
-        } else {
-            formRef.current.reportValidity();
-
+        } else if (formRef.current.reportValidity()) {
             const areaFloat = parseFloat(area);
             const rentFloat = parseFloat(rent);
             const depositInt = parseInt(deposit);
@@ -98,7 +98,7 @@ const PostNewLease = () => {
                     "parking": parkingInt,
                     "latitude": latitudeFloat,
                     "longitude": longitudeFloat,
-                    "images": null
+                    "images": images
                 })
             };
             console.log(requestOptions.body);
@@ -107,7 +107,7 @@ const PostNewLease = () => {
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    navigate('/listing');
+                    navigate('/listings');
                 })
                 .catch(handleError);
         }
@@ -474,9 +474,17 @@ const PostNewLease = () => {
                         <Grid container spacing={3} mt={2} paddingBottom="5%">
                             <Grid xs={10}>
                                 <Typography variant="h6" p={1}>
-                                    Property/Room Image
+                                    Property/Room Images
                                 </Typography>
                             </Grid>
+                            <Grid xs={10}>
+                                <Upload photos={photoData => {
+                                    setImages(photoData);
+                                    console.log(photoData);
+                                }}/>
+                            </Grid>
+
+
                         </Grid>
 
                         <Button
