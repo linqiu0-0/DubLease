@@ -58,6 +58,7 @@ const PostNewLease = () => {
     const [longitude, setLongitude] = React.useState("");
     const [images, setImages] = React.useState("");
     const formRef = React.useRef();
+    const username = window.sessionStorage.getItem("username");
 
     const handleSubmit = () => {
         formRef.current.reportValidity();
@@ -92,7 +93,7 @@ const PostNewLease = () => {
                 "parking": parkingInt,
                 "latitude": latitudeFloat,
                 "longitude": longitudeFloat,
-                "image": images
+                "images": images
             })
         };
         console.log(requestOptions.body);
@@ -101,6 +102,7 @@ const PostNewLease = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                navigate('/listings');
             })
             .catch(handleError);
     }
@@ -120,18 +122,14 @@ const PostNewLease = () => {
     return (
         <ThemeProvider theme={theme}>
             <>
-                <MainAppBar username={userInfo.state.username} />
+                <MainAppBar username={username} />
                 <Button
                     sx={{ mt: 2, p: 0, px: 1, mx: 4 }}
                     size="medium"
                     color="primary"
                     variant="contained" onClick={
                         () => {
-                            navigate('/home', {
-                                state: {
-                                    username: userInfo.state.username
-                                }
-                            });
+                            navigate('/home');
                         }
                     }>
                     <ArrowBackIcon />
