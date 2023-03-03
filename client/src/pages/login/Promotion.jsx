@@ -35,7 +35,7 @@ const PromotionRight = () => {
           <div className="h-[642px] mr-[26px] relative sm:w-[100%] w-[96%]">
             <Img
               src="images/img_group.svg"
-              className="absolute h-[300px] left-[0] top-[0] w-[300px]"
+              className="absolute h-[300px] left-[0] top-[0] w-[300px] o"
               alt="Group"
             />
             <div className="absolute bottom-[0] h-[514px] right-[0] sm:w-[100%] w-[84%]">
@@ -44,6 +44,7 @@ const PromotionRight = () => {
                   <Img
                     src="https://images1.apartments.com/i2/WCQqdTdOx7whsIN4SXA0qt-msh5dw_VGIju9PzqlhX4/111/hub-u-district-seattle-seattle-wa-primary-photo.jpg"
                     className="h-[212px] sm:h-[auto] object-cover md:w-[100%] sm:w-[100%] w-[auto]"
+                    style ={{objectFit: "cover", width:"100%",aspectRatio: "4 / 3"}}
                     alt="Image One"
                   />
                   <div className="flex flex-row items-start justify-between mt-[32px] w-[100%]">
