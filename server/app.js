@@ -240,7 +240,24 @@ app.post('/upload_image', async(req, res) => {
       console.log(e);
       res.status(500).send(new Error("internal server error"));
    }
-})
+});
+
+app.post('/archive_lease', async(req, res) => {
+   const lease_id = req.body.lease_id;
+   const status = req.body.status;
+   if (!lease_id) {
+      res.status(400).send("lease id is required")
+      return;
+   }
+
+   try {
+      const {code, msg} = await lease.archive_lease(lease_id, status);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
 
 
 var server = app.listen(8000, function () {

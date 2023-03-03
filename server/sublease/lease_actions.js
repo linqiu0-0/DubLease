@@ -163,3 +163,20 @@ exports.add_lease = async function(user_id, images, address = "", category = "",
         },
     };
 };
+
+exports.archive_lease = async function(lease_id, status=0) {
+    const has_lease = db.check_lease_exists(lease_id);
+    if (!has_lease) {
+        return {code: 400, msg: "Provided lease id does not exist"};
+    }
+
+    const affectedRows = await db.change_lease_status(lease_id, status);
+    if (affectedRows != 1) {
+        return {
+            code: 500, msg: new Error("failed to update")
+        }
+    }
+
+    const msg = status == 0 ? "Lease archived" : "Lease restored";
+    return {code: 200, msg: "Lease archived"};
+};
