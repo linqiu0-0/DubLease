@@ -209,6 +209,15 @@ exports.lease_insert = async function(value_map) {
     });
 };
 
+exports.lease_update = async function(value_map, lease_id) {
+    const sql = "Update Sublease SET ? WHERE PostID = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, [value_map, lease_id], function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+}
+
 exports.check_lease_id_and_image_key_exists = async function(lease_id, image_key) {
     const sql = 'SELECT COUNT(*) AS count FROM Sublease_Images WHERE LeaseID = ? AND ImageKey = ?';
     return new Promise((resolve, reject) => {
@@ -253,6 +262,15 @@ exports.delete_lease = async function(lease_id) {
     const sql = "DELETE FROM Sublease WHERE PostID = ?";
     return new Promise((resolve, reject) => {
         connection.query(sql, lease_id, function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+}
+
+exports.delete_one_image_key_from_lease = async function(lease_id, image_key) {
+    const sql = "DELETE FROM Sublease_Images WHERE LeaseID = ? AND ImageKey = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, [lease_id, image_key], function(error, results, fields) {
             return error ? reject(error) : resolve(results.affectedRows);
         });
     });

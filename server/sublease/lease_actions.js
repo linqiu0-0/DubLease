@@ -120,39 +120,17 @@ exports.add_lease = async function(user_id, images, address="", category="", pro
     }
 
     const lease_id = await db.lease_insert(value_map);
-    const image_keys = []
+    let image_keys = []
 
     if (images) {
-        // upload images
-        for (let image of images) {
-            const name = image.name;
-            const data = image.data;
-            const type = image.type;
-            const encoding = image.encoding;
-            if (!name || !data) {
-                return {
-                    code: 400, msg: "invalid image format; image name & data are required"
-                };
-            }
-            const image_key = lease_id + "-" + name;
-
-            // Store the lease & the image to the database
-            const duplicate = await db.check_lease_id_and_image_key_exists(lease_id, image_key);
-            // Only add a new database entry if we didn't find a duplicated image key under the same lease.
-            // By default, Amazon S3 will override the previous object if a new object with the same key is uploaded.
-            if (!duplicate) {
-                await db.add_lease_id_and_image_key(lease_id, image_key);
-            }
-
-            // Upload the image to S3
-            location = await imageHandler.uploadObject(image_key, data, type, encoding);
-            if (!location) {
-                return {
-                    code: 500, msg: new Error("failed to upload the image")
-                }
-            }
-            image_keys.push(image_key);
+        const{code, msg, data} = await upload_images(images, lease_id);
+        console.log(code);
+        console.log(msg);
+        console.log(data);
+        if (code != 200) {
+            return {code: code, msg: msg};
         }
+        image_keys = data;
     }
 
     return {
@@ -170,8 +148,8 @@ exports.archive_lease = async function(lease_id, status=0) {
         return {code: 400, msg: "Provided lease id does not exist"};
     }
 
-    const affectedRows = await db.change_lease_status(lease_id, status);
-    if (affectedRows != 1) {
+    const affected_rows = await db.change_lease_status(lease_id, status);
+    if (affected_rows != 1) {
         return {
             code: 500, msg: new Error("failed to update")
         };
@@ -209,3 +187,101 @@ exports.delete_lease = async function(lease_id) {
 
     return {code: 200, msg: "Success"};
 };
+
+exports.edit_lease = async function(lease_id, user_id, images, images_deleted, address, category, property_name, area, room_type, price, deposit,
+                                    description, start_date, end_date, gender, pet, parking, longitude, latitude, status=1) {
+    // First, update the lease entry in the database
+    const value_map = {}
+    if (property_name)  value_map.PropertyName = property_name;
+    if (category)       value_map.PropertyCategory = category;
+    if (address)        value_map.PropertyAddress = address;
+    if (price)          value_map.PropertyPrice = price;
+    if (area)           value_map.RoomSize = area;
+    if (room_type)      value_map.RoomType = room_type;
+    if (gender)         value_map.GenderLimit = gender;
+    if (pet)            value_map.IsPetFriendly = pet;
+    if (start_date)     value_map.SubleasePeriodStart = start_date;
+    if (end_date)       value_map.SubleasePeriodEnd = end_date;
+    if (description)    value_map.PropertyDescription = description;
+    if (parking)        value_map.ParkingAvailable = parking;
+    if (deposit)        value_map.Deposit = deposit;
+    if (latitude)       value_map.Latitude = latitude;
+    if (longitude)      value_map.Longitude = longitude;
+    if (status)         value_map.status = status;
+    if (user_id)        value_map.UserID = user_id;
+
+    const affected_rows = await db.lease_update(value_map, lease_id);
+    if (affected_rows != 1) {
+        return {code: 500, msg: new Error("An error occured during update")};
+    }
+
+    // Add the lease id and the image keys to the database and upload the new images to S3
+    let image_keys = []
+    if (images && images.length > 0) {
+        const {code, msg, data} = await upload_images(images, lease_id);
+        if (code != 200) {
+            return {code: code, msg: msg};
+        }
+        image_keys = data;
+    }
+
+    if (images_deleted && images_deleted.length > 0) {
+        // After that, delete the image keys and lease id of the deleted images from the database
+        for (let delete_key of images_deleted) {
+            const exists = await db.check_lease_id_and_image_key_exists(lease_id, delete_key);
+            // only delete if exists
+            if (exists) {
+                const deleted_rows = await db.delete_one_image_key_from_lease(lease_id, delete_key);
+                if (deleted_rows != 1) {
+                    return {code: 500, msg: new Error("An error occured when deleting old images")};
+                }
+            }
+        }
+        // Finally, delete the deleted images from S3
+        const results = await imageHandler.batchDeleteObjects(images_deleted);
+        if (results.Errors.length > 0) {
+            return {code: 500, msg: "Failed to delete images"};
+        }
+    }
+
+    return {
+        code: 200,
+        image_keys: image_keys,
+    };
+}
+
+async function upload_images(images, lease_id) {
+    const image_keys = []
+    for (let image of images) {
+        const name = image.name;
+        const data = image.data;
+        const type = image.type;
+        const encoding = image.encoding;
+        if (!name || !data) {
+            return {
+                code: 400, 
+                msg: "invalid image format; image name & data are required", 
+                data: null
+            };
+
+        }
+        const image_key = lease_id + "-" + name;
+
+        // Upload the image to S3
+        const location = await imageHandler.uploadObject(image_key, data, type, encoding);
+        if (!location) {
+            return {code: 500, msg: "failed to upload the image", data: null};
+        }
+
+        // Now the image is uploaded, store the lease & the image key to the database
+        const duplicate = await db.check_lease_id_and_image_key_exists(lease_id, image_key);
+        // Only add a new database entry if we didn't find a duplicated image key under the same lease.
+        // By default, Amazon S3 will override the previous object if a new object with the same key is uploaded.
+        if (!duplicate) {
+            await db.add_lease_id_and_image_key(lease_id, image_key);
+        }
+
+        image_keys.push(image_key);
+    }
+    return {code: 200, msg: "success", data: image_keys};
+}
