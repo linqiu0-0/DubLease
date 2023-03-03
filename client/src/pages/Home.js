@@ -137,7 +137,7 @@ const Home = () => {
                 <Grid container spacing={3} mt={2}>
                     {/*map view*/}
                     <Grid xs={6}>
-                        {/*<Map leaseData={leaseData}/>*/}
+                        <Map leaseData={leaseData}/>
                     </Grid>
                     {/*sublease search*/}
                     <Grid xs={6}>

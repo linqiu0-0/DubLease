@@ -56,55 +56,62 @@ const PostNewLease = () => {
     const [parking, setParking] = React.useState("");
     const [latitude, setLatitude] = React.useState("");
     const [longitude, setLongitude] = React.useState("");
+    const [validLatitude, setValidLatitude] = React.useState(true);
+    const [validLongitude, setValidLongitude] = React.useState(true);
     const [images, setImages] = React.useState("");
     const formRef = React.useRef();
     const username = window.sessionStorage.getItem("username");
 
     const handleSubmit = () => {
-        formRef.current.reportValidity();
+        if(!validLatitude) {
+            //need popup/alert
+            console.log("Invalid latitude");
+        } else if (!validLongitude) {
+            //need popup/alert
+            console.log("Invalid longitude");
+        } else if (formRef.current.reportValidity()) {
+            const areaFloat = parseFloat(area);
+            const rentFloat = parseFloat(rent);
+            const depositInt = parseInt(deposit);
+            const genderInt = parseInt(gender);
+            const petInt = parseInt(pet);
+            const parkingInt = parseInt(parking);
+            const latitudeFloat = parseFloat(latitude);
+            const longitudeFloat = parseFloat(longitude);
 
-        // userId is number?
-        const areaFloat = parseFloat(area);
-        const rentFloat = parseFloat(rent);
-        const depositInt = parseInt(deposit);
-        const genderInt = parseInt(gender);
-        const petInt = parseInt(pet);
-        const parkingInt = parseInt(parking);
-        const latitudeFloat = parseFloat(latitude);
-        const longitudeFloat = parseFloat(longitude);
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                "user_id": userInfo.state.userId,
-                "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
-                "category": category,
-                "propertyName": propertyName,
-                "area": areaFloat,
-                "roomType": roomType,
-                "price": rentFloat,
-                "deposit": depositInt,
-                "description": description,
-                "dateAvailable": dateAvailable,
-                "dateEnd": dateEnd,
-                "gender": genderInt,
-                "pet": petInt,
-                "parking": parkingInt,
-                "latitude": latitudeFloat,
-                "longitude": longitudeFloat,
-                "images": images
-            })
-        };
-        console.log(requestOptions.body);
-        fetch(process.env.REACT_APP_SERVER_URL + "add_lease", requestOptions)
-            .then(checkStatus)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                navigate('/listings');
-            })
-            .catch(handleError);
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "user_id": userInfo.state.userId,
+                    "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
+                    "category": category,
+                    "propertyName": propertyName,
+                    "area": areaFloat,
+                    "roomType": roomType,
+                    "price": rentFloat,
+                    "deposit": depositInt,
+                    "description": description,
+                    "dateAvailable": dateAvailable,
+                    "dateEnd": dateEnd,
+                    "gender": genderInt,
+                    "pet": petInt,
+                    "parking": parkingInt,
+                    "latitude": latitudeFloat,
+                    "longitude": longitudeFloat,
+                    "images": images
+                })
+            };
+            console.log(requestOptions.body);
+            fetch(process.env.REACT_APP_SERVER_URL + "add_lease", requestOptions)
+                .then(checkStatus)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    navigate('/listings');
+                })
+                .catch(handleError);
+        }
     }
 
     function checkStatus(response) {
@@ -292,7 +299,9 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setLatitude(e.target.value)}
+                                    onChange={(e) => {
+                                        setLatitude(e.target.value); setValidLatitude(/^[-+]?[0-9]*\.?[0-9]+$/.test(e.target.value) || e.target.value.length == 0);
+                                    }}
 
                                 ></TextField>
                             </Grid>
@@ -306,7 +315,9 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setLongitude(e.target.value)}
+                                    onChange={(e) => {
+                                        setLongitude(e.target.value); setValidLongitude(/^[-+]?[0-9]*\.?[0-9]+$/.test(e.target.value) || e.target.value.length == 0)
+                                    }}
 
                                 ></TextField>
                             </Grid>
