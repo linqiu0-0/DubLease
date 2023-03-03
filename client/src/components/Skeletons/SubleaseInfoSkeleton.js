@@ -91,7 +91,7 @@ export default function SubleaseInfoSkeleton() {
                 <Typography variant="h6" component="div" p={1}>
                     Map
                 </Typography>
-                <Map leaseData={[]}/>
+                <Map leaseData={[]} isSubleaseInfo={true}/>
             </Box>
             <Box height={100}>
             </Box>

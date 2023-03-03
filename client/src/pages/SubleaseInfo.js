@@ -134,6 +134,11 @@ const SubleaseInfo = () => {
                         <Typography variant="body" component="div" p={1}>
                             {subleaseInfoData.description}
                         </Typography>
+<<<<<<< Updated upstream
+=======
+                        <Map leaseData={mapData} isSubleaseInfo={true}/>
+                    </Box>
+>>>>>>> Stashed changes
 
                         {/* Rental Features */}
                         <Typography variant="h6" component="div" p={1}>
