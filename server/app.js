@@ -242,6 +242,40 @@ app.post('/upload_image', async(req, res) => {
    }
 });
 
+app.post('/delete_image', async(req, res) => {
+   const key = req.body.key;
+
+   if (!key) {
+      res.status(400).send("the image key must not be empty");
+      return;
+   }
+
+   try {
+      const msg = await imageHandler.deleteObject(key);
+      res.status(200).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
+app.post('/batch_delete_images', async(req, res) => {
+   const keys = req.body.keys;
+
+   if (!keys) {
+      res.status(400).send("the image keys cannot be empty");
+      return;
+   }
+
+   try {
+      const results = await imageHandler.batchDeleteObjects(keys);
+      res.status(200).send(results);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
 app.post('/archive_lease', async(req, res) => {
    const lease_id = req.body.lease_id;
    const status = req.body.status;

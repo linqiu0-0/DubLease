@@ -91,8 +91,8 @@ exports.get_lease = async function(lease_id) {
     };
 }
 
-exports.add_lease = async function(user_id, images, address = "", category = "", property_name = "", area = 0, room_type = "1B1B", price = 0, deposit = 0, description = "",
-                                    start_date = "0000-00-00", end_date = "0000-00-00", gender = 0, pet = 0, parking = 0, longitude = 0.0, latitude = 0.0, status = 1) {
+exports.add_lease = async function(user_id, images, address="", category="", property_name="", area=0, room_type="1B1B", price=0, deposit=0, description="",
+                                    start_date="0000-00-00", end_date="0000-00-00", gender=0, pet=0, parking=0, longitude=0.0, latitude=0.0, status=1) {
     const user_exists = await db.check_user_id(user_id);
     if (!user_exists) {
         return {code: 400, msg: "User does not exist"};
