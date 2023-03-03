@@ -181,14 +181,15 @@ const SubleaseInfo = () => {
                                     </Typography>
                                 </Grid>
                             </Grid>
-                            {/* Map View */}
-                            <Box height={350}>
-                                <Typography variant="h6" component="div" p={1}>
-                                    Map
-                                </Typography>
-                                <Map leaseData={mapData} isSubleaseInfo={true}/>
-                            </Box>
                         </Box>
+                        {/* Map View */}
+                        <Box height={350}>
+                            <Typography variant="h6" component="div" p={1}>
+                                Map
+                            </Typography>
+                            <Map leaseData={mapData} isSubleaseInfo={true}/>
+                        </Box>
+                    </Box>
 
                     {/* Bottom Margin*/}
                     <Box height={100}>
