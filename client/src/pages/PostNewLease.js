@@ -69,6 +69,8 @@ const PostNewLease = () => {
         } else if (!validLongitude) {
             //need popup/alert
             console.log("Invalid longitude");
+        } else if (dateEnd < dateAvailable) {
+            console.log("End date is before start date");
         } else if (formRef.current.reportValidity()) {
             const areaFloat = parseFloat(area);
             const rentFloat = parseFloat(rent);
@@ -225,6 +227,11 @@ const PostNewLease = () => {
                                     required
                                     id="zipCode"
                                     type="number"
+                                    InputProps={{
+                                        inputProps: { 
+                                            min: 0
+                                        }
+                                    }}
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
@@ -281,6 +288,11 @@ const PostNewLease = () => {
                                     required
                                     id="area"
                                     type="number"
+                                    InputProps={{
+                                        inputProps: { 
+                                            min: 0
+                                        }
+                                    }}
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
@@ -353,6 +365,11 @@ const PostNewLease = () => {
                                     required
                                     id="rent"
                                     type="number"
+                                    InputProps={{
+                                        inputProps: { 
+                                            min: 0
+                                        }
+                                    }}
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
