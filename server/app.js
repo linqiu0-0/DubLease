@@ -293,6 +293,22 @@ app.post('/archive_lease', async(req, res) => {
    }
 });
 
+app.post('/delete_lease', async(req, res) => {
+   const lease_id = req.body.lease_id;
+   if (!lease_id) {
+      res.status(400).send("lease id is required")
+      return;
+   }
+
+   try {
+      const {code, msg} = await lease.delete_lease(lease_id);
+      res.status(code).send(msg);
+   } catch (e) {
+      console.log(e);
+      res.status(500).send(new Error("internal server error"));
+   }
+});
+
 
 var server = app.listen(8000, function () {
    var host = server.address().address;

@@ -174,9 +174,38 @@ exports.archive_lease = async function(lease_id, status=0) {
     if (affectedRows != 1) {
         return {
             code: 500, msg: new Error("failed to update")
-        }
+        };
     }
 
     const msg = status == 0 ? "Lease archived" : "Lease restored";
     return {code: 200, msg: "Lease archived"};
+};
+
+exports.delete_lease = async function(lease_id) {
+    const has_lease = db.check_lease_exists(lease_id);
+    if (!has_lease) {
+        return {code: 400, msg: "Provided lease id does not exist"};
+    }
+
+    // first, retrieve all images under the leaase
+    const image_keys = await db.get_sublease_images(lease_id);
+
+    // next, delete those images from s3
+    if (image_keys.length > 0) {
+        const results = await imageHandler.batchDeleteObjects(image_keys);
+        if (results.Errors.length > 0) {
+            return {code: 500, msg: "Failed to delete images"};
+        }
+    }
+    
+    // then, delete all image keys from the database
+    var _ = await db.delete_image_keys_from_lease(lease_id);
+
+    // finally, delete the lease from the database
+    const deleted_rows = await db.delete_lease(lease_id);
+    if (deleted_rows != 1) {
+        return {code: 500, msg: "An error occured during lease delete"};
+    }
+
+    return {code: 200, msg: "Success"};
 };

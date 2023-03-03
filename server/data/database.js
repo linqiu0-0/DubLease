@@ -239,3 +239,21 @@ exports.change_lease_status = async function(lease_id, status) {
         });
     });
 };
+
+exports.delete_image_keys_from_lease = async function(lease_id) {
+    const sql = "DELETE FROM Sublease_Images WHERE LeaseID = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, lease_id, function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+};
+
+exports.delete_lease = async function(lease_id) {
+    const sql = "DELETE FROM Sublease WHERE PostID = ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, lease_id, function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+}
