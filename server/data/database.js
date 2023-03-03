@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-   host     : 'database-dublease.cgiuptojslql.us-west-2.rds.amazonaws.com',
-   port     : '3306',
-   user     : 'admin',
-   password : 'Ryan6666!!',
-   database : 'dublease'
+    host     : 'database-dublease.cgiuptojslql.us-west-2.rds.amazonaws.com',
+    port     : '3306',
+    user     : 'admin',
+    password : 'Ryan6666!!',
+    database : 'dublease'
 });
 
 // connects to the database (should be called on start of app)
@@ -13,7 +13,7 @@ exports.connect_to_db = function() {
         if(!err) {
             console.log("Database is connected ... ");
         } else {
-            console.log("Error connecting database ... ");   
+            console.log("Error connecting database ... ");
             console.log(err);
             throw err;
         }
@@ -23,9 +23,9 @@ exports.connect_to_db = function() {
 exports.disconnect_db = function() {
     connection.end(function(err){
         if(!err) {
-            console.log("Database is disconnected");    
+            console.log("Database is disconnected");
         } else {
-            console.log("Error disconnecting database:");   
+            console.log("Error disconnecting database:");
             console.log(err);
             throw err;
         }
@@ -52,6 +52,16 @@ exports.add_user = async function(username, email, password_hash) {
     return new Promise((resolve, reject) => {
         connection.query(sql, [values], function(error, results, fields) {
             return error ? reject(error) : resolve(results.insertId);
+        });
+    });
+};
+
+// private
+exports._delete_test_user = async function() {
+    const sql = 'DELETE FROM User WHERE UserName like ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, "test_%", function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
         });
     });
 };

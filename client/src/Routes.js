@@ -6,8 +6,8 @@ import SignUp from "./pages/login/SignUp";
 import { Profile } from "./pages/profile/Profile";
 import { Listings } from "./pages/listings/Listings";
 import SubleaseInfo from "./pages/SubleaseInfo";
+import PostNewLease from "./pages/PostNewLease";
 import useAuth from "./hooks/useAuth";
-
 import NotFound from "./pages/NotFound";
 
 function RequireAuth({ children }) {
@@ -38,6 +38,10 @@ const ProjectRoutes = () => {
                 <Route path="/sublease/:id" element={
                     <RequireAuth>
                         <SubleaseInfo />
+                    </RequireAuth>} />
+                <Route path="/post" element={
+                    <RequireAuth>
+                        <PostNewLease />
                     </RequireAuth>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

@@ -8,16 +8,35 @@ import {createTheme, SvgIcon} from "@mui/material";
 import { ReactComponent as Logo } from '../assets/images/DubLeaseLogo.svg';
 import {ThemeProvider} from "@emotion/react";
 import { useNavigate } from "react-router-dom";
-import {AccountMenu} from "./AccountMenu"
+import {AccountMenu} from "./AccountMenu";
 
 const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function MainAppBar({ username, userId }) {
-    console.log("app bar" + userId)
+    console.log("app bar" + userId);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
+
+    const handleNavMenu = (page) => {
+        // Navigate to AddPost page
+        if (pages.indexOf(page) == 0) {
+            navigate('/home', {
+                state: {
+                  username: username
+                }
+              });
+        }
+        if (pages.indexOf(page) == 2) {
+            navigate('/post', {
+                state: {
+                    username: username,
+                    userId: userId
+                }
+            });
+        }
+    }
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -65,7 +84,7 @@ function MainAppBar({ username, userId }) {
                             {pages.map((page) => (
                                 <Button
                                     key={page}
-                                    onClick={handleCloseNavMenu}
+                                    onClick={() => handleNavMenu(page)}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
                                     {page}
