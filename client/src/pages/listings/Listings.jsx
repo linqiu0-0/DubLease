@@ -7,6 +7,7 @@ import { Text } from "../../components/Text";
 const Listings = () => {
   const [leaseData, setLeaseData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [reloading, setReloading] = React.useState(false);
 
   const getLeaseData = () => {
     let queryUrl = "?id=" + window.sessionStorage.getItem("userId") ;
@@ -36,7 +37,9 @@ const Listings = () => {
 
   useEffect(() => {
     getLeaseData();
-  }, []);
+    setReloading(false);
+    console.log("road all result")
+  }, [reloading]);
 
 
   return (
@@ -93,7 +96,7 @@ const Listings = () => {
                 <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                   {leaseData.map((singleLease) => (
                     <Grid item xs={4}>
-                      <LeaseCardVertical key={singleLease.post_id} leaseCardData={singleLease} />
+                      <LeaseCardVertical key={singleLease.post_id} leaseCardData={singleLease} setReloading={setReloading} />
                     </Grid>
                   ))}
                 </Grid> :
