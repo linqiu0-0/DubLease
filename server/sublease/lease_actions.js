@@ -8,7 +8,6 @@ exports.get_lease = async function(lease_id) {
     }
 
     const sublease = await db.get_lease_by_id(lease_id);
-    // console.log(sublease);
     const image_keys = await db.get_sublease_images(lease_id);
     const user_id = sublease.UserID;
     const user = await db.get_user_by_id(user_id);
@@ -124,9 +123,6 @@ exports.add_lease = async function(user_id, images, address="", category="", pro
 
     if (images) {
         const{code, msg, data} = await upload_images(images, lease_id);
-        console.log(code);
-        console.log(msg);
-        console.log(data);
         if (code != 200) {
             return {code: code, msg: msg};
         }

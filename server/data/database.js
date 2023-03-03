@@ -66,16 +66,6 @@ exports._delete_test_user = async function() {
     });
 };
 
-// private 
-exports._delete_test_user = async function() {
-    const sql = 'DELETE FROM User WHERE UserName like ?';
-    return new Promise((resolve, reject) => {
-        connection.query(sql, "test_%", function(error, results, fields) {
-            return error ? reject(error) : resolve(results.affectedRows);
-        });
-    });
-};
-
 exports.get_user = async function(email) {
     const sql = 'SELECT UserID as userid, UserName as username, PasswordHash as password_hash FROM User WHERE UserEmail = ?';
     return new Promise((resolve, reject) => {
@@ -216,7 +206,7 @@ exports.lease_update = async function(value_map, lease_id) {
             return error ? reject(error) : resolve(results.affectedRows);
         });
     });
-}
+};
 
 exports.check_lease_id_and_image_key_exists = async function(lease_id, image_key) {
     const sql = 'SELECT COUNT(*) AS count FROM Sublease_Images WHERE LeaseID = ? AND ImageKey = ?';
