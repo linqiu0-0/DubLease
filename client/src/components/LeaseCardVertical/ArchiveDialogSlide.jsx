@@ -13,8 +13,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-
-
 function ArchiveDialogSlide({ openArchive, setOpenArchive, post_id, lease_status, setReloading }) {
 
     function checkStatus(response) {
@@ -40,8 +38,7 @@ function ArchiveDialogSlide({ openArchive, setOpenArchive, post_id, lease_status
                 "status": !lease_status,
             })
         };
-        // fetch(process.env.REACT_APP_SERVER_URL + "archive_lease", requestOptions)
-        fetch("http://10.18.201.200:8000/" + "archive_lease", requestOptions)
+        fetch(process.env.REACT_APP_SERVER_URL + "archive_lease", requestOptions)
             .then(checkStatus)
             .then(() => { 
                 setReloading(true);

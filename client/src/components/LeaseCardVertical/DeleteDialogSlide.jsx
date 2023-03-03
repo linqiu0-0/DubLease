@@ -34,8 +34,7 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id }) {
                 "lease_id": post_id
             })
         };
-        // fetch(process.env.REACT_APP_SERVER_URL + "archive_lease", requestOptions)
-        fetch("http://10.18.201.200:8000/" + "delete_lease", requestOptions)
+        fetch(process.env.REACT_APP_SERVER_URL + "delete_lease", requestOptions)
             .then(checkStatus)
             .then(() => { setOpenDelete(false); })
             .catch((error) => { console.log(error) });
