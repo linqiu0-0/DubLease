@@ -206,7 +206,7 @@ exports.lease_update = async function(value_map, lease_id) {
             return error ? reject(error) : resolve(results.affectedRows);
         });
     });
-}
+};
 
 exports.check_lease_id_and_image_key_exists = async function(lease_id, image_key) {
     const sql = 'SELECT COUNT(*) AS count FROM Sublease_Images WHERE LeaseID = ? AND ImageKey = ?';
