@@ -33,6 +33,14 @@ const theme = createTheme({
     },
 });
 
+const states = [
+    'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', ' DC', 'FL', 'GA', 'HI', 'ID',
+    'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS',
+    'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK',
+    'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+    'WI', 'WY'
+];
+
 const EditLease = () => {
     const userInfo = useLocation();
     const navigate = useNavigate();
@@ -177,7 +185,10 @@ const EditLease = () => {
         } else if (!validLongitude) {
             //need popup/alert
             console.log("Invalid longitude");
+        } else if (dateEnd < dateAvailable) {
+            console.log("End date is before start date");
         } else if (formRef.current.reportValidity()) {
+            document.getElementById("submitButton").disabled = true;
             const areaFloat = parseFloat(area);
             const rentFloat = parseFloat(rent);
             const depositInt = parseInt(deposit);
@@ -240,6 +251,7 @@ const EditLease = () => {
 
     function checkStatus(response) {
         if (!response.ok) {
+            document.getElementById("submitButton").disabled = false;
             response.text().then(txt => { alert(txt); });
             throw Error("Error in request: " + response.statusText);
         }
@@ -296,7 +308,7 @@ const EditLease = () => {
                                     size="30ch"
                                     variant="outlined"
                                     value={streetAddress}
-                                    onChange={(e) => setStreetAddress(e.target.value)}
+                                    onChange={(e) => setStreetAddress(e.target.value.trim())}
 
                                 ></TextField>
                             </Grid>
@@ -330,7 +342,7 @@ const EditLease = () => {
                                     size="30ch"
                                     variant="outlined"
                                     value={cityAddress}
-                                    onChange={(e) => setCityAddress(e.target.value)}
+                                    onChange={(e) => setCityAddress(e.target.value.trim())}
 
                                 ></TextField>
                             </Grid>
@@ -338,16 +350,23 @@ const EditLease = () => {
                                 <Typography variant="body1" component="h1" p={1}>
                                     State *
                                 </Typography>
-                                <TextField
-                                    required
-                                    id="stateAddress"
-                                    className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
-                                    size="30ch"
-                                    variant="outlined"
-                                    value={stateAddress}
-                                    onChange={(e) => setStateAddress(e.target.value)}
-
-                                ></TextField>
+                                <FormControl fullWidth>
+                                    <Select
+                                        required
+                                        id="stateAddress"
+                                        value={stateAddress}
+                                        onChange={(e) => setStateAddress(e.target.value)}
+                                    >
+                                        {states.map((state) => (
+                                            <MenuItem
+                                                key={state}
+                                                value={state}
+                                            >
+                                                {state}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid xs={4}>
                                 <Typography variant="body1" component="h1" p={1}>
@@ -357,6 +376,11 @@ const EditLease = () => {
                                     required
                                     id="zipCode"
                                     type="number"
+                                    InputProps={{
+                                        inputProps: {
+                                            min: 0
+                                        }
+                                    }}
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
@@ -403,7 +427,7 @@ const EditLease = () => {
                                     size="30ch"
                                     variant="outlined"
                                     value={propertyName}
-                                    onChange={(e) => setPropertyName(e.target.value)}
+                                    onChange={(e) => setPropertyName(e.target.value.trim())}
 
                                 ></TextField>
                             </Grid>
@@ -415,6 +439,11 @@ const EditLease = () => {
                                     required
                                     id="area"
                                     type="number"
+                                    InputProps={{
+                                        inputProps: {
+                                            min: 0
+                                        }
+                                    }}
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
@@ -455,7 +484,6 @@ const EditLease = () => {
                                     onChange={(e) => {
                                         setLongitude(e.target.value); setValidLongitude(/^[-+]?[0-9]*\.?[0-9]+$/.test(e.target.value) || e.target.value.length == 0)
                                     }}
-
                                 ></TextField>
                             </Grid>
 
@@ -490,12 +518,16 @@ const EditLease = () => {
                                     required
                                     id="rent"
                                     type="number"
+                                    InputProps={{
+                                        inputProps: {
+                                            min: 0
+                                        }
+                                    }}
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
                                     value={rent}
                                     onChange={(e) => setRent(e.target.value)}
-
                                 ></TextField>
                             </Grid>
 
@@ -515,7 +547,6 @@ const EditLease = () => {
                                     </Select>
                                 </FormControl>
                             </Grid>
-
 
                             <Grid xs={12}>
                                 <Typography variant="body1" component="h1" p={1}>
@@ -629,6 +660,7 @@ const EditLease = () => {
                         </Grid>
 
                         <Button
+                            id="submitButton"
                             size="large"
                             variant="contained"
                             color="primary"
