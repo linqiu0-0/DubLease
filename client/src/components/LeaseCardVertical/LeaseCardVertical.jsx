@@ -9,7 +9,7 @@ import { StatusButton } from "./StatusButton";
 import { CardDropDown } from './CardDropDown';
 
 
-function LeaseCardVertical({ leaseCardData }) {
+function LeaseCardVertical({ leaseCardData, setReloading }) {
 
     const [image, setImage] = React.useState([]);
 
@@ -97,7 +97,7 @@ function LeaseCardVertical({ leaseCardData }) {
                             >
                                 ARCHIVED
                             </StatusButton>}
-                        <CardDropDown post_id={leaseCardData.post_id} />
+                        <CardDropDown post_id={leaseCardData.post_id} lease_status={leaseCardData.status} setReloading={setReloading}/>
                     </div>
                     <div className="flex flex-col gap-[8px] items-start justify-start mt-[4px] w-[auto]">
                         <Text
@@ -125,7 +125,7 @@ function LeaseCardVertical({ leaseCardData }) {
                                 className="text-gray_600 text-left w-[auto]"
                                 variant="body6"
                             >
-                                {leaseCardData.bedNum} Beds
+                                {leaseCardData.bedNum == "studio"? "Studio": leaseCardData.bedNum + " Beds"} 
                             </Text>
                         </div>
                         <div className="flex flex-row gap-[8px] items-start justify-start w-[auto]">
@@ -138,7 +138,7 @@ function LeaseCardVertical({ leaseCardData }) {
                                 className="text-gray_600 text-left w-[auto]"
                                 variant="body6"
                             >
-                                {leaseCardData.bathNum} Bathrooms
+                                {leaseCardData.bedNum == "studio"? "1 Bathroom": leaseCardData.bedNum + " Beds"} 
                             </Text>
                         </div>
                         <div className="flex flex-row gap-[8px] items-center justify-center w-[auto]">

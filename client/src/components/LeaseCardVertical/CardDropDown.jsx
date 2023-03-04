@@ -10,10 +10,17 @@ import { useNavigate } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
+import { ArchiveDialogSlide } from './ArchiveDialogSlide';
+import { DeleteDialogSlide } from './DeleteDialogSlide';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ArchiveIcon from '@mui/icons-material/Archive';
 
-function CardDropDown({ post_id }) {
+
+function CardDropDown({ post_id, lease_status, setReloading }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const [openArchive, setOpenArchive] = React.useState(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
     const navigate = useNavigate();
 
     const handleClick = (event) => {
@@ -22,8 +29,9 @@ function CardDropDown({ post_id }) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    
 
-    const handleLogout = () => {
+    const handleViewListings = () => {
         navigate("/sublease/" + post_id, {
             state: {
                 post_id: post_id,
@@ -32,15 +40,12 @@ function CardDropDown({ post_id }) {
         });
     };
 
+    const handleArchive = () => {
+        setOpenDialog(true);
+    }
 
-    const handleListings = () => {
-        navigate("/sublease/" + post_id, {
-            state: {
-                post_id: post_id,
-                username: window.sessionStorage.getItem("username")
-            }
-        });
-    };
+
+
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -87,21 +92,34 @@ function CardDropDown({ post_id }) {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem onClick={handleListings}>
+                <MenuItem onClick={handleViewListings}>
                     <ListItemIcon>
                         <HolidayVillageIcon fontSize="small" />
                     </ListItemIcon>
-                    View Properties
+                    View Listing
                 </MenuItem>
-                <Divider />
-
-                <MenuItem onClick={handleLogout}>
+                <MenuItem onClick={handleViewListings}>
                     <ListItemIcon>
                         <EditIcon fontSize="small" />
                     </ListItemIcon>
-                    Edit Properties
+                    Edit Listing
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={()=> setOpenArchive(true)}>
+                    <ListItemIcon >
+                        <ArchiveIcon fontSize="small" />
+                    </ListItemIcon>
+                    {lease_status? "Archive Listing" :"Unarchive Listing"}
+                </MenuItem>
+                <MenuItem onClick={()=> {setOpenDelete(true)}} >
+                    <ListItemIcon>
+                        <DeleteOutlineIcon fontSize="small" />
+                    </ListItemIcon>
+                    Delete Listing
                 </MenuItem>
             </Menu>
+            <ArchiveDialogSlide openArchive={openArchive} setOpenArchive={setOpenArchive} post_id={post_id} lease_status={lease_status} setReloading={setReloading} />
+            <DeleteDialogSlide openDelete={openDelete} setOpenDelete={setOpenDelete} post_id={post_id} setReloading={setReloading}/>
         </React.Fragment>
     );
 }
