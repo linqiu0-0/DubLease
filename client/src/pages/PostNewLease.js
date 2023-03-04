@@ -184,7 +184,11 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setUnitNum(e.target.value)}
+                                    onChange={(e) => {
+                                        if (e.target.value !== null) {
+                                            setUnitNum("(" + e.target.value + ")");
+                                        }
+                                    }}
 
                                 ></TextField>
                             </Grid>
