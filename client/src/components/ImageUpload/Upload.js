@@ -11,7 +11,6 @@ const Upload = ({ prevImages, photos }) => {
 
 
     const handleChange = (e) => {
-        console.log(prevImages);
         let newFiles = [...e.target.files];
         setFiles([...files, ...newFiles]);
         setFilesData([...filesData, {}]);

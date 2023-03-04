@@ -4,7 +4,7 @@ import MainAppBar from "../components/AppBar";
 import Grid from "@mui/material/Unstable_Grid2";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider, TextField, Button } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -42,7 +42,7 @@ const states = [
 ];
 
 const EditLease = () => {
-    const userInfo = useLocation();
+    const leaseId = useParams();
     const navigate = useNavigate();
     const [streetAddress, setStreetAddress] = React.useState("");
     const [unitNum, setUnitNum] = React.useState("");
@@ -70,7 +70,6 @@ const EditLease = () => {
     const formRef = React.useRef();
     const username = window.sessionStorage.getItem("username");
     const userid = window.sessionStorage.getItem("userId");
-    console.log(userid);
 
     const [prevImages, setPrevImages] = React.useState([]);
     const [prevImagesName, setprevImagesName] = useState([]);
@@ -149,7 +148,7 @@ const EditLease = () => {
     }
 
     const fetchSublaseInfo = async (event) => {
-        let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + 50;
+        let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + leaseId.id;
         console.log(query);
         try {
             let response = await fetch(query);
