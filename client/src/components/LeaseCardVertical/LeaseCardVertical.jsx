@@ -19,7 +19,6 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
         "Access-Control-Allow-Origin": "*"
     };
     const fetchImage = async (imageKey) => {
-        console.log(imageKey);
         if (imageKey == null) {
             return;
         }
@@ -36,7 +35,6 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
             imageBytes = _arrayBufferToBase64(imageBytes);
             let imageUrl = "data:image/png;base64," + imageBytes;
             setImage(imageUrl);
-            console.log(image);
         } catch (e) {
             console.log(e);
         }

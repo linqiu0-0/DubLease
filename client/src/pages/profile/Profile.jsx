@@ -32,10 +32,6 @@ const Profile = () => {
     }
 
     const handleSubmit = () => {
-        // eslint-disable-next-line no-undef
-
-        console.log("validEmail = " + validEmail)
-        console.log("validPhone = " + validPhone)
 
 
         if (validEmail && validPhone) {
@@ -55,9 +51,9 @@ const Profile = () => {
             fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
                 .then(response => response.json())
-                .then((data) => {
-                    console.log(data)
-                })
+                // .then((data) => {
+                //     // console.log(data)
+                // })
                 .catch(handleError);
         }
     }
@@ -269,7 +265,7 @@ const Profile = () => {
                                             error={!validEmail}
                                         ></TextField>
                                         {edit && <Text className="text-black_900 text-[14px] font-plusjakartasans">
-                                            * Edit this wouldn't change the login email address. This is only used for contact.
+                                            * Edit this wouldn&apos;t change the login email address. This is only used for contact.
                                         </Text>}
 
                                     </div>

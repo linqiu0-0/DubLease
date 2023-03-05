@@ -53,7 +53,7 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id }) {
                 <DialogTitle>{"Delete this lisitng?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        Once a listing is deleted, it cannot be recovered, and all associated information, including photos and
+                        Once a listing is deleted, it <b>cannot</b> be recovered, and all associated information, including photos and
                         inquiries, will be permanently removed from our system. We only recommend you to delete this listing when
                         you have successfully subleased it.
                     </DialogContentText>
