@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import PropTypes from 'prop-types';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -52,7 +53,7 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id }) {
                 <DialogTitle>{"Delete this lisitng?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        Once a listing is deleted, it cannot be recovered, and all associated information, including photos and
+                        Once a listing is deleted, it <b>cannot</b> be recovered, and all associated information, including photos and
                         inquiries, will be permanently removed from our system. We only recommend you to delete this listing when
                         you have successfully subleased it.
                     </DialogContentText>
@@ -66,3 +67,10 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id }) {
     );
 }
 export { DeleteDialogSlide }
+
+DeleteDialogSlide.propTypes = {
+    openDelete: PropTypes.bool,
+    setOpenDelete: PropTypes.func,
+    post_id: PropTypes.number,
+};
+

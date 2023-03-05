@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {  Grid, Box} from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { ListingHeader } from "./ListingHeader";
 import { LeaseCardVertical } from "../../components/LeaseCardVertical/LeaseCardVertical";
 import { Text } from "../../components/Text";
@@ -10,7 +10,7 @@ const Listings = () => {
   const [reloading, setReloading] = React.useState(false);
 
   const getLeaseData = () => {
-    let queryUrl = "?id=" + window.sessionStorage.getItem("userId") ;
+    let queryUrl = "?id=" + window.sessionStorage.getItem("userId");
     let headers = {
       'Content-Type': 'application/json',
       "Access-Control-Allow-Origin": "*"
@@ -38,17 +38,16 @@ const Listings = () => {
   useEffect(() => {
     getLeaseData();
     setReloading(false);
-    console.log("road all result")
   }, [reloading]);
 
 
   return (
-    <>
-      <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[150px] h-[100%] w-[100%]">
-        <div className="flex flex-col gap-[10px] justify-center w-[100%]">
-          <ListingHeader />
-          <div className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[100%]">
-            {/* <Paper className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[85%]" variant="outlined">
+
+    <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] h-screen w-[100%]">
+      <div className="flex flex-col gap-[10px] justify-center pb-[100px] w-[100%]">
+        <ListingHeader />
+        <div className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[100%]">
+          {/* <Paper className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[85%]" variant="outlined">
               <Box sx={{
                 width: '100%',
                 p: 1,
@@ -84,35 +83,34 @@ const Listings = () => {
                 </Grid>
               </Box>
             </Paper> */}
-            <Box sx={{
-              width: '85%',
-              display: 'flex',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              p: 1,
-              m: 1
-            }} >
-              {!loading && (leaseData.length != 0 ?
-                <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                  {leaseData.map((singleLease) => (
-                    <Grid item xs={4}>
-                      <LeaseCardVertical key={singleLease.post_id} leaseCardData={singleLease} setReloading={setReloading} />
-                    </Grid>
-                  ))}
-                </Grid> :
-                <Text
-                  className="font-bold text-indigo_900 text-left tracking-[-0.09px] w-[auto]"
-                  variant="body3"
-                >
-                  You have not posted any properties yet.
-                </Text>)}
-            </Box>
-          </div>
-        </div >
+          <Box sx={{
+            width: '85%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            p: 1,
+            m: 1
+          }} >
+            {!loading && (leaseData.length != 0 ?
+              <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                {leaseData.map((singleLease) => (
+                  <Grid item xs={4} key={singleLease.post_id}>
+                    <LeaseCardVertical key={singleLease.post_id} leaseCardData={singleLease} setReloading={setReloading} />
+                  </Grid>
+                ))}
+              </Grid> :
+              <Text
+                className="font-bold text-indigo_900 text-left tracking-[-0.09px] w-[auto]"
+                variant="body3"
+              >
+                You have not posted any properties yet.
+              </Text>)}
+          </Box>
+        </div>
       </div >
-    </>
+    </div >
 
-  ); 
-}; 
-  
+  );
+};
+
 export { Listings }
