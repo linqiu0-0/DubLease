@@ -195,7 +195,11 @@ const PostNewLease = () => {
                                     className=" text-[16px] placeholder:text-black_900_87 text-black_900_87 text-left w-[100%]"
                                     size="30ch"
                                     variant="outlined"
-                                    onChange={(e) => setUnitNum(e.target.value.trim())}
+                                    onChange={(e) => {
+                                        if (e.target.value !== null) {
+                                            setUnitNum("(" + e.target.value + ")");
+                                        }
+                                    }}
                                 ></TextField>
                             </Grid>
 
@@ -507,7 +511,7 @@ const PostNewLease = () => {
                                 <Upload photos={photoData => {
                                     setImages(photoData);
                                     console.log(photoData);
-                                }} />
+                                }} prevImages={[]} />
                             </Grid>
                         </Grid>
 
