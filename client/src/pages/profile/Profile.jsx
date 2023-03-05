@@ -97,7 +97,7 @@ const Profile = () => {
 
     return (
         <>
-            <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[200px] h-[100%] w-[100%]">
+            <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[50px] h-screen w-[100%]">
                 <div className="flex flex-col gap-[23px] justify-center w-[100%]">
                     <ProfileHeader />
                     <div className="flex md:flex-col sm:flex-col flex-row md:gap-[40px] sm:gap-[40px] items-start justify-center max-w-[1020px] mx-[auto] md:px-[20px] sm:px-[20px] w-[100%]">

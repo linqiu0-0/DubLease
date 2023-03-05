@@ -40,9 +40,6 @@ const SignIn = () => {
         .then(checkStatus)
         .then(response => response.json())
         .then(data => {
-          // log user id
-          console.log(data.username);
-          console.log(data.userid);
           window.sessionStorage.setItem("username", data.username);
           window.sessionStorage.setItem("userId", data.userid);
           auth.login().then(() => {
