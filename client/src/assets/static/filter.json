@@ -6,7 +6,7 @@
     "items": [
       {
         "text": "Any Price",
-        "value": "0"
+        "value": "-1"
       },
       {
         "text": "$600",
@@ -45,7 +45,7 @@
     "items": [
       {
         "text": "Any Price",
-        "value": "0"
+        "value": "-1"
       },
       {
         "text": "$1000",
@@ -88,6 +88,10 @@
     "items": [
       {
         "text": "Any Number",
+        "value": "-1"
+      },
+      {
+        "text": "Studio",
         "value": "0"
       },
       {
@@ -115,7 +119,7 @@
     "items": [
       {
         "text": "Any Gender",
-        "value": "0"
+        "value": "-1"
       },
       {
         "text": "Male",

@@ -98,7 +98,7 @@ const Home = () => {
 
         let query = "?";
         filters.map((filter) => {
-            if (filter.value !== "" && (filter.value !== "0" || filter.filterQuery === "name")) {
+            if (filter.value !== "" && (filter.value !== "-1" || filter.filterQuery === "name")) {
                 query += filter.filterQuery + "=" + filter.value + "&";
             }
         });
@@ -164,6 +164,7 @@ const Home = () => {
                                 </Box>
                         }
 
+                        {/* filters */}
                         <MonthPicker
                             prefix={monthPicker[0].prefix}
                             chooseFilterCallback={chooseFilterCallback(monthPicker[0].queryPara)}/>
@@ -177,6 +178,7 @@ const Home = () => {
                             ))}
                         </React.Fragment>
 
+                        {/* Search Results Display */}
                         <Box mx={1} sx={{ border: 1, borderRadius: 2, borderColor: 'grey.500' }}>
                             {
                                 (!firstRender && leaseData.length === 0) ?

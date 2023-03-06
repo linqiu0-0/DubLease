@@ -69,6 +69,8 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
             :
             ( <Paper variant="outlined" onClick={browseSubleaseDetail}>
                 <Grid container spacing={1}>
+
+                    {/* Cover Image*/}
                     <Grid xs={5}>
                         <img
                             src={image}
@@ -76,6 +78,7 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                             className="img"
                         />
                     </Grid>
+
                     <Grid xs={7}>
                         <Box
                             sx={{
@@ -97,6 +100,8 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                                 {leaseCardData.address}
                             </Typography>
                             <Divider />
+
+                            {/* Detail and icon display */}
                             <Box sx={{
                                 display: 'flex',
                                 flexDirection: 'row',
