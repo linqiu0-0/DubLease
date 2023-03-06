@@ -14,7 +14,6 @@ const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function MainAppBar({ username, userId }) {
-    console.log("app bar" + userId);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();

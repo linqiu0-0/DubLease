@@ -10,6 +10,7 @@ import "../styles/App.css"
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import LeaseCardSkeleton from "./Skeletons/LeaseCardSkeleton";
+import ImagePlaceHolder from "../assets/images/PlaceHolderImage.png";
 
 
 function LeaseCard({ leaseCardData, username }) {
@@ -28,8 +29,9 @@ function LeaseCard({ leaseCardData, username }) {
     const headers = { 'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*"};
     const fetchImage = async (imageKey) => {
-        // console.log(imageKey);
+
         if (imageKey == null) {
+            setImage(ImagePlaceHolder);
             return;
         }
         try {

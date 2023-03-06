@@ -80,7 +80,7 @@ const EditLease = () => {
             let response = await fetch(query);
             if (!response.ok) {
                 // get error message from body or default to response statusText
-                const error = (data && data.message) || response.statusText;
+                const error = response.statusText;
                 return Promise.reject(error);
             }
             let data = await response.json();

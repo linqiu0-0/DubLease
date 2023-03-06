@@ -90,7 +90,7 @@ const Home = () => {
         if (filters[1].value !== "" && filters[2].value !== "" && filters[1].value.localeCompare(filters[2].value) > 0) {
             setAlert({severity: "warning", content: "Start Date must be earlier than End Date"});
             return;
-        } else if (filters[3].value !== "" && filters[4].value !== "" && filters[3].value.localeCompare(filters[4].value) > 0) {
+        } else if (filters[3].value !== "" && filters[4].value !== "" && paseInt(filters[3].value) > paseInt(filters[4].value)) {
             setAlert({severity: "warning", content: "Max Price must be bigger than Min Price"});
             return;
         }

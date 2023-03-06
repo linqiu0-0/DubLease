@@ -8,7 +8,6 @@ let propertyData, fromSubleaseInfo;
 function Map({leaseData, isSubleaseInfo}) {
     propertyData = leaseData;
     fromSubleaseInfo = isSubleaseInfo;
-    console.log(leaseData);
 
     useEffect(() => {
         if (propertyData.length === 1 && !propertyData[0].category) {
