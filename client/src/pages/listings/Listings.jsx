@@ -11,13 +11,8 @@ const Listings = () => {
 
   const getLeaseData = () => {
     let queryUrl = "?id=" + window.sessionStorage.getItem("userId");
-    let headers = {
-      'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin": "*"
-    };
 
-    fetch(process.env.REACT_APP_SERVER_URL + "list" + queryUrl,
-      { headers })
+    fetch(process.env.REACT_APP_SERVER_URL + "list" + queryUrl)
       .then(async response => {
         const data = await response.json();
         // check for error response

@@ -107,7 +107,11 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                                         <BedIcon />
                                     </SvgIcon>
                                     <Typography variant="body1" component="span" marginTop={0} mx={1}>
-                                        {leaseCardData.bedNum}
+                                        {
+                                            leaseCardData.bedNum === "0"?
+                                                "Studio" :
+                                                leaseCardData.bedNum === "1" ? leaseCardData.bedNum + " Bed" :
+                                                    leaseCardData.bedNum + " Beds"}
                                     </Typography>
                                 </Box>
                                 <Box mx={2}>
@@ -115,7 +119,7 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                                         <BathIcon />
                                     </SvgIcon>
                                     <Typography paragraph variant="body1" component="span" marginTop={0} mx={1}>
-                                        {leaseCardData.bathNum}
+                                        {leaseCardData.bathNum} {leaseCardData.bathNum === "1" ? "Bath" : "Baths"}
                                     </Typography>
                                 </Box>
 

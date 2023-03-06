@@ -122,7 +122,7 @@ const SubleaseInfo = () => {
                         <ArrowBackIcon />
                         <Typography variant="button" component="span" p={1}>
                             Back
-                            {entryFrom !== null && entryFrom.entryFrom === "Listing" ? entryFrom.entryFrom : "Home"}
+                            {entryFrom !== null && entryFrom.entryFrom === "Listing" ? " Listing" : " Home"}
                         </Typography>
                     </Button>
 

@@ -162,7 +162,6 @@ const Home = () => {
                                 <Box p={1}>
                                     <Alert severity={alert.severity}>{alert.content}</Alert>
                                 </Box>
-
                         }
 
                         <MonthPicker
