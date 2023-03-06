@@ -11,6 +11,7 @@ import Map from "../components/Map";
 import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
 const monthPicker = [
     {
@@ -54,9 +55,6 @@ const initialFilters = [
     }
 ];
 
-const headers = { 'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": "*"};
-
 const theme = createTheme({
     palette: {
         primary: {
@@ -74,6 +72,7 @@ const Home = () => {
     const [filters, setFilters] = React.useState(initialFilters);
     const [leaseData, setLeaseData] = React.useState([]);
     const [alert, setAlert] = React.useState("");
+    const [firstRender, setFirstRender] = React.useState(true);
     const username = window.sessionStorage.getItem("username")
     const userId = window.sessionStorage.getItem("userId")
 
@@ -90,7 +89,7 @@ const Home = () => {
         if (filters[1].value !== "" && filters[2].value !== "" && filters[1].value.localeCompare(filters[2].value) > 0) {
             setAlert({severity: "warning", content: "Start Date must be earlier than End Date"});
             return;
-        } else if (filters[3].value !== "" && filters[4].value !== "" && paseInt(filters[3].value) > paseInt(filters[4].value)) {
+        } else if (filters[3].value !== "" && filters[4].value !== "" && parseInt(filters[3].value) > parseInt(filters[4].value)) {
             setAlert({severity: "warning", content: "Max Price must be bigger than Min Price"});
             return;
         }
@@ -105,8 +104,7 @@ const Home = () => {
         });
         query = process.env.REACT_APP_SERVER_URL + "home" + query.slice(0, -1);
 
-        fetch(query,
-        {headers})
+        fetch(query)
             .then(async response => {
                 const data = await response.json();
                 console.log(data);
@@ -116,6 +114,7 @@ const Home = () => {
                     const error = (data && data.message) || response.statusText;
                     return Promise.reject(error);
                 }
+                setFirstRender(false);
 
                 setLeaseData(data);
             })
@@ -171,15 +170,31 @@ const Home = () => {
                             ))}
                         </React.Fragment>
 
-                        <Stack spacing={2} mt={1} px={1}
-                        sx={{
-                            height: "800px",
-                            overflow: "auto"
-                        }}>
-                            {leaseData.map((singleLease) => (
-                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} username={username}/>
-                            ))}
-                        </Stack>
+                        <Box sx={{ border: 1, borderRadius: 2, borderColor: 'grey.500' }}>
+                            {
+                                (!firstRender && leaseData.length === 0) ?
+                                <Box sx={{
+                                    height: "800px",
+                                    overflow: "auto"
+                                }}>
+                                    <Typography variant="h5" component="h5" p={1} align={"center"}>
+                                        Oops! No available sublease found.
+                                        <SentimentVeryDissatisfiedIcon/>
+                                    </Typography>
+
+                                </Box>
+                                :
+                                <Stack spacing={2} mt={1} px={1}
+                                       sx={{
+                                           height: "800px",
+                                           overflow: "auto"
+                                       }}>
+                                    {leaseData.map((singleLease) => (
+                                        <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} username={username}/>
+                                    ))}
+                                </Stack>
+                            }
+                        </Box>
                     </Grid>
                 </Grid>
             </Box>

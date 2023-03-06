@@ -69,6 +69,7 @@ const PostNewLease = () => {
     const [images, setImages] = React.useState("");
     const formRef = React.useRef();
     const username = window.sessionStorage.getItem("username");
+    const userId = window.sessionStorage.getItem("userId");
 
     const handleSubmit = () => {
         if (!validLatitude) {
@@ -94,7 +95,7 @@ const PostNewLease = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    "user_id": userInfo.state.userId,
+                    "user_id": userId,
                     "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
                     "category": category,
                     "propertyName": propertyName,
@@ -196,7 +197,7 @@ const PostNewLease = () => {
                                     size="30ch"
                                     variant="outlined"
                                     onChange={(e) => {
-                                        if (e.target.value !== null) {
+                                        if (e.target.value !== "") {
                                             setUnitNum("(" + e.target.value + ")");
                                         }
                                     }}

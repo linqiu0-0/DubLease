@@ -10,51 +10,28 @@ import {ThemeProvider} from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import {AccountMenu} from "./AccountMenu";
 
-const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Home', 'Add Lease'];
 
 function MainAppBar({ username, userId }) {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
 
     const handleNavMenu = (page) => {
         // Navigate to AddPost page
         if (pages.indexOf(page) == 0) {
-            navigate('/home', {
-                state: {
-                  username: username
-                }
-              });
+            navigate('/home');
         }
-        if (pages.indexOf(page) == 2) {
-            navigate('/post', {
-                state: {
-                    username: username,
-                    userId: userId
-                }
-            });
+        if (pages.indexOf(page) == 1) {
+            navigate('/post');
         }
     }
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
-
-
-
 
     const customTheme = createTheme({
         palette: {
@@ -74,7 +51,7 @@ function MainAppBar({ username, userId }) {
                     }}
                 >
                     <Toolbar disableGutters>
-                        <SvgIcon component="a" fontSize="large" href="/home" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, pt:"4px" }}>
+                        <SvgIcon component="a" fontSize="large" href="/home" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, pt:1 }}>
                             <Logo />
                         </SvgIcon>
 

@@ -217,7 +217,7 @@ const EditLease = () => {
                 body: JSON.stringify({
                     "lease_id": 50,
                     "user_id": userid,
-                    "address": streetAddress + " (" + unitNum + "), " + cityAddress + ", " + stateAddress + " " + zipcode,
+                    "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
                     "category": category,
                     "propertyName": propertyName,
                     "area": areaFloat,
@@ -322,7 +322,7 @@ const EditLease = () => {
                                     variant="outlined"
                                     value={unitNum}
                                     onChange={(e) => {
-                                        if (e.target.value !== null) {
+                                        if (e.target.value !== "") {
                                             setUnitNum("(" + e.target.value + ")");
                                         }
                                     }}

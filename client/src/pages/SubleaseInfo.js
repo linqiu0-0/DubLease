@@ -80,7 +80,7 @@ const SubleaseInfo = () => {
             setMapData([{latitude: data.latitude, longitude: data.longitude, category: category.text}])
         } catch (error) {
             console.error('There was an error!', error);
-            setErrorMessage(error.message);
+            setErrorMessage(error);
         }
     }
 
