@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from '@mui/material';
 import Box from "@mui/material/Box";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Grid from "@mui/material/Unstable_Grid2";
 import ImagePreview from "./ImagePreview";
 
-const Upload = ({ photos }) => {
+
+const Upload = ({ prevImages, photos }) => {
     const [files, setFiles] = useState([]);
     const [filesData, setFilesData] = useState([]);
 
@@ -22,6 +23,10 @@ const Upload = ({ photos }) => {
             return oldValues.filter((_, i) => i !== index)
         })
     };
+
+    useEffect(() => {
+        setFiles([...files, ...prevImages]);
+    }, [prevImages]);
 
     const getFileData = (index) => (fileData) => {
         filesData[index] = fileData

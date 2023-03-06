@@ -35,8 +35,15 @@ function CardDropDown({ post_id, lease_status, setReloading }) {
     const handleViewListings = () => {
         navigate("/sublease/" + post_id, {
             state: {
-                post_id: post_id,
-                username: window.sessionStorage.getItem("username")
+                entryFrom: "Listing",
+            }
+        });
+    };
+
+    const handleEditListings = () => {
+        navigate("/edit/" + post_id, {
+            state: {
+                entryFrom: "Listing",
             }
         });
     };
@@ -94,7 +101,7 @@ function CardDropDown({ post_id, lease_status, setReloading }) {
                     </ListItemIcon>
                     View Listing
                 </MenuItem>
-                <MenuItem onClick={handleViewListings}>
+                <MenuItem onClick={handleEditListings}>
                     <ListItemIcon>
                         <EditIcon fontSize="small" />
                     </ListItemIcon>

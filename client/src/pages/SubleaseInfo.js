@@ -2,43 +2,43 @@ import React, {useEffect} from "react";
 import {Box, Button, Container, Typography} from '@mui/material';
 import MainAppBar from "../components/AppBar";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate, useParams, useLocation} from "react-router-dom";
 import Map from "../components/Map";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImagesCarousel from "../components/ImagesCarousel";
 import SubleaseInfoSkeleton from "../components/Skeletons/SubleaseInfoSkeleton";
 import GeneralError from "../components/GeneralError";
+import ImagePlaceHolder from "../assets/images/PlaceHolderImage.png";
 
 const SubleaseInfo = () => {
     const [subleaseInfoData, setSubleaseInfoData] = React.useState("");
     const [images, setImages] = React.useState([]);
     const [rentalFeatures, setRentalFeatures] = React.useState([]);
     const [mapData, setMapData] = React.useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
 
     const navigate = useNavigate();
-    const postId = useLocation();
-
-    const headers = { 'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"};
+    const leaseId = useParams();
+    const entryFrom = useLocation().state;
 
     const fetchImage = async (imageKey) => {
         let query = process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey;
         try {
-            let response = await fetch(query, {headers});
+            let response = await fetch(query);
             if (!response.ok) {
                 // get error message from body or default to response statusText
-                const error = (data && data.message) || response.statusText;
-                return Promise.reject(error);
+                const error = response.statusText;
+                throw new Error(error);
             }
             let data = await response.json();
             let imageBytes = data.Body.data;
             imageBytes = _arrayBufferToBase64(imageBytes);
             let imageUrl = "data:image/png;base64," + imageBytes;
             images.push({ src: imageUrl }); // have to use push since multiple images may change state at the same time
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            console.error('There was an error!', error);
+            throw new Error("Image " + error.message);
         }
     };
 
@@ -53,21 +53,23 @@ const SubleaseInfo = () => {
     }
 
     const fetchSublaseInfo = async (event) => {
-        let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + postId.state.post_id;
-        console.log(query);
+        let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + leaseId.id;
         try {
-            let response = await fetch(query, {headers});
+            let response = await fetch(query);
             if (!response.ok) {
                 // get error message from body or default to response statusText
-                const error = (data && data.message) || response.statusText;
-                return Promise.reject(error);
+                const error = response.statusText;
+                throw new Error(error);
             }
 
             const data = await response.json();
-            console.log(data);
 
-            for (let i = 0; i < data.image_keys.length; i++) {
-                await fetchImage(data.image_keys[i]);
+            if (data.image_keys.length == 0 ) {
+                setImages([...images, { src: ImagePlaceHolder }]);
+            } else {
+                for (let i = 0; i < data.image_keys.length; i++) {
+                    await fetchImage(data.image_keys[i]);
+                }
             }
             data.user_phone = (data.user_phone === null || data.user_phone === "") ? "N/A": data.user_phone;
             setSubleaseInfoData(data);
@@ -79,7 +81,7 @@ const SubleaseInfo = () => {
             setMapData([{latitude: data.latitude, longitude: data.longitude, category: category.text}])
         } catch (error) {
             console.error('There was an error!', error);
-            setOpen(true);
+            setErrorMessage(error.message);
         }
     }
 
@@ -92,7 +94,7 @@ const SubleaseInfo = () => {
             return;
         }
 
-        setOpen(false);
+        setErrorMessage("");
     };
 
     return (
@@ -110,12 +112,17 @@ const SubleaseInfo = () => {
                         color="secondary"
                         variant="contained"
                         onClick={() => {
-                            navigate(-1);
+                            if (entryFrom !== null && entryFrom.entryFrom === "Listing") {
+                                navigate("/listings");
+                            } else {
+                                navigate("/home");
+                            }
                         }}
                     >
                         <ArrowBackIcon />
                         <Typography variant="button" component="span" p={1}>
-                            Back Home
+                            Back
+                            {entryFrom !== null && entryFrom.entryFrom === "Listing" ? " Listing" : " Home"}
                         </Typography>
                     </Button>
 
@@ -125,7 +132,7 @@ const SubleaseInfo = () => {
                     <Typography variant="subtitle1" component="div" py={1}>
                         {subleaseInfoData.address}
                     </Typography>
-                    <Box sx={{height: 550 }}>
+                    <Box sx={{height: 650}}>
                         <ImagesCarousel images={images}/>
                     </Box>
                     <Typography variant="h6" component="div" p={1}>
@@ -182,13 +189,14 @@ const SubleaseInfo = () => {
                                 </Grid>
                             </Grid>
                         </Box>
-                        {/* Map View */}
-                        <Box height={350}>
-                            <Typography variant="h6" component="div" p={1}>
-                                Map
-                            </Typography>
-                            <Map leaseData={mapData} isSubleaseInfo={true}/>
-                        </Box>
+                    </Box>
+
+                    {/* Map View */}
+                    <Box height={350}>
+                        <Typography variant="h6" component="div" p={1}>
+                            Map
+                        </Typography>
+                        <Map leaseData={mapData} isSubleaseInfo={true}/>
                     </Box>
 
                     {/* Bottom Margin*/}
@@ -196,7 +204,7 @@ const SubleaseInfo = () => {
                     </Box>
                 </Container>
             }
-            <GeneralError open={open} onClose={handleClose}/>
+            <GeneralError errorMessage={errorMessage} onClose={handleClose}/>
         </React.Fragment>
     );
 };
