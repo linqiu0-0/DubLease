@@ -10,9 +10,10 @@ import "../styles/App.css"
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import LeaseCardSkeleton from "./Skeletons/LeaseCardSkeleton";
+import ImagePlaceHolder from "../assets/images/PlaceHolderImage.png";
 
 
-function LeaseCard({ leaseCardData, username }) {
+function LeaseCard({ leaseCardData, errorDisplay }) {
     const [image, setImage] = React.useState("");
 
     const navigate = useNavigate();
@@ -20,34 +21,31 @@ function LeaseCard({ leaseCardData, username }) {
     const browseSubleaseDetail = (event) => {
         navigate("/sublease/" + leaseCardData.post_id, {
             state: {
-                post_id: leaseCardData.post_id,
+                entryFrom: "Home",
             }
         });
     }
-
-    const headers = { 'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"};
     const fetchImage = async (imageKey) => {
-        // console.log(imageKey);
+
         if (imageKey == null) {
+            setImage(ImagePlaceHolder);
             return;
         }
         try {
-            let response = await fetch(process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey,
-                {headers})
-            let data = await response.json();
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey);
             if (!response.ok) {
                 // get error message from body or default to response statusText
-                const error = (data && data.message) || response.statusText;
-                return Promise.reject(error);
+                const error = response.statusText;
+                throw new Error(error);
             }
+            let data = await response.json();
             let imageBytes = data.Body.data;
             imageBytes = _arrayBufferToBase64(imageBytes);
             let imageUrl = "data:image/png;base64," + imageBytes;
             setImage(imageUrl);
-            // console.log(image);
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            console.error(error);
+            errorDisplay(error.message);
         }
     };
 
@@ -109,7 +107,11 @@ function LeaseCard({ leaseCardData, username }) {
                                         <BedIcon />
                                     </SvgIcon>
                                     <Typography variant="body1" component="span" marginTop={0} mx={1}>
-                                        {leaseCardData.bedNum}
+                                        {
+                                            leaseCardData.bedNum === "0"?
+                                                "Studio" :
+                                                leaseCardData.bedNum === "1" ? leaseCardData.bedNum + " Bed" :
+                                                    leaseCardData.bedNum + " Beds"}
                                     </Typography>
                                 </Box>
                                 <Box mx={2}>
@@ -117,7 +119,7 @@ function LeaseCard({ leaseCardData, username }) {
                                         <BathIcon />
                                     </SvgIcon>
                                     <Typography paragraph variant="body1" component="span" marginTop={0} mx={1}>
-                                        {leaseCardData.bathNum}
+                                        {leaseCardData.bathNum} {leaseCardData.bathNum === "1" ? "Bath" : "Baths"}
                                     </Typography>
                                 </Box>
 
@@ -126,7 +128,7 @@ function LeaseCard({ leaseCardData, username }) {
                                         <SizeIcon />
                                     </SvgIcon>
                                     <Typography variant="body1" component="span" marginTop={0} mx={1}>
-                                        {leaseCardData.space}
+                                        {leaseCardData.space} sqft
                                     </Typography>
                                 </Box>
                             </Box>

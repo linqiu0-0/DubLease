@@ -8,7 +8,6 @@ let propertyData, fromSubleaseInfo;
 function Map({leaseData, isSubleaseInfo}) {
     propertyData = leaseData;
     fromSubleaseInfo = isSubleaseInfo;
-    console.log(leaseData);
 
     useEffect(() => {
         if (propertyData.length === 1 && !propertyData[0].category) {
@@ -42,7 +41,7 @@ function load(p) {
             <i class="fa fa-icon fa-${p.category}"></i>
         </div>
         <div class="info">
-            <div class="price">${p.price}</div>
+            <div class="price">$ ${p.price}</div>
             <div class="address">${p.address}</div>
 
             <div class="features">

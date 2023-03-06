@@ -11,13 +11,8 @@ const Listings = () => {
 
   const getLeaseData = () => {
     let queryUrl = "?id=" + window.sessionStorage.getItem("userId");
-    let headers = {
-      'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin": "*"
-    };
 
-    fetch(process.env.REACT_APP_SERVER_URL + "list" + queryUrl,
-      { headers })
+    fetch(process.env.REACT_APP_SERVER_URL + "list" + queryUrl)
       .then(async response => {
         const data = await response.json();
         // check for error response
@@ -43,7 +38,7 @@ const Listings = () => {
 
   return (
 
-    <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] h-screen w-[100%]">
+    <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] min-h-screen	 w-[100%]">
       <div className="flex flex-col gap-[10px] justify-center pb-[100px] w-[100%]">
         <ListingHeader />
         <div className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[100%]">

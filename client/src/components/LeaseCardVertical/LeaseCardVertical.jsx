@@ -124,7 +124,10 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
                                 className="text-gray_600 text-left w-[auto]"
                                 variant="body6"
                             >
-                                {leaseCardData.bedNum == "studio"? "Studio": leaseCardData.bedNum + " Beds"} 
+                                {leaseCardData.bedNum === "0"?
+                                    "Studio" :
+                                    leaseCardData.bedNum === "1" ? leaseCardData.bedNum + " Bed" :
+                                        leaseCardData.bedNum + " Beds"}
                             </Text>
                         </div>
                         <div className="flex flex-row gap-[8px] items-start justify-start w-[auto]">
@@ -137,7 +140,7 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
                                 className="text-gray_600 text-left w-[auto]"
                                 variant="body6"
                             >
-                                {leaseCardData.bedNum == "studio"? "1 Bathroom": leaseCardData.bedNum + " Beds"} 
+                                {leaseCardData.bathNum} {leaseCardData.bathNum === "1" ? "Bath" : "Baths"}
                             </Text>
                         </div>
                         <div className="flex flex-row gap-[8px] items-center justify-center w-[auto]">
