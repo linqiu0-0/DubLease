@@ -444,7 +444,7 @@ const PostNewLease = () => {
                                 <div className="flex flex-row  justify-start">
                                     <Grid >
                                         <Typography variant="body1" p={1}>
-                                            Date  *
+                                            Date  Start*
                                         </Typography>
                                         <TextField
                                             required

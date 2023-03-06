@@ -564,7 +564,7 @@ const EditLease = () => {
                             </Grid>
                             <Grid xs={10}>
                                 <Typography variant="body1" p={1}>
-                                    Date Available *
+                                    Date Start *
                                 </Typography>
                                 <TextField
                                     required
