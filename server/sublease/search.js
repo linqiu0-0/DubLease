@@ -53,7 +53,7 @@ exports.search_sublease = async function(name, start_date, end_date, min_price, 
 
 // list all postings from a given user
 exports.list_sublease = async function(userid) {
-    const exist = db.check_user_id(userid);
+    const exist = await db.check_user_id(userid);
     if (!exist) {
         return {code: 400, msg: "User does not exist"};
     }
