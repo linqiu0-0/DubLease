@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useEffect } from "react";
-import { Grid, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import { Box } from '@mui/material';
 import { Text } from "../Text";
 import { Img } from "../Img";
 import { Line } from "../Line";
 import { StatusButton } from "./StatusButton";
 import { CardDropDown } from './CardDropDown';
+import PropTypes from 'prop-types';
 
 
 function LeaseCardVertical({ leaseCardData, setReloading }) {
@@ -18,7 +19,6 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
         "Access-Control-Allow-Origin": "*"
     };
     const fetchImage = async (imageKey) => {
-        console.log(imageKey);
         if (imageKey == null) {
             return;
         }
@@ -35,7 +35,6 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
             imageBytes = _arrayBufferToBase64(imageBytes);
             let imageUrl = "data:image/png;base64," + imageBytes;
             setImage(imageUrl);
-            console.log(image);
         } catch (e) {
             console.log(e);
         }
@@ -161,3 +160,9 @@ function LeaseCardVertical({ leaseCardData, setReloading }) {
 }
 
 export { LeaseCardVertical };
+
+
+LeaseCardVertical.propTypes = {
+    leaseCardData: PropTypes.object.isRequired,
+    setReloading: PropTypes.func.isRequired
+};

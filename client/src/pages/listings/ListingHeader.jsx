@@ -7,8 +7,6 @@ import { Text } from "../../components/Text";
 import { Line } from "../../components/Line";
 import { Img } from "../../components/Img";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth.jsx";
-
 
 
 const ListingHeader = () => {

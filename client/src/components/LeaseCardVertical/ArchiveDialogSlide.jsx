@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -40,10 +40,10 @@ function ArchiveDialogSlide({ openArchive, setOpenArchive, post_id, lease_status
         };
         fetch(process.env.REACT_APP_SERVER_URL + "archive_lease", requestOptions)
             .then(checkStatus)
-            .then(() => { 
+            .then(() => {
                 setReloading(true);
                 setOpenArchive(false);
-             })
+            })
             .catch((error) => { console.log(error) });
     }
 
@@ -57,25 +57,26 @@ function ArchiveDialogSlide({ openArchive, setOpenArchive, post_id, lease_status
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle>{lease_status ? "Archive this lisitng?" : "Unarchive this lisitng?"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        {lease_status ?
-                            <div>
-                                <Typography gutterBottom>
-                                    Archiving this listing will remove it from the search results, making it no longer
-                                    visible to potential renters. You can easily unarchive it later if needed.
-                                </Typography>
-                                <Typography gutterBottom>
-                                    We
-                                    recommend to delete the listing once you have successfully subleased your property,
-                                    as this will prevent further inquiries and save you time.
-                                </Typography>
-                            </div> :
-                            "The listing will then be restored and will become visible in search results again."
-                        }
 
-                    </DialogContentText>
-                </DialogContent>
+                {lease_status ?
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            Archiving this listing will remove it from the search results, making it no longer
+                            visible to potential renters. You can easily unarchive it later if needed.
+                        </DialogContentText>
+                        <DialogContentText id="alert-dialog-slide-description2">
+                            We recommend to <b>delete</b> the listing once you have successfully subleased your property,
+                            as this will prevent further inquiries and save you time.
+                        </DialogContentText>
+                    </DialogContent>
+                    :
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            The listing  will then be restored and will become visible in search results again.
+                        </DialogContentText>
+                    </DialogContent>
+                }
+
                 <DialogActions>
                     <Button onClick={handleClose}>Disagree</Button>
                     <Button onClick={handleAgree}>Agree</Button>
@@ -85,3 +86,12 @@ function ArchiveDialogSlide({ openArchive, setOpenArchive, post_id, lease_status
     );
 }
 export { ArchiveDialogSlide }
+
+
+ArchiveDialogSlide.propTypes = {
+    openArchive: PropTypes.bool,
+    setOpenArchive: PropTypes.func,
+    post_id: PropTypes.number,
+    lease_status: PropTypes.number,
+    setReloading: PropTypes.func,
+};

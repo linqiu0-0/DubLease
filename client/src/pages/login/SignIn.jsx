@@ -40,9 +40,6 @@ const SignIn = () => {
         .then(checkStatus)
         .then(response => response.json())
         .then(data => {
-          // log user id
-          console.log(data.username);
-          console.log(data.userid);
           window.sessionStorage.setItem("username", data.username);
           window.sessionStorage.setItem("userId", data.userid);
           auth.login().then(() => {
@@ -73,12 +70,11 @@ const SignIn = () => {
 
   return (
       <>
-        <div className="bg-white_A700 font-plusjakartasans h-[950px] mx-[auto] relative w-[100%]">
-          <div className="absolute flex flex-col gap-[32px] gap-x-[32px] gap-y-[32px] h-[950px] items-start justify-start ml-[160px] mt-[0] md:pl-[20px] sm:pl-[20px] md:pr-[20px] sm:pr-[20px] top-[176px] w-[auto]">
+        <div className="bg-white_A700 font-plusjakartasans mx-[auto] relative w-[100%]">
+          <div className="absolute flex flex-col gap-[32px] gap-x-[32px] gap-y-[32px] items-start justify-start ml-[160px] mt-[0] md:pl-[20px] sm:pl-[20px] md:pr-[20px] sm:pr-[20px] top-[176px] w-[auto]">
             <div className="flex flex-col gap-[8px] items-start justify-start w-[auto]">
               <Text
                   className="text-black_901 text-left tracking-ls032 md:tracking-ls111 sm:tracking-ls111 w-[auto]"
-                  as="h5"
                   variant="h5"
               >
                 Welcome back
