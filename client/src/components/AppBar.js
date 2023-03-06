@@ -25,14 +25,6 @@ function MainAppBar({ username, userId }) {
         }
     }
 
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
     const customTheme = createTheme({
         palette: {
             secondary: {
@@ -69,12 +61,7 @@ function MainAppBar({ username, userId }) {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
-                            {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {/* <Avatar alt={username} src="/static/images/avatar/2.jpg" /> */}
-                                <AccountMenu username={username} userId={userId}/>
-                            </IconButton>
+                            <AccountMenu username={username} userId={userId}/>
                         </Box>
                     </Toolbar>
                 </Box>

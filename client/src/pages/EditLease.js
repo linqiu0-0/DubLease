@@ -81,7 +81,7 @@ const EditLease = () => {
             if (!response.ok) {
                 // get error message from body or default to response statusText
                 const error = response.statusText;
-                return Promise.reject(error);
+                throw new Error(error);
             }
             let data = await response.json();
             let imageBytes = data.Body.data;

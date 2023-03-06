@@ -4,7 +4,7 @@ import MainAppBar from "../components/AppBar";
 import Grid from "@mui/material/Unstable_Grid2";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider, TextField, Button } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -42,7 +42,6 @@ const states = [
 ];
 
 const PostNewLease = () => {
-    const userInfo = useLocation();
     const navigate = useNavigate();
     const [streetAddress, setStreetAddress] = React.useState("");
     const [unitNum, setUnitNum] = React.useState("");
@@ -278,6 +277,7 @@ const PostNewLease = () => {
                                         labelId="category-label"
                                         id="property"
                                         value={category}
+                                        label={"Select Category"}
                                         onChange={(e) => setCategory(e.target.value)}
                                     >
                                         <MenuItem value={"Apartment"}>Apartment</MenuItem>
@@ -363,6 +363,7 @@ const PostNewLease = () => {
                                         labelId="room-label"
                                         id="roomType"
                                         value={roomType}
+                                        label={"Select Type"}
                                         onChange={(e) => setRoomType(e.target.value)}
                                     >
                                         <MenuItem value={"Studio"}>Studio</MenuItem>

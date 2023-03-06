@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Box, Button, Container, Typography} from '@mui/material';
 import MainAppBar from "../components/AppBar";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, useLocation} from "react-router-dom";
 import Map from "../components/Map";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -20,15 +20,16 @@ const SubleaseInfo = () => {
 
     const navigate = useNavigate();
     const leaseId = useParams();
+    const entryFrom = useLocation().state;
 
     const fetchImage = async (imageKey) => {
-        let query = process.env.REACT_APP_SERVER_URL + "get_image?key=1" + imageKey;
+        let query = process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey;
         try {
             let response = await fetch(query);
             if (!response.ok) {
                 // get error message from body or default to response statusText
                 const error = response.statusText;
-                return Promise.reject(error);
+                throw new Error(error);
             }
             let data = await response.json();
             let imageBytes = data.Body.data;
@@ -37,7 +38,7 @@ const SubleaseInfo = () => {
             images.push({ src: imageUrl }); // have to use push since multiple images may change state at the same time
         } catch (error) {
             console.error('There was an error!', error);
-            return Promise.reject(error);
+            throw new Error("Image " + error.message);
         }
     };
 
@@ -58,7 +59,7 @@ const SubleaseInfo = () => {
             if (!response.ok) {
                 // get error message from body or default to response statusText
                 const error = response.statusText;
-                return Promise.reject(error);
+                throw new Error(error);
             }
 
             const data = await response.json();
@@ -80,7 +81,7 @@ const SubleaseInfo = () => {
             setMapData([{latitude: data.latitude, longitude: data.longitude, category: category.text}])
         } catch (error) {
             console.error('There was an error!', error);
-            setErrorMessage(error);
+            setErrorMessage(error.message);
         }
     }
 
@@ -111,12 +112,17 @@ const SubleaseInfo = () => {
                         color="secondary"
                         variant="contained"
                         onClick={() => {
-                            navigate(-1);
+                            if (entryFrom !== null && entryFrom.entryFrom === "Listing") {
+                                navigate("/listings");
+                            } else {
+                                navigate("/home");
+                            }
                         }}
                     >
                         <ArrowBackIcon />
                         <Typography variant="button" component="span" p={1}>
-                            Back Home
+                            Back
+                            {entryFrom !== null && entryFrom.entryFrom === "Listing" ? entryFrom.entryFrom : "Home"}
                         </Typography>
                     </Button>
 

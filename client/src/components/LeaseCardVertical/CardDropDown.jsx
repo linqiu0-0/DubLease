@@ -35,8 +35,7 @@ function CardDropDown({ post_id, lease_status, setReloading }) {
     const handleViewListings = () => {
         navigate("/sublease/" + post_id, {
             state: {
-                post_id: post_id,
-                username: window.sessionStorage.getItem("username")
+                entryFrom: "Listing",
             }
         });
     };

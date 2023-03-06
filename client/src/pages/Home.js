@@ -107,7 +107,7 @@ const Home = () => {
         fetch(query)
             .then(async response => {
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 // check for error response
                 if (!response.ok) {
                     // get error message from body or default to response statusText
@@ -133,14 +133,14 @@ const Home = () => {
         <>
             <MainAppBar username={username} userId={userId}/>
             <Box marginX={4}>
-                <Grid container spacing={3} mt={2}>
+                <Grid container spacing={3} mt={1}>
                     {/*map view*/}
                     <Grid xs={6}>
                         <Map leaseData={leaseData} isSubleaseInfo={false}/>
                     </Grid>
                     {/*sublease search*/}
                     <Grid xs={6}>
-                        <Typography variant="h5" component="h1" p={1} pb={0}>
+                        <Typography variant="h5" component="h1" px={1} >
                             Search Properties
                         </Typography>
                         <Typography variant="subtitle1" component="div" p={1}>
@@ -151,11 +151,19 @@ const Home = () => {
                             <SearchBar
                                 chooseFilterCallback={chooseFilterCallback("name")}
                                 searchWithFilters={searchWithFilters}/>
-                            <Button variant="contained" color="primary" onClick={searchWithFilters}>Apply Filter</Button>
+                            <Button variant="contained" size="small" color="primary" onClick={searchWithFilters}>Apply Filter</Button>
                         </Box>
 
                         {/* Display alert message if there is one. */}
-                        {(alert === "") ? <></> : <Alert severity={alert.severity}>{alert.content}</Alert>}
+                        {
+                            (alert === "") ?
+                                <></>
+                                :
+                                <Box p={1}>
+                                    <Alert severity={alert.severity}>{alert.content}</Alert>
+                                </Box>
+
+                        }
 
                         <MonthPicker
                             prefix={monthPicker[0].prefix}
@@ -170,7 +178,7 @@ const Home = () => {
                             ))}
                         </React.Fragment>
 
-                        <Box sx={{ border: 1, borderRadius: 2, borderColor: 'grey.500' }}>
+                        <Box mx={1} sx={{ border: 1, borderRadius: 2, borderColor: 'grey.500' }}>
                             {
                                 (!firstRender && leaseData.length === 0) ?
                                 <Box sx={{
@@ -190,7 +198,8 @@ const Home = () => {
                                            overflow: "auto"
                                        }}>
                                     {leaseData.map((singleLease) => (
-                                        <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} username={username}/>
+                                        <LeaseCard key={singleLease.post_id} leaseCardData={singleLease}
+                                                   errorDisplay={error=>setAlert({severity: "error", content: error})}/>
                                     ))}
                                 </Stack>
                             }
