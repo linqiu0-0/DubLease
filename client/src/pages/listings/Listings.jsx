@@ -38,7 +38,7 @@ const Listings = () => {
 
   return (
 
-    <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] h-screen w-[100%]">
+    <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] min-h-screen	 w-[100%]">
       <div className="flex flex-col gap-[10px] justify-center pb-[100px] w-[100%]">
         <ListingHeader />
         <div className="flex flex-col items-center justify-center mt-[40px] md:w-[100%] w-[100%]">
