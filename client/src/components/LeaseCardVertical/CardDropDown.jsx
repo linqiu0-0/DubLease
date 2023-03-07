@@ -40,6 +40,14 @@ function CardDropDown({ post_id, lease_status, setReloading }) {
         });
     };
 
+    const handleEditListings = () => {
+        navigate("/edit/" + post_id, {
+            state: {
+                entryFrom: "Listing",
+            }
+        });
+    };
+
 
     return (
         <React.Fragment>
@@ -93,7 +101,7 @@ function CardDropDown({ post_id, lease_status, setReloading }) {
                     </ListItemIcon>
                     View Listing
                 </MenuItem>
-                <MenuItem onClick={handleViewListings}>
+                <MenuItem onClick={handleEditListings}>
                     <ListItemIcon>
                         <EditIcon fontSize="small" />
                     </ListItemIcon>
