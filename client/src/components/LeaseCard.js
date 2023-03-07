@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {Divider, Paper, Skeleton, SvgIcon} from "@mui/material";
+import { Divider, Paper, Skeleton, SvgIcon } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ReactComponent as BedIcon } from '../assets/images/BedIcon.svg';
 import { ReactComponent as SizeIcon } from '../assets/images/SizeIcon.svg';
 import { ReactComponent as BathIcon } from '../assets/images/BathIcon.svg';
 import "../styles/App.css"
-import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import LeaseCardSkeleton from "./Skeletons/LeaseCardSkeleton";
 import ImagePlaceHolder from "../assets/images/PlaceHolderImage.png";
 
@@ -49,14 +49,14 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
         }
     };
 
-    const _arrayBufferToBase64=(buffer) => {
+    const _arrayBufferToBase64 = (buffer) => {
         var binary = '';
-        var bytes = new Uint8Array( buffer );
+        var bytes = new Uint8Array(buffer);
         var len = bytes.byteLength;
         for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode( bytes[ i ] );
+            binary += String.fromCharCode(bytes[i]);
         }
-        return window.btoa( binary );
+        return window.btoa(binary);
     }
 
     useEffect(() => {
@@ -65,9 +65,9 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
 
     return (
         (image === "") ?
-            ( <LeaseCardSkeleton /> )
+            (<LeaseCardSkeleton />)
             :
-            ( <Paper variant="outlined" onClick={browseSubleaseDetail}>
+            (<Paper variant="outlined" onClick={browseSubleaseDetail}>
                 <Grid container spacing={1}>
                     <Grid xs={5}>
                         <img
@@ -87,13 +87,18 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                                 px: 2
                             }}
                         >
-                            <Typography variant="subtitle1" component="h2">
-                                ${leaseCardData.price} / month
-                            </Typography>
-                            <Typography variant="h5" component="h2" marginTop={0}>
+                            <div>
+                                <Typography fontWeight='bold' className="text-deep_purple_A200" variant="h5" component="span">
+                                   ${leaseCardData.price} 
+                                </Typography>
+                                <Typography className='text-slate-600' variant="body1" component="span">
+                                    {" "}/month
+                                </Typography>
+                            </div>
+                            <Typography fontWeight='bold' className='text-gray-700 ' variant="h5" component="h2" marginTop={0}>
                                 {leaseCardData.name}
                             </Typography>
-                            <Typography variant="body2" component="span" marginTop={0}>
+                            <Typography className='text-slate-600' variant="body2" component="span" marginTop={0}>
                                 {leaseCardData.address}
                             </Typography>
                             <Divider />
@@ -103,31 +108,31 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                                 justifyContent: "flex-start",
                             }}>
                                 <Box mx={2}>
-                                    <SvgIcon component="span" fontSize="small" sx={{ pt:1 }}>
+                                    <SvgIcon component="span" fontSize="small" sx={{ pt: 1 }}>
                                         <BedIcon />
                                     </SvgIcon>
-                                    <Typography variant="body1" component="span" marginTop={0} mx={1}>
+                                    <Typography className='text-slate-600' variant="body2" component="span" marginTop={0} mx={0}>
                                         {
-                                            leaseCardData.bedNum === "0"?
+                                            leaseCardData.bedNum === "0" ?
                                                 "Studio" :
                                                 leaseCardData.bedNum === "1" ? leaseCardData.bedNum + " Bed" :
                                                     leaseCardData.bedNum + " Beds"}
                                     </Typography>
                                 </Box>
                                 <Box mx={2}>
-                                    <SvgIcon component="span" fontSize="small" sx={{ pt:1 }}>
+                                    <SvgIcon component="span" fontSize="small" sx={{ pt: 1 }}>
                                         <BathIcon />
                                     </SvgIcon>
-                                    <Typography paragraph variant="body1" component="span" marginTop={0} mx={1}>
+                                    <Typography className='text-slate-600' paragraph variant="body2" component="span" marginTop={0} mx={0}>
                                         {leaseCardData.bathNum} {leaseCardData.bathNum === "1" ? "Bath" : "Baths"}
                                     </Typography>
                                 </Box>
 
                                 <Box mx={2}>
-                                    <SvgIcon component="span" fontSize="small" sx={{ pt:1 }}>
+                                    <SvgIcon component="span" fontSize="small" sx={{ pt: 1 }}>
                                         <SizeIcon />
                                     </SvgIcon>
-                                    <Typography variant="body1" component="span" marginTop={0} mx={1}>
+                                    <Typography className='text-slate-600' variant="body2" component="span" marginTop={0} mx={0}>
                                         {leaseCardData.space} sqft
                                     </Typography>
                                 </Box>
@@ -135,7 +140,7 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                         </Box>
                     </Grid>
                 </Grid>
-            </Paper> )
+            </Paper>)
     );
 }
 
