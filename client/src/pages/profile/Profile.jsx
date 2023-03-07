@@ -32,10 +32,6 @@ const Profile = () => {
     }
 
     const handleSubmit = () => {
-        // eslint-disable-next-line no-undef
-
-        console.log("validEmail = " + validEmail)
-        console.log("validPhone = " + validPhone)
 
 
         if (validEmail && validPhone) {
@@ -55,9 +51,9 @@ const Profile = () => {
             fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
                 .then(response => response.json())
-                .then((data) => {
-                    console.log(data)
-                })
+                // .then((data) => {
+                //     // console.log(data)
+                // })
                 .catch(handleError);
         }
     }
@@ -97,7 +93,7 @@ const Profile = () => {
 
     return (
         <>
-            <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[200px] h-[100%] w-[100%]">
+            <div className="bg-gray_50 flex flex-col font-plusjakartasans items-center justify-start mx-[auto] pb-[50px] h-screen w-[100%]">
                 <div className="flex flex-col gap-[23px] justify-center w-[100%]">
                     <ProfileHeader />
                     <div className="flex md:flex-col sm:flex-col flex-row md:gap-[40px] sm:gap-[40px] items-start justify-center max-w-[1020px] mx-[auto] md:px-[20px] sm:px-[20px] w-[100%]">
@@ -269,7 +265,7 @@ const Profile = () => {
                                             error={!validEmail}
                                         ></TextField>
                                         {edit && <Text className="text-black_900 text-[14px] font-plusjakartasans">
-                                            * Edit this wouldn't change the login email address. This is only used for contact.
+                                            * Edit this wouldn&apos;t change the login email address. This is only used for contact.
                                         </Text>}
 
                                     </div>

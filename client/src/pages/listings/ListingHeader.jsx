@@ -7,8 +7,6 @@ import { Text } from "../../components/Text";
 import { Line } from "../../components/Line";
 import { Img } from "../../components/Img";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth.jsx";
-
 
 
 const ListingHeader = () => {
@@ -29,12 +27,12 @@ const ListingHeader = () => {
                                         shape="icbRoundedBorder8"
                                         size="smIcn"
                                         variant="icbFillDeeppurpleA200"
+                                        href="/home"
                                     >
                                         <Logo />
                                     </Button>
                                     <Text
                                         className="font-bold mb-[2px] mt-[8px] text-indigo_900 text-left"
-                                        as="body2"
                                         variant="body2"
                                     >
                                         My Listings

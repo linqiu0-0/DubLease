@@ -11,6 +11,7 @@ import Map from "../components/Map";
 import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
 const monthPicker = [
     {
@@ -54,9 +55,6 @@ const initialFilters = [
     }
 ];
 
-const headers = { 'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": "*"};
-
 const theme = createTheme({
     palette: {
         primary: {
@@ -74,6 +72,7 @@ const Home = () => {
     const [filters, setFilters] = React.useState(initialFilters);
     const [leaseData, setLeaseData] = React.useState([]);
     const [alert, setAlert] = React.useState("");
+    const [firstRender, setFirstRender] = React.useState(true);
     const username = window.sessionStorage.getItem("username")
     const userId = window.sessionStorage.getItem("userId")
 
@@ -90,7 +89,7 @@ const Home = () => {
         if (filters[1].value !== "" && filters[2].value !== "" && filters[1].value.localeCompare(filters[2].value) > 0) {
             setAlert({severity: "warning", content: "Start Date must be earlier than End Date"});
             return;
-        } else if (filters[3].value !== "" && filters[4].value !== "" && filters[3].value.localeCompare(filters[4].value) > 0) {
+        } else if (filters[3].value !== "" && filters[4].value !== "" && parseInt(filters[3].value) > parseInt(filters[4].value)) {
             setAlert({severity: "warning", content: "Max Price must be bigger than Min Price"});
             return;
         }
@@ -99,23 +98,23 @@ const Home = () => {
 
         let query = "?";
         filters.map((filter) => {
-            if (filter.value !== "" && (filter.value !== "0" || filter.filterQuery === "name")) {
+            if (filter.value !== "" && (filter.value !== "-1" || filter.filterQuery === "name")) {
                 query += filter.filterQuery + "=" + filter.value + "&";
             }
         });
         query = process.env.REACT_APP_SERVER_URL + "home" + query.slice(0, -1);
 
-        fetch(query,
-        {headers})
+        fetch(query)
             .then(async response => {
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 // check for error response
                 if (!response.ok) {
                     // get error message from body or default to response statusText
                     const error = (data && data.message) || response.statusText;
                     return Promise.reject(error);
                 }
+                setFirstRender(false);
 
                 setLeaseData(data);
             })
@@ -134,14 +133,14 @@ const Home = () => {
         <>
             <MainAppBar username={username} userId={userId}/>
             <Box marginX={4}>
-                <Grid container spacing={3} mt={2}>
+                <Grid container spacing={3} mt={1}>
                     {/*map view*/}
                     <Grid xs={6}>
-                        <Map leaseData={leaseData}/>
+                        <Map leaseData={leaseData} isSubleaseInfo={false}/>
                     </Grid>
                     {/*sublease search*/}
                     <Grid xs={6}>
-                        <Typography variant="h5" component="h1" p={1} pb={0}>
+                        <Typography variant="h5" component="h1" px={1} >
                             Search Properties
                         </Typography>
                         <Typography variant="subtitle1" component="div" p={1}>
@@ -152,12 +151,20 @@ const Home = () => {
                             <SearchBar
                                 chooseFilterCallback={chooseFilterCallback("name")}
                                 searchWithFilters={searchWithFilters}/>
-                            <Button variant="contained" color="primary" onClick={searchWithFilters}>Apply Filter</Button>
+                            <Button variant="contained" size="small" color="primary" onClick={searchWithFilters}>Apply Filter</Button>
                         </Box>
 
                         {/* Display alert message if there is one. */}
-                        {(alert === "") ? <></> : <Alert severity={alert.severity}>{alert.content}</Alert>}
+                        {
+                            (alert === "") ?
+                                <></>
+                                :
+                                <Box p={1}>
+                                    <Alert severity={alert.severity}>{alert.content}</Alert>
+                                </Box>
+                        }
 
+                        {/* filters */}
                         <MonthPicker
                             prefix={monthPicker[0].prefix}
                             chooseFilterCallback={chooseFilterCallback(monthPicker[0].queryPara)}/>
@@ -171,15 +178,33 @@ const Home = () => {
                             ))}
                         </React.Fragment>
 
-                        <Stack spacing={2} mt={1} px={1}
-                        sx={{
-                            height: "800px",
-                            overflow: "auto"
-                        }}>
-                            {leaseData.map((singleLease) => (
-                                <LeaseCard key={singleLease.post_id} leaseCardData={singleLease} username={username}/>
-                            ))}
-                        </Stack>
+                        {/* Search Results Display */}d
+                        <Box mx={1} sx={{ border: 1, borderRadius: 2, borderColor: 'grey.500' }}>
+                            {
+                                (!firstRender && leaseData.length === 0) ?
+                                <Box sx={{
+                                    height: "800px",
+                                    overflow: "auto"
+                                }}>
+                                    <Typography variant="h5" component="h5" p={1} align={"center"}>
+                                        Oops! No available sublease found.
+                                        <SentimentVeryDissatisfiedIcon/>
+                                    </Typography>
+
+                                </Box>
+                                :
+                                <Stack spacing={2} mt={1} px={1}
+                                       sx={{
+                                           height: "800px",
+                                           overflow: "auto"
+                                       }}>
+                                    {leaseData.map((singleLease) => (
+                                        <LeaseCard key={singleLease.post_id} leaseCardData={singleLease}
+                                                   errorDisplay={error=>setAlert({severity: "error", content: error})}/>
+                                    ))}
+                                </Stack>
+                            }
+                        </Box>
                     </Grid>
                 </Grid>
             </Box>

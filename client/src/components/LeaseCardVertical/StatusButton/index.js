@@ -18,8 +18,6 @@ const sizes = { smIcn: "p-[4px]", mdIcn: "p-[10px]", sm: "p-[9px]" };
 const StatusButton = ({
   children,
   className = "",
-  leftIcon,
-  rightIcon,
   shape,
   variant,
   size,
@@ -32,9 +30,7 @@ const StatusButton = ({
       } ${(variant && variants[variant]) || ""}`}
       {...restProps}
     >
-      {!!leftIcon && leftIcon}
       {children}
-      {!!rightIcon && rightIcon}
     </button>
   );
 };

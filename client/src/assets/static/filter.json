@@ -6,7 +6,15 @@
     "items": [
       {
         "text": "Any Price",
-        "value": "0"
+        "value": "-1"
+      },
+      {
+        "text": "$600",
+        "value": "600"
+      },
+      {
+        "text": "$600",
+        "value": "600"
       },
       {
         "text": "$800",
@@ -41,7 +49,7 @@
     "items": [
       {
         "text": "Any Price",
-        "value": "0"
+        "value": "-1"
       },
       {
         "text": "$1000",
@@ -66,6 +74,14 @@
       {
         "text": "$2000",
         "value": "2000"
+      },
+      {
+        "text": "$2200",
+        "value": "2200"
+      },
+      {
+        "text": "$2400",
+        "value": "2400"
       }
     ]
   },
@@ -76,6 +92,10 @@
     "items": [
       {
         "text": "Any Number",
+        "value": "-1"
+      },
+      {
+        "text": "Studio",
         "value": "0"
       },
       {
@@ -103,7 +123,7 @@
     "items": [
       {
         "text": "Any Gender",
-        "value": "0"
+        "value": "-1"
       },
       {
         "text": "Male",

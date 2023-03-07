@@ -8,35 +8,22 @@ import {createTheme, SvgIcon} from "@mui/material";
 import { ReactComponent as Logo } from '../assets/images/DubLeaseLogo.svg';
 import {ThemeProvider} from "@emotion/react";
 import { useNavigate } from "react-router-dom";
-import {AccountMenu} from "./AccountMenu"
+import {AccountMenu} from "./AccountMenu";
 
-const pages = ['Home', 'Message', 'Add Lease', 'About Us'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Home', 'Add Lease'];
 
 function MainAppBar({ username, userId }) {
-    console.log("app bar" + userId)
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
-
-
-
+    const handleNavMenu = (page) => {
+        // Navigate to AddPost page
+        if (pages.indexOf(page) == 0) {
+            navigate('/home');
+        }
+        if (pages.indexOf(page) == 1) {
+            navigate('/post');
+        }
+    }
 
     const customTheme = createTheme({
         palette: {
@@ -56,7 +43,7 @@ function MainAppBar({ username, userId }) {
                     }}
                 >
                     <Toolbar disableGutters>
-                        <SvgIcon component="a" href="/" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+                        <SvgIcon component="a" fontSize="large" href="/home" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, pt:1 }}>
                             <Logo />
                         </SvgIcon>
 
@@ -65,7 +52,7 @@ function MainAppBar({ username, userId }) {
                             {pages.map((page) => (
                                 <Button
                                     key={page}
-                                    onClick={handleCloseNavMenu}
+                                    onClick={() => handleNavMenu(page)}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
                                     {page}
@@ -74,12 +61,7 @@ function MainAppBar({ username, userId }) {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
-                            {/* <Button variant="contained" sx={{mr: 3}}  onClick={handleViewProfile}>View Profile</Button> */}
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {/* <Avatar alt={username} src="/static/images/avatar/2.jpg" /> */}
-                                <AccountMenu username={username} userId={userId}/>
-                            </IconButton>
+                            <AccountMenu username={username} userId={userId}/>
                         </Box>
                     </Toolbar>
                 </Box>

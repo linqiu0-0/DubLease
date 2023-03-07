@@ -28,19 +28,19 @@ export default function SubleaseInfoSkeleton() {
             </Button>
 
             <Typography variant="h2" component="h1">
-                <Skeleton width={"30%"}/>
+                <Skeleton animation="wave" width={"30%"}/>
             </Typography>
             <Typography variant="h5" component="div">
-                <Skeleton width={"20%"}/>
+                <Skeleton animation="wave" width={"20%"}/>
             </Typography>
 
             <Box marginTop={2} sx={{height: 550 }}>
-                <Skeleton variant="rectangular" height={550}/>
+                <Skeleton animation="wave" variant="rectangular" height={550}/>
             </Box>
             <Typography variant="h6" component="div" p={1}>
                 Description
             </Typography>
-            <Skeleton variant="rounded" height={200} sx={{p: 1}}/>
+            <Skeleton animation="wave" variant="rounded" height={200} sx={{p: 1}}/>
 
             <Typography variant="h6" component="div" p={1}>
                 Rental Features
@@ -49,15 +49,7 @@ export default function SubleaseInfoSkeleton() {
                 {
                     rentalFeatures.map((holder, index) => (
                         <Grid key={index} item xs={6}>
-                            <Skeleton variant="rectangular" height={30}/>
-                            {/*<Box sx={{display: 'flex', justifyContent: 'space-between'}}>*/}
-                            {/*    <Typography align="left" variant="body" component="div">*/}
-                            {/*        {features.label}*/}
-                            {/*    </Typography>*/}
-                            {/*    <Typography align="right" variant="body" component="div" >*/}
-                            {/*        {features.text}*/}
-                            {/*    </Typography>*/}
-                            {/*</Box>*/}
+                            <Skeleton animation="wave" variant="rectangular" height={30}/>
                         </Grid>
                     ))
                 }
@@ -70,18 +62,18 @@ export default function SubleaseInfoSkeleton() {
                 </Typography>
 
                 <Box sx={{ display: "flex", px:2 , alignItems: 'center'}}>
-                    <Skeleton variant="circular">
+                    <Skeleton animation="wave" variant="circular">
                         <Avatar/>
                     </Skeleton>
                     <Grid container justifyContent="space-between" sx={{flexGrow: 1}}>
                         <Grid xs={3}>
-                            <Skeleton variant="rounded" sx={{m: 2}}/>
+                            <Skeleton animation="wave" variant="rounded" sx={{m: 2}}/>
                         </Grid>
                         <Grid xs={3}>
-                            <Skeleton variant="rounded" sx={{m: 2}}/>
+                            <Skeleton animation="wave" variant="rounded" sx={{m: 2}}/>
                         </Grid>
                         <Grid xs={3}>
-                            <Skeleton variant="rounded" sx={{m: 2, textAlign: 'right'}}/>
+                            <Skeleton animation="wave" variant="rounded" sx={{m: 2, textAlign: 'right'}}/>
                         </Grid>
                     </Grid>
                 </Box>
@@ -91,7 +83,7 @@ export default function SubleaseInfoSkeleton() {
                 <Typography variant="h6" component="div" p={1}>
                     Map
                 </Typography>
-                <Map leaseData={[]}/>
+                <Map leaseData={[]} isSubleaseInfo={true}/>
             </Box>
             <Box height={100}>
             </Box>
