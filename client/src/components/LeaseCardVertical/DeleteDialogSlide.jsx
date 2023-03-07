@@ -13,7 +13,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-function DeleteDialogSlide({ openDelete, setOpenDelete, post_id }) {
+function DeleteDialogSlide({ openDelete, setOpenDelete, post_id, setReloading }) {
 
     function checkStatus(response) {
         if (!response.ok) {
@@ -37,7 +37,10 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id }) {
         };
         fetch(process.env.REACT_APP_SERVER_URL + "delete_lease", requestOptions)
             .then(checkStatus)
-            .then(() => { setOpenDelete(false); })
+            .then(() => { 
+                setReloading(true)
+                setOpenDelete(false);
+             })
             .catch((error) => { console.log(error) });
     }
 
@@ -72,5 +75,6 @@ DeleteDialogSlide.propTypes = {
     openDelete: PropTypes.bool,
     setOpenDelete: PropTypes.func,
     post_id: PropTypes.number,
+    setReloading: PropTypes.func
 };
 
