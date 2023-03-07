@@ -3,7 +3,7 @@
 ## Installation
 
 To get started, clone the repo:
-`$ git@github.com:linqiu0-0/DubLease.git`
+`$ git clone https://github.com/linqiu0-0/DubLease.git`
 
 ## Start Developing
 ### Prerequisites
