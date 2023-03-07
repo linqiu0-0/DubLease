@@ -132,9 +132,12 @@ const SubleaseInfo = () => {
                     <Typography variant="subtitle1" component="div" py={1}>
                         {subleaseInfoData.address}
                     </Typography>
+
+                    {/* Image Carousel */}
                     <Box sx={{height: 650}}>
                         <ImagesCarousel images={images}/>
                     </Box>
+
                     <Typography variant="h6" component="div" p={1}>
                         Description
                     </Typography>

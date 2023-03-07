@@ -14,6 +14,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Upload from "../components/ImageUpload/Upload";
+import { LatLongTooltips } from "../components/latLongTooltips/LatLongTooltips";
 
 const theme = createTheme({
     typography: {
@@ -138,6 +139,10 @@ const PostNewLease = () => {
         console.log(error);
     }
 
+
+
+
+
     return (
         <ThemeProvider theme={theme}>
             <>
@@ -167,7 +172,7 @@ const PostNewLease = () => {
                     </Grid>
 
                     <form ref={formRef}>
-                        <Grid container spacing={3} mt={2} paddingBottom="5%">
+                        <Grid container spacing={3} mt={2} paddingBottom="5%" >
                             <Grid xs={10}>
                                 <Typography variant="h6" p={1}>
                                     Property Address
@@ -321,9 +326,12 @@ const PostNewLease = () => {
                             </Grid>
 
                             <Grid xs={6}>
-                                <Typography variant="body1" p={1}>
-                                    Property Latitude *
-                                </Typography>
+                                <div className="flex flex-row items-center">
+                                    <Typography variant="body1" component="span" p={1}>
+                                        Property Latitude *
+                                    </Typography>
+                                    <LatLongTooltips />
+                                </div>
                                 <TextField
                                     required
                                     id="latitude"
@@ -335,11 +343,15 @@ const PostNewLease = () => {
                                     }}
 
                                 ></TextField>
+
                             </Grid>
                             <Grid xs={6}>
-                                <Typography variant="body1" p={1}>
-                                    Property Longitude *
-                                </Typography>
+                                <div className="flex flex-row items-center">
+                                    <Typography variant="body1" component="span" p={1}>
+                                        Property Longitude *
+                                    </Typography>
+                                    <LatLongTooltips />
+                                </div>
                                 <TextField
                                     required
                                     id="longitude"
@@ -428,80 +440,86 @@ const PostNewLease = () => {
                                     onChange={(e) => setDescription(e.target.value)}
                                 />
                             </Grid>
-                            <Grid xs={10}>
-                                <Typography variant="body1" p={1}>
-                                    Date Available *
-                                </Typography>
-                                <TextField
-                                    required
-                                    id="dateAvailable"
-                                    type="date"
-                                    defaultValue={dateAvailable}
-                                    sx={{ width: 220 }}
-                                    onChange={(e) => setDateAvailable(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid xs={10}>
-                                <Typography variant="body1" p={1}>
-                                    Date End *
-                                </Typography>
-                                <TextField
-                                    required
-                                    id="dateEnd"
-                                    type="date"
-                                    defaultValue={dateEnd}
-                                    sx={{ width: 220 }}
-                                    onChange={(e) => setDateEnd(e.target.value)}
-                                />
-                            </Grid>
-
-                            <Grid xs={4}>
-                                <Typography variant="body1" p={1}>
-                                    Gender Constraint *
-                                </Typography>
-                                <FormControl required>
-                                    <RadioGroup
-                                        id="gender"
-                                        onChange={(e) => setGender(e.target.value)}
-                                    >
-                                        <FormControlLabel value={0} control={<Radio required={true} />} label="Any" />
-                                        <FormControlLabel value={1} control={<Radio required={true} />} label="Male Only" />
-                                        <FormControlLabel value={2} control={<Radio required={true} />} label="Female Only" />
-                                        <FormControlLabel value={3} control={<Radio required={true} />} label="Other" />
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-                            <Grid xs={4}>
-                                <Typography variant="body1" p={1}>
-                                    Pet Friendly *
-                                </Typography>
-                                <FormControl>
-                                    <RadioGroup
-                                        required
-                                        id="pet"
-                                        onChange={(e) => setPet(e.target.value)}
-                                    >
-                                        <FormControlLabel value={1} control={<Radio required={true} />} label="Yes" />
-                                        <FormControlLabel value={0} control={<Radio required={true} />} label="No" />
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-                            <Grid xs={4}>
-                                <Typography variant="body1" p={1}>
-                                    Parking Available *
-                                </Typography>
-                                <FormControl>
-                                    <RadioGroup
-                                        required
-                                        id="parking"
-                                        onChange={(e) => setParking(e.target.value)}
-                                    >
-                                        <FormControlLabel value={1} control={<Radio required={true} />} label="Yes" />
-                                        <FormControlLabel value={0} control={<Radio required={true} />} label="No" />
-                                    </RadioGroup>
-                                </FormControl>
+                            <Grid xs={12}>
+                                <div className="flex flex-row  justify-start">
+                                    <Grid >
+                                        <Typography variant="body1" p={1}>
+                                            Date  Start*
+                                        </Typography>
+                                        <TextField
+                                            required
+                                            id="dateAvailable"
+                                            type="date"
+                                            defaultValue={dateAvailable}
+                                            sx={{ width: 220 }}
+                                            onChange={(e) => setDateAvailable(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid >
+                                        <Typography variant="body1" p={1}>
+                                            Date End *
+                                        </Typography>
+                                        <TextField
+                                            required
+                                            id="dateEnd"
+                                            type="date"
+                                            defaultValue={dateEnd}
+                                            sx={{ width: 220 }}
+                                            onChange={(e) => setDateEnd(e.target.value)}
+                                        />
+                                    </Grid>
+                                </div>
+                                <div className="flex flex-row">
+                                    <Grid xs={4}>
+                                        <Typography variant="body1" p={1}>
+                                            Gender Constraint *
+                                        </Typography>
+                                        <FormControl required>
+                                            <RadioGroup
+                                                id="gender"
+                                                onChange={(e) => setGender(e.target.value)}
+                                            >
+                                                <FormControlLabel value={0} control={<Radio required={true} />} label="Any" />
+                                                <FormControlLabel value={1} control={<Radio required={true} />} label="Male Only" />
+                                                <FormControlLabel value={2} control={<Radio required={true} />} label="Female Only" />
+                                                <FormControlLabel value={3} control={<Radio required={true} />} label="Other" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid xs={4}>
+                                        <Typography variant="body1" p={1}>
+                                            Pet Friendly *
+                                        </Typography>
+                                        <FormControl>
+                                            <RadioGroup
+                                                required
+                                                id="pet"
+                                                onChange={(e) => setPet(e.target.value)}
+                                            >
+                                                <FormControlLabel value={1} control={<Radio required={true} />} label="Yes" />
+                                                <FormControlLabel value={0} control={<Radio required={true} />} label="No" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid xs={4}>
+                                        <Typography variant="body1" p={1}>
+                                            Parking Available *
+                                        </Typography>
+                                        <FormControl>
+                                            <RadioGroup
+                                                required
+                                                id="parking"
+                                                onChange={(e) => setParking(e.target.value)}
+                                            >
+                                                <FormControlLabel value={1} control={<Radio required={true} />} label="Yes" />
+                                                <FormControlLabel value={0} control={<Radio required={true} />} label="No" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                </div>
                             </Grid>
                         </Grid>
+
 
                         <Grid container spacing={3} mt={2} paddingBottom="5%">
                             <Grid xs={10}>

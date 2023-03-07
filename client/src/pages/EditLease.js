@@ -215,7 +215,7 @@ const EditLease = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    "lease_id": 50,
+                    "lease_id": leaseId.id,
                     "user_id": userid,
                     "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
                     "category": category,
@@ -564,7 +564,7 @@ const EditLease = () => {
                             </Grid>
                             <Grid xs={10}>
                                 <Typography variant="body1" p={1}>
-                                    Date Available *
+                                    Date Start *
                                 </Typography>
                                 <TextField
                                     required
