@@ -178,7 +178,7 @@ const Home = () => {
                             ))}
                         </React.Fragment>
 
-                        {/* Search Results Display */}d
+                        {/* Search Results Display */}
                         <Box mx={1} sx={{ border: 1, borderRadius: 2, borderColor: 'grey.500' }}>
                             {
                                 (!firstRender && leaseData.length === 0) ?
