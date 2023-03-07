@@ -2,7 +2,7 @@ const db = require('../data/database');
 const imageHandler = require('../data/file_storage');
 
 exports.get_lease = async function(lease_id) {
-    const has_lease = db.check_lease_exists(lease_id);
+    const has_lease = await db.check_lease_exists(lease_id);
     if (!has_lease) {
         return {code: 400, msg: "Provided lease id does not exist"};
     }
@@ -139,7 +139,7 @@ exports.add_lease = async function(user_id, images, address="", category="", pro
 };
 
 exports.archive_lease = async function(lease_id, status=0) {
-    const has_lease = db.check_lease_exists(lease_id);
+    const has_lease = await db.check_lease_exists(lease_id);
     if (!has_lease) {
         return {code: 400, msg: "Provided lease id does not exist"};
     }
@@ -152,11 +152,11 @@ exports.archive_lease = async function(lease_id, status=0) {
     }
 
     const msg = status == 0 ? "Lease archived" : "Lease restored";
-    return {code: 200, msg: "Lease archived"};
+    return {code: 200, msg: msg};
 };
 
 exports.delete_lease = async function(lease_id) {
-    const has_lease = db.check_lease_exists(lease_id);
+    const has_lease = await db.check_lease_exists(lease_id);
     if (!has_lease) {
         return {code: 400, msg: "Provided lease id does not exist"};
     }

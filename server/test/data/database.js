@@ -18,6 +18,7 @@ describe('database.js: user-related tests', function () {
     it('insert one user', async function () {
       user1.userID = await db.add_user(user1.username, user1.email, user1.password_hash);
       user1_id = user1.userID;
+      console.log("user1 id: " + user1_id);
       assert.ok(user1.userID > 0);
     });
     it('insert multiple users', async function () {
@@ -86,53 +87,36 @@ describe('database.js: user-related tests', function () {
 });
 
 
+var sublease1_id;
 describe('database.js: sublease-related tests', function () {
   const sublease1 = {
-    post_id: -1,
-    image_keys: ["test_1_1", "test_1_2", "test_1_3"],
-    name: "test_house1",
-    category: "house",
-    address: "address 1, WA",
-    price: 1000,
-    space: 1000,
-    bedNum: 3,
-    bathNum: 4,
-    gender: 0,
-    petOK: 1,
-    periodStart: "2020-10-10",
-    periodEnd: "2020-12-12",
-    description: "test sublease 1",
-    parking: 1,
-    deposit: 0,
-    longitude: 0,
-    latitude: 0,
+    // PostID: -1,
+    // image_keys: ["test_1_1", "test_1_2", "test_1_3"],
+    PropertyName: "test_house1",
+    PropertyCategory: "house",
+    PropertyAddress: "address 1, WA",
+    PropertyPrice: 1000,
+    RoomSize: 1000,
+    RoomType: "4B3B",
+    GenderLimit: 0,
+    IsPetFriendly: 1,
+    SubleasePeriodStart: "2020-10-10",
+    SubleasePeriodEnd: "2020-12-12",
+    PropertyDescription: "test sublease 1",
+    ParkingAvailable: 1,
+    Deposit: 0,
+    Latitude: 0,
+    Longitude: 0,
     status: 1,
-    user_id: user1_id
+    UserID: user1_id,
   };
-  const sublease2 = {
-    post_id: -1,
-    image_keys: ["test_2"],
-    name: "test_apart1",
-    category: "apartment",
-    address: "address 2, WA",
-    price: 1500,
-    space: 1000,
-    bedNum: 2,
-    bathNum: 2,
-    gender: 1,
-    petOK: 0,
-    periodStart: "2020-11-11",
-    periodEnd: "2021-1-1",
-    description: "test sublease 2",
-    parking: 1,
-    deposit: 0,
-    longitude: 0,
-    latitude: 0,
-    status: 1,
-    user_id: user1_id
-  }
-  describe('#add_sublease', function () {
-    it('to be implemented', async function () {
+  describe('#lease_insert', function () {
+    it('insert one sublease should success (yield positive post id)', async function () {
+      sublease1.UserID = user1_id;
+      sublease1.PostID = await db.lease_insert(sublease1);
+      console.log("POST1 ID: " + sublease1.PostID);
+      sublease1_id = sublease1.PostID;
+      assert.ok(sublease1.PostID > 0);
     });
   });
 
@@ -141,42 +125,88 @@ describe('database.js: sublease-related tests', function () {
     });
   });
 
-  // describe('#get_sublease_images', function () {
-  //   it('existing sublease', async function () {
-  //     var img_key = await db.get_sublease_images(sublease1.post_id);
-  //     assert.deepEqual(img_key, sublease1.image_keys);
-  //     img_key = await db.get_sublease_images(sublease2.post_id);
-  //     assert.deepEqual(img_key, sublease2.image_keys);
-  //   });
-  //   it('non-existing sublease should return nothing', async function () {
-  //     const res = await db.get_sublease_images(-1); // should be undefined
-  //     assert.ok(!res);
-  //   });
-  // });
-  // describe('#get_lease_by_id', function () {
-  //   it('existing sublease', async function () {
-  //     var sublease = await db.get_lease_by_id(sublease1.post_id);
-  //     assert.deepEqual(sublease, sublease1); // TODO: Change key names
-  //     sublease = await db.get_lease_by_id(sublease2.post_id);
-  //     assert.deepEqual(sublease, sublease2); // TODO: Change key names
-  //   });
-  //   it('non-existing sublease should return nothing', async function () {
-  //     const res = await db.get_lease_by_id(-1); // should be undefined
-  //     assert.ok(!res);
-  //   });
-  // });
-  // describe('#check_lease_exists', function () {
-  //   it('existing sublease', async function () {
-  //     var res = await db.check_lease_exists(sublease1.post_id);
-  //     assert.ok(res > 0);
-  //     res = await db.check_lease_exists(sublease2.post_id);
-  //     assert.ok(res > 0);
-  //   });
-  //   it('non-existing sublease should return nothing', async function () {
-  //     const res = await db.check_lease_exists(-1); // should be undefined
-  //     assert.ok(!res);
-  //   });
-  // });
-
+  describe('#get_lease_by_id', function () {
+    it('existing sublease id should return the correct info', async function () {
+      var res = await db.get_lease_by_id(sublease1.PostID);
+      var sublease = JSON.parse(JSON.stringify(res));
+      // console.log(sublease);
+      assert.deepEqual(sublease, sublease1);
+    });
+    it('non-existing sublease id should return nothing', async function () {
+      const res = await db.get_lease_by_id(-1); // should be undefined
+      assert.ok(!res);
+    });
+  });
+  describe('#check_lease_exists', function () {
+    it('existing sublease should return truthy result', async function () {
+      var res = await db.check_lease_exists(sublease1.PostID);
+      console.log("check_lease_exists existing [" + res + "]");
+      assert.ok(res);
+    });
+    it('non-existing sublease should return nothing', async function () {
+      const res = await db.check_lease_exists(-1); // should be undefined
+      assert.ok(!res);
+    });
+  });
+  describe('#list_sublease_by_user_id', function () {
+    it('existing userid with sublease should return corresponding sublease', async function () {
+      var sublease = await db.list_sublease_by_user_id(sublease1.UserID);
+      assert.deepEqual(sublease[0], sublease1);
+    });
+    it('non-existing userid should return nothing', async function () {
+      const res = await db.list_sublease_by_user_id(-1); // should return empty list
+      // console.log("list_sublease_by_user_id non-exist [" + res + "]");
+      assert.ok(!res.length);
+    });
+  });
+  describe('#lease_update', function () {
+    it('will be tested under router tests', async function () {
+    });
+  });
   exports.sublease1 = sublease1;
+});
+
+
+describe('database.js: sublease-image-related tests', function () {
+  const image_keys = ["test_1_1", "test_1_2", "test_1_3"];
+  describe('#add_lease_id_and_image_key', function () {
+    it('insert image keys to one sublease should all success (affected rows should > 0)', async function () {
+      for (let key of image_keys) {
+        var res = await db.add_lease_id_and_image_key(sublease1_id, key);
+        assert.ok(res);
+      }
+    });
+  });
+
+  describe('#check_lease_id_and_image_key_exists', function () {
+    it('existing sublease id and image id', async function () {
+      for (let key of image_keys) {
+        var res = await db.check_lease_id_and_image_key_exists(sublease1_id, key);
+        assert.ok(res);
+      }
+    });
+    it('non-existing sublease id should return error', async function () {
+      const res = await db.check_lease_id_and_image_key_exists(-1, image_keys[0]); // should be error
+      assert.ok(!res);
+    });
+    it('non-existing image id should return error', async function () {
+      const res = await db.check_lease_id_and_image_key_exists(sublease1_id, -1); // should be error
+      assert.ok(!res);
+    });
+  });
+  describe('#get_sublease_images', function () {
+    it('existing sublease should return correct image keys', async function () {
+      var img_keys = await db.get_sublease_images(sublease1_id);
+      assert.deepEqual(img_keys, image_keys);
+    });
+    it('non-existing sublease should return error', async function () {
+      const res = await db.get_sublease_images(-1); // should return empty list
+      assert.ok(!res.length);
+    });
+  });
+});
+
+describe('#database.js: delete tests', function () {
+  it('skipped, to be implemented in future', async function () {
+  });
 });
