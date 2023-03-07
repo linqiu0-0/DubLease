@@ -56,7 +56,7 @@ describe('account.js', function () {
 
   describe('#edit_profile', function () {
     it('should be able to change username', async function () {
-      console.log("HELLO " + user4.userID);
+      // console.log("HELLO " + user4.userID);
       const res = await account.edit_profile(user4.userID, user4.username + "_", undefined, undefined);
       assert.equal(res.code, 200);
     });
