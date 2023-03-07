@@ -215,7 +215,7 @@ const EditLease = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    "lease_id": 50,
+                    "lease_id": leaseId,
                     "user_id": userid,
                     "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
                     "category": category,
