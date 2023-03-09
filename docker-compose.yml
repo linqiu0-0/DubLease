@@ -1,11 +1,11 @@
 version: '3'
 services:
-  frontend:
-    build: ./client/.
-    ports:
-      - "127.0.0.1:8080:8080"
-    volumes:
-      - .:/code
+  # frontend:
+  #   build: ./client/.
+  #   ports:
+  #     - "127.0.0.1:8080:8080"
+  #   volumes:
+  #     - .:/code
   backend:
     build: ./server/.
     ports:
