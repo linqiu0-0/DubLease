@@ -19,37 +19,37 @@ function RequireAuth({ children }) {
 
 const ProjectRoutes = () => {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/home" element={
-                    <RequireAuth>
-                        <Home />
-                    </RequireAuth>
-                } />
-                <Route path="/profile" element={
-                    <RequireAuth> <Profile /></RequireAuth>
-                } />
-                <Route path="/listings" element={
-                    <RequireAuth>
-                        <Listings />
-                    </RequireAuth>} />
-                <Route path="/sublease/:id" element={
-                    <RequireAuth>
-                        <SubleaseInfo />
-                    </RequireAuth>} />
-                <Route path="/edit/:id" element={
-                    <RequireAuth>
-                        <EditLease />
-                    </RequireAuth>} />
-                <Route path="/post" element={
-                    <RequireAuth>
-                        <PostNewLease />
-                    </RequireAuth>} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </Router>
+            <Router basename={process.env.PUBLIC_URL}>
+                <Routes>
+                    <Route path="/" element={<SignIn />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/home" element={
+                        <RequireAuth>
+                            <Home />
+                        </RequireAuth>
+                    } />
+                    <Route path="/profile" element={
+                        <RequireAuth> <Profile /></RequireAuth>
+                    } />
+                    <Route path="/listings" element={
+                        <RequireAuth>
+                            <Listings />
+                        </RequireAuth>} />
+                    <Route path="/sublease/:id" element={
+                        <RequireAuth>
+                            <SubleaseInfo />
+                        </RequireAuth>} />
+                    <Route path="/edit/:id" element={
+                        <RequireAuth>
+                            <EditLease />
+                        </RequireAuth>} />
+                    <Route path="/post" element={
+                        <RequireAuth>
+                            <PostNewLease />
+                        </RequireAuth>} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </Router>
     );
 };
 export default ProjectRoutes;
