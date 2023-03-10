@@ -25,7 +25,7 @@ jobs:
         REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
 
     - name: Deploy
-      uses: linqiu0-0/github-pages-deploy-action@releases/v3
+      uses: linqiu0-0/dublease@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY_PAGES }}
         BRANCH: gh-pages
