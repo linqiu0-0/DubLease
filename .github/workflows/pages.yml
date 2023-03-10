@@ -27,6 +27,6 @@ jobs:
         REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
 
     - name: Deploy
-      run: npm run deploy
+      run: cd client && npm run deploy
       env:
         REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
