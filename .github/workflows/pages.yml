@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - frontend-deploy
+  pull_request: 
+    branches:
+        - frontend
+
 
 jobs:
   build-and-deploy:
@@ -21,7 +25,7 @@ jobs:
         REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
 
     - name: Deploy
-      uses: lq9/github-pages-deploy-action@releases/v3
+      uses: linqiu0-0/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY_PAGES }}
         BRANCH: gh-pages
