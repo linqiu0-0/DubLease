@@ -21,8 +21,8 @@ jobs:
         REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
 
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: lq9/github-pages-deploy-action@releases/v3
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_KEY }}
+        GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY_PAGES }}
         BRANCH: gh-pages
         FOLDER: dist
