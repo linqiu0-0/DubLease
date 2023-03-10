@@ -101,5 +101,24 @@ Our team will test frontend pages manually to mimic users click on different com
 # Build & Deployment
 Our app is deployed on Amazon EC2. The service is currently suspended due to a limited development budget. We will provide an update once the server is reactivated. The frontend is deployed with `port 8080`, and the backend is deployed with `port 8000`.
 
+Frontend is deployed through Github static page hosting. To cut a new release on the frontend, 
+1. Go to `client` directory
+2. run `npm run deploy`
+
+    > That will cause the `predeploy` and `deploy` scripts defined in `package.json` to run.
+    >
+    > Under the hood, the `predeploy` script will build a distributable version of the React app and store it in a folder named `build`. Then, the `deploy` script will push the contents of that folder to a new commit on the `gh-pages` branch of the GitHub repository, creating that branch if it doesn't already exist.
+
+    > By default, the new commit on the `gh-pages` branch will have a commit message of "Updates". You can [specify a custom commit message](https://github.com/gitname/react-gh-pages/issues/80#issuecomment-1042449820) via the `-m` option, like this:
+    > ```shell
+    > $ npm run deploy -- -m "Deploy React app to GitHub Pages"
+    > ```
+
+At this point, the GitHub repository contains a branch named `gh-pages`, which contains the files that make up the distributable version of the React app. However, we haven't configured GitHub Pages to _serve_ those files yet.
+
+
+
+
+
 # Contribution
 Each version release of the app is currently done manually by the developers. After creating a pull request, please get in touch with [Lin](lq9@uw.edu) for it to be reviewed and included in a future release.
