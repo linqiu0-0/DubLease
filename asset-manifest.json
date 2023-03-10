@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/static/css/main.6734803a.css",
-    "main.js": "/static/js/main.50ccd993.js",
-    "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
-    "static/media/InterRegular.ttf": "/static/media/InterRegular.e89cb19905e7db5591b0.ttf",
-    "static/media/GaladaRegular.ttf": "/static/media/GaladaRegular.96f42dd34b5558ca6dd1.ttf",
-    "static/media/PoppinsRegular.ttf": "/static/media/PoppinsRegular.35d26b781dc5fda684cc.ttf",
-    "static/media/PoppinsMedium.ttf": "/static/media/PoppinsMedium.673ed42382ab264e0bf5.ttf",
-    "static/media/PoppinsSemiBold.ttf": "/static/media/PoppinsSemiBold.ac8d04b620e54be9b0f0.ttf",
-    "static/media/PlusJakartaSansMedium.ttf": "/static/media/PlusJakartaSansMedium.e959ca27c856c771bc26.ttf",
-    "static/media/PlusJakartaSansRegular.ttf": "/static/media/PlusJakartaSansRegular.e959ca27c856c771bc26.ttf",
-    "static/media/PlusJakartaSansExtraBold.ttf": "/static/media/PlusJakartaSansExtraBold.5a0637ca31265773a597.ttf",
-    "static/media/PlusJakartaSansBold.ttf": "/static/media/PlusJakartaSansBold.fea436026c7ab9d46e14.ttf",
-    "static/media/PlaceHolderImage.png": "/static/media/PlaceHolderImage.7ad545b9a4c36b725870.png",
-    "static/media/DubLeaseLogo.svg": "/static/media/DubLeaseLogo.a12f4021ede5874d1bf50bd0471bed57.svg",
-    "static/media/BathIcon.svg": "/static/media/BathIcon.06062626b8a85020cc4de40cf9ba35c8.svg",
-    "index.html": "/index.html",
-    "static/media/BedIcon.svg": "/static/media/BedIcon.14cc68111dc750a911566ba5aaff1333.svg",
-    "static/media/SizeIcon.svg": "/static/media/SizeIcon.916b370372d37043772b8edb792566f7.svg",
-    "main.6734803a.css.map": "/static/css/main.6734803a.css.map",
-    "main.50ccd993.js.map": "/static/js/main.50ccd993.js.map",
-    "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
+    "main.css": "/DubLease/static/css/main.8ddd55d1.css",
+    "main.js": "/DubLease/static/js/main.b56087e5.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/DubLease/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/InterRegular.ttf": "/DubLease/static/media/InterRegular.e89cb19905e7db5591b0.ttf",
+    "static/media/GaladaRegular.ttf": "/DubLease/static/media/GaladaRegular.96f42dd34b5558ca6dd1.ttf",
+    "static/media/PoppinsRegular.ttf": "/DubLease/static/media/PoppinsRegular.35d26b781dc5fda684cc.ttf",
+    "static/media/PoppinsMedium.ttf": "/DubLease/static/media/PoppinsMedium.673ed42382ab264e0bf5.ttf",
+    "static/media/PoppinsSemiBold.ttf": "/DubLease/static/media/PoppinsSemiBold.ac8d04b620e54be9b0f0.ttf",
+    "static/media/PlusJakartaSansMedium.ttf": "/DubLease/static/media/PlusJakartaSansMedium.e959ca27c856c771bc26.ttf",
+    "static/media/PlusJakartaSansRegular.ttf": "/DubLease/static/media/PlusJakartaSansRegular.e959ca27c856c771bc26.ttf",
+    "static/media/PlusJakartaSansExtraBold.ttf": "/DubLease/static/media/PlusJakartaSansExtraBold.5a0637ca31265773a597.ttf",
+    "static/media/PlusJakartaSansBold.ttf": "/DubLease/static/media/PlusJakartaSansBold.fea436026c7ab9d46e14.ttf",
+    "static/media/PlaceHolderImage.png": "/DubLease/static/media/PlaceHolderImage.7ad545b9a4c36b725870.png",
+    "static/media/DubLeaseLogo.svg": "/DubLease/static/media/DubLeaseLogo.a12f4021ede5874d1bf50bd0471bed57.svg",
+    "static/media/BathIcon.svg": "/DubLease/static/media/BathIcon.06062626b8a85020cc4de40cf9ba35c8.svg",
+    "index.html": "/DubLease/index.html",
+    "static/media/BedIcon.svg": "/DubLease/static/media/BedIcon.14cc68111dc750a911566ba5aaff1333.svg",
+    "static/media/SizeIcon.svg": "/DubLease/static/media/SizeIcon.916b370372d37043772b8edb792566f7.svg",
+    "main.8ddd55d1.css.map": "/DubLease/static/css/main.8ddd55d1.css.map",
+    "main.b56087e5.js.map": "/DubLease/static/js/main.b56087e5.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/DubLease/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6734803a.css",
-    "static/js/main.50ccd993.js"
+    "static/css/main.8ddd55d1.css",
+    "static/js/main.b56087e5.js"
   ]
 }
