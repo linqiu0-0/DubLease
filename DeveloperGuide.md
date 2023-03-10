@@ -114,7 +114,8 @@ Frontend is deployed through Github static page hosting. To cut a new release on
     > $ npm run deploy -- -m "Deploy React app to GitHub Pages"
     > ```
 
-At this point, the GitHub repository contains a branch named `gh-pages`, which contains the files that make up the distributable version of the React app. However, we haven't configured GitHub Pages to _serve_ those files yet.
+At this point, the GitHub repository contains a branch named `gh-pages`, which contains the files that make up the distributable version of the React app. 
+You can view our deployed version at [Dublease](https://linqiu0-0.github.io/DubLease/).
 
 
 

@@ -3,8 +3,10 @@
 ## Application Description
 DubLease is a web application that lets you find or post a sublease near the University of Washington. Currently, most related sublease information is published on social media like Facebook and Reddit, but those information is scattered around and hard to use. DubLease is such an application that aims to provide a more accessible platform for sublease.
 Have you ever tried to find a suitable short-term lease that satisfied your needs during the summer quarter? Have you ever had to move out and are concerned about the remaining leasing term? Try our application, DubLease, which helps you solve all these problems related to subleasing.
+## How To Use DubLease
+You can view our deployed version at [Dublease](https://linqiu0-0.github.io/DubLease/).
 
-## How To Install DubLease
+## How To Install DubLease Locally
 There are two ways to install Dublease and get the application running.
 
 ### Prerequisites
@@ -66,8 +68,7 @@ You are also encouraged to include photos and screenshots to further illustrate 
 
 
 ## Known Issues
-1. Filter by date doesn't give the correct search result.
-2. For multiple subleases that share the exact same address, there will be only one marker corresponding to one sublease displayed on the map in the hompage.
+1. For multiple subleases that share the exact same address, there will be only one marker corresponding to one sublease displayed on the map in the hompage.
 
 Note: For detailed issues description, please check the [Github Issues](https://github.com/linqiu0-0/DubLease/issues) tab.
 
