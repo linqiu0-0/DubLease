@@ -3,9 +3,19 @@
 ## Application Description
 DubLease is a web application that lets you find or post a sublease near the University of Washington. Currently, most related sublease information is published on social media like Facebook and Reddit, but those information is scattered around and hard to use. DubLease is such an application that aims to provide a more accessible platform for sublease.
 Have you ever tried to find a suitable short-term lease that satisfied your needs during the summer quarter? Have you ever had to move out and are concerned about the remaining leasing term? Try our application, DubLease, which helps you solve all these problems related to subleasing.
+## How To Visit DubLease
+First, visit our backend service [link](https://54.188.22.87:4000) in Chrome browser to accept our certificate. 
+You will encounter a risk warning like this about this connection because we use a self-sign certificate in backend. 
+<img width="692" alt="Screen Shot 2023-03-09 at 10 08 31 PM" src="https://user-images.githubusercontent.com/73025661/224237032-7c96e781-a461-4fce-8236-fe1487d7ae0b.png">
 
-## How To Install DubLease
-There are two ways to install Dublease and get the application running.
+1. Click on the `advance` button
+2. Click on `Proceed to 54.188.22.87 (unsafe)`
+3. See hello world on the page 
+
+Then, you can visit our deployed version at [Dublease](https://linqiu0-0.github.io/DubLease/).
+
+## How To Install DubLease Locally
+If the depolyed link not works, there are two ways to install Dublease and get the application running.
 
 ### Prerequisites
 Clone the repository or download the source code
@@ -66,8 +76,7 @@ You are also encouraged to include photos and screenshots to further illustrate 
 
 
 ## Known Issues
-1. Filter by date doesn't give the correct search result.
-2. For multiple subleases that share the exact same address, there will be only one marker corresponding to one sublease displayed on the map in the hompage.
+1. For multiple subleases that share the exact same address, there will be only one marker corresponding to one sublease displayed on the map in the hompage.
 
 Note: For detailed issues description, please check the [Github Issues](https://github.com/linqiu0-0/DubLease/issues) tab.
 
