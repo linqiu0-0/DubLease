@@ -6,14 +6,16 @@ Have you ever tried to find a suitable short-term lease that satisfied your need
 ## How To Visit DubLease
 First, visit our backend service link in Chrome browser to accept our certificate. 
 You will encounter a risk warning like this about this connection because we use a self-sign certificate in backend. 
-![warning](/client/public/images/ignoreRisks.png）
-1. Click on the advance button
-2. Click on Proceed to 54.188.22.87 (unsafe)
+<img width="692" alt="Screen Shot 2023-03-09 at 10 08 31 PM" src="https://user-images.githubusercontent.com/73025661/224237032-7c96e781-a461-4fce-8236-fe1487d7ae0b.png">
+
+1. Click on the `advance` button
+2. Click on `Proceed to 54.188.22.87 (unsafe)`
 3. See hello world on the page 
+
 Then, you can visit our deployed version at [Dublease](https://linqiu0-0.github.io/DubLease/).
 
 ## How To Install DubLease Locally
-There are two ways to install Dublease and get the application running.
+If the depolyed link not works, there are two ways to install Dublease and get the application running.
 
 ### Prerequisites
 Clone the repository or download the source code

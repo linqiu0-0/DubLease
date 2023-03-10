@@ -1,15 +1,9 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches:
-      - frontend-deploy
   pull_request: 
     branches:
         - main
-  tags:        
-    - v2
-    - v1.*
 permissions:
   contents: write
 
