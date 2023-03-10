@@ -19,7 +19,7 @@ function RequireAuth({ children }) {
 
 const ProjectRoutes = () => {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
