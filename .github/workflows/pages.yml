@@ -7,9 +7,9 @@ on:
   pull_request: 
     branches:
         - main
-    tags:        
-      - v2
-      - v1.*
+  tags:        
+    - v2
+    - v1.*
 permissions:
   contents: write
 
