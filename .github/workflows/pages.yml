@@ -6,7 +6,6 @@ on:
       - frontend-deploy
   pull_request: 
     branches:
-        - frontend
         - main
 permissions:
   contents: write
