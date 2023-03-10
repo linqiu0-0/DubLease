@@ -7,11 +7,13 @@ on:
   pull_request: 
     branches:
         - frontend
+        - main
 
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
     - name: Checkout
       uses: actions/checkout@v1
@@ -25,6 +27,7 @@ jobs:
         REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
 
     - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
         GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY_PAGES }}
         BRANCH: gh-pages
