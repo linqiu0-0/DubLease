@@ -27,6 +27,8 @@ jobs:
         REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
 
     - name: Deploy
-      run: cd client && npm run deploy
-      env:
-        REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./client/build
+ 
