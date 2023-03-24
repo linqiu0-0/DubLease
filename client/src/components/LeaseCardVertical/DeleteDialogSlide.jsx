@@ -53,7 +53,7 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id, setReloading })
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{"Delete this lisitng?"}</DialogTitle>
+                <DialogTitle>{"Delete this listing?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         Once a listing is deleted, it <b>cannot</b> be recovered, and all associated information, including photos and
