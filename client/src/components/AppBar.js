@@ -2,13 +2,14 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import {createTheme, SvgIcon} from "@mui/material";
 import { ReactComponent as Logo } from '../assets/images/DubLeaseLogo.svg';
 import {ThemeProvider} from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import {AccountMenu} from "./AccountMenu";
+import PropTypes from 'prop-types';
+
 
 const pages = ['Home', 'Add Lease'];
 
@@ -43,12 +44,12 @@ function MainAppBar({ username, userId }) {
                     }}
                 >
                     <Toolbar disableGutters>
-                        <SvgIcon component="a" fontSize="large" href="/home" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, pt:1 }}>
+                        <SvgIcon component="a" fontSize="large" href="/home" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, pt: 1}}>
                             <Logo />
                         </SvgIcon>
 
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        <Box sx={{ flexGrow: 1, display: 'flex'  }}>
                             {pages.map((page) => (
                                 <Button
                                     key={page}
@@ -69,4 +70,10 @@ function MainAppBar({ username, userId }) {
         </ThemeProvider>
     );
 }
+
+MainAppBar.propTypes = {
+    username: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+};
+
 export default MainAppBar;
