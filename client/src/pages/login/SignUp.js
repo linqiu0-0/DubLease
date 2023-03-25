@@ -48,7 +48,7 @@ const SignUp = () => {
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
-                navigate('/home', {
+                navigate('/', {
                     state: {
                         username: data.username
                     }
@@ -230,7 +230,7 @@ const SignUp = () => {
                             Already have an account?{" "}
                         </span>
                         <Link className="text-deep_purple_A200 text-[14px] font-plusjakartasans font-bold"
-                            to="../">
+                            to="/signin">
                             Login
                         </Link>
                     </Text>

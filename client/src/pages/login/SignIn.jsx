@@ -43,7 +43,7 @@ const SignIn = () => {
           window.sessionStorage.setItem("username", data.username);
           window.sessionStorage.setItem("userId", data.userid);
           auth.login().then(() => {
-            navigate('/home');
+            navigate('/');
           });
         })
         .catch(handleError);

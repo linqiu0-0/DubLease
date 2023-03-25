@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { Carousel } from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+import PropTypes from 'prop-types';
 
 export default function ImagesCarousel({images}) {
 
@@ -16,6 +17,7 @@ export default function ImagesCarousel({images}) {
                         alt={"sublease detail pic"}
                         className={"sublease_info_img"}
                         loading="lazy"
+                        style={{ objectFit: "cover" }}
                     />
                 </Box>
             ))}
@@ -23,3 +25,6 @@ export default function ImagesCarousel({images}) {
     );
 }
 
+ImagesCarousel.propTypes = {
+    images: PropTypes.array,
+};
