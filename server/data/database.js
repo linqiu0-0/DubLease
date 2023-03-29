@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-   host     : 'database-dublease.cgiuptojslql.us-west-2.rds.amazonaws.com',
-   port     : '3306',
-   user     : 'admin',
-   password : 'Ryan6666!!',
-   database : 'dublease'
+    host     : 'database-dublease.cgiuptojslql.us-west-2.rds.amazonaws.com',
+    port     : '3306',
+    user     : 'admin',
+    password : 'Ryan6666!!',
+    database : 'dublease'
 });
 
 // connects to the database (should be called on start of app)
@@ -13,7 +13,7 @@ exports.connect_to_db = function() {
         if(!err) {
             console.log("Database is connected ... ");
         } else {
-            console.log("Error connecting database ... ");   
+            console.log("Error connecting database ... ");
             console.log(err);
             throw err;
         }
@@ -23,9 +23,9 @@ exports.connect_to_db = function() {
 exports.disconnect_db = function() {
     connection.end(function(err){
         if(!err) {
-            console.log("Database is disconnected");    
+            console.log("Database is disconnected");
         } else {
-            console.log("Error disconnecting database:");   
+            console.log("Error disconnecting database:");
             console.log(err);
             throw err;
         }
@@ -56,7 +56,8 @@ exports.add_user = async function(username, email, password_hash) {
     });
 };
 
-// private 
+////////////////////////// PRIVATE METHODS FOR TESTING //////////////////////////
+
 exports._delete_test_user = async function() {
     const sql = 'DELETE FROM User WHERE UserName like ?';
     return new Promise((resolve, reject) => {
@@ -65,6 +66,25 @@ exports._delete_test_user = async function() {
         });
     });
 };
+
+exports._delete_test_sublease = async function() {
+    const sql = 'DELETE FROM Sublease WHERE PropertyName like ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, "test_%", function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+};
+
+exports._delete_test_images = async function(lease_id, image_key) {
+    const sql = "DELETE FROM Sublease_Images WHERE ImageKey like ?";
+    return new Promise((resolve, reject) => {
+        connection.query(sql, "test_%", function(error, results, fields) {
+            return error ? reject(error) : resolve(results.affectedRows);
+        });
+    });
+}
+////////////////////////// //////////////////////////// //////////////////////////
 
 exports.get_user = async function(email) {
     const sql = 'SELECT UserID as userid, UserName as username, PasswordHash as password_hash FROM User WHERE UserEmail = ?';
@@ -99,10 +119,10 @@ exports.get_user_by_id = async function(userid) {
 
 exports.update_user = async function(update_statements, values) {
     const sql = "UPDATE User " + update_statements + " WHERE UserID = ?";
-    console.log(sql);
+    // console.log(sql);
     return new Promise((resolve, reject) => {
         connection.query(sql, values, function(error, results, fields) {
-            console.log(results);
+            // console.log(results);
             // console.log("subleases: \n", subleases);
             return error ? reject(error) : resolve(results);
         });
@@ -162,7 +182,7 @@ exports.get_lease_by_id = async function(id) {
 };
 
 exports.check_lease_exists = async function(id) {
-    const sql = 'SELECT COUNT(*) FROM Sublease WHERE PostID = ?';
+    const sql = 'SELECT COUNT(*) as count FROM Sublease WHERE PostID = ?';
     return new Promise((resolve, reject) => {
         connection.query(sql, id, function(error, results, fields) {
             if (error) {

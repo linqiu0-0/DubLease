@@ -3,11 +3,11 @@ import '../styles/map.css';
 
 const center = { lat: 47.659662, lng: -122.31 };
 
-let propertyData;
+let propertyData, fromSubleaseInfo;
 
-function Map({leaseData}) {
+function Map({leaseData, isSubleaseInfo}) {
     propertyData = leaseData;
-    console.log(leaseData);
+    fromSubleaseInfo = isSubleaseInfo;
 
     useEffect(() => {
         if (propertyData.length === 1 && !propertyData[0].category) {
@@ -41,7 +41,7 @@ function load(p) {
             <i class="fa fa-icon fa-${p.category}"></i>
         </div>
         <div class="info">
-            <div class="price">${p.price}</div>
+            <div class="price">$ ${p.price}</div>
             <div class="address">${p.address}</div>
 
             <div class="features">
@@ -85,17 +85,19 @@ export function initMap() {
             content: load(p)
         });
 
-        const ele = advancedMarkerView.element;
-        ["focus", "pointerenter"].forEach((event) => {
-            ele.addEventListener(event, () => {
-                hoverOver(advancedMarkerView);
+        if (!fromSubleaseInfo) {
+            const ele = advancedMarkerView.element;
+            ["focus", "pointerenter"].forEach((event) => {
+                ele.addEventListener(event, () => {
+                    hoverOver(advancedMarkerView);
+                });
             });
-        });
-        ["blur", "pointerleave"].forEach((event) => {
-            ele.addEventListener(event, () => {
-                unhover(advancedMarkerView);
+            ["blur", "pointerleave"].forEach((event) => {
+                ele.addEventListener(event, () => {
+                    unhover(advancedMarkerView);
+                });
             });
-        });
+        }
     }
 }
 

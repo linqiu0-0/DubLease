@@ -11,7 +11,7 @@ Most UW students decide to live near the school like the dorm, off-campus apartm
 | Name | Role | 
 | --- | ----------- | 
 | Ryan Li | Backend | 
-| Lin Qiu | UI/UX Developer, Backend Developer | 
+| Lin Qiu | UI/UX Developer, Frontend Developer | 
 | Tony Song | PM, Frontend Developer |
 | Carlos Yu | Testing + Backend Developer | 
 | Crystal Li | UI + Backend Developer| 

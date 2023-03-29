@@ -6,20 +6,20 @@ import SignUp from "./pages/login/SignUp";
 import { Profile } from "./pages/profile/Profile";
 import { Listings } from "./pages/listings/Listings";
 import SubleaseInfo from "./pages/SubleaseInfo";
+import PostNewLease from "./pages/PostNewLease";
 import useAuth from "./hooks/useAuth";
-
 import NotFound from "./pages/NotFound";
+import EditLease from "./pages/EditLease";
 
 function RequireAuth({ children }) {
     const { authed } = useAuth();
-    console.log("authed value " + authed)
     return authed == true ? children : <Navigate to="/" replace />;
 }
 
 
 const ProjectRoutes = () => {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -38,6 +38,14 @@ const ProjectRoutes = () => {
                 <Route path="/sublease/:id" element={
                     <RequireAuth>
                         <SubleaseInfo />
+                    </RequireAuth>} />
+                <Route path="/edit/:id" element={
+                    <RequireAuth>
+                        <EditLease />
+                    </RequireAuth>} />
+                <Route path="/post" element={
+                    <RequireAuth>
+                        <PostNewLease />
                     </RequireAuth>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

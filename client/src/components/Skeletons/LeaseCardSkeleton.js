@@ -10,7 +10,7 @@ export default function LeaseCardSkeleton() {
         <Paper variant="outlined">
             <Grid container spacing={1}>
                 <Grid xs={5}>
-                    <Skeleton variant="rectangular" height={200} />
+                    <Skeleton animation="wave" variant="rectangular" height={200} />
                 </Grid>
                 <Grid xs={7}>
                     <Box
@@ -23,12 +23,12 @@ export default function LeaseCardSkeleton() {
                             px: 2
                         }}
                     >
-                        <Skeleton variant="subtitle1" />
-                        <Skeleton variant="h5" />
-                        <Skeleton variant="body2" />
+                        <Skeleton animation="wave" variant="subtitle1" />
+                        <Skeleton animation="wave" variant="h5" />
+                        <Skeleton animation="wave" variant="body2" />
 
                         <Divider />
-                        <Skeleton variant="rounded" height={30}/>
+                        <Skeleton animation="wave" variant="rounded" height={30}/>
                     </Box>
                 </Grid>
             </Grid>

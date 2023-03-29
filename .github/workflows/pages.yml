@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+
+on:
+  pull_request: 
+    branches:
+        - main
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Build
+      run: |
+        cd client
+        npm install
+        npm run build
+      env:
+        REACT_APP_MAP_API_KEY: ${{ secrets.REACT_APP_MAP_API_KEY }}
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./client/build
+
+ 
