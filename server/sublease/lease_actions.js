@@ -138,10 +138,15 @@ exports.add_lease = async function(user_id, images, address="", category="", pro
     };
 };
 
-exports.archive_lease = async function(lease_id, status=0) {
+exports.archive_lease = async function(lease_id, user_id, status=0) {
     const has_lease = await db.check_lease_exists(lease_id);
     if (!has_lease) {
         return {code: 400, msg: "Provided lease id does not exist"};
+    }
+
+    const lease_user = await db.get_userid_by_leaseid(lease_id);
+    if (user_id != lease_user) {
+        return {code: 401, msg: "Unauthorized user"};
     }
 
     const affected_rows = await db.change_lease_status(lease_id, status);
@@ -155,10 +160,15 @@ exports.archive_lease = async function(lease_id, status=0) {
     return {code: 200, msg: msg};
 };
 
-exports.delete_lease = async function(lease_id) {
+exports.delete_lease = async function(lease_id, user_id) {
     const has_lease = await db.check_lease_exists(lease_id);
     if (!has_lease) {
         return {code: 400, msg: "Provided lease id does not exist"};
+    }
+
+    const lease_user = await db.get_userid_by_leaseid(lease_id);
+    if (user_id != lease_user) {
+        return {code: 401, msg: "Unauthorized user"};
     }
 
     // first, retrieve all images under the leaase

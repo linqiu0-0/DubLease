@@ -1,6 +1,7 @@
 const db = require('../data/database');
 // const image_storage = require('../data/images');
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const cost_factor = 10;
 
@@ -16,12 +17,23 @@ exports.signup = async function(email, password, username) {
     const password_hash = await bcrypt.hash(password, cost_factor);
     // Add the email, password, and username to the database
     const userid = await db.add_user(username, email, password_hash);
+    const user = {
+        username: username,
+        userid: userid,
+    };
+
+    // sign the json web token and return it to the user
+    const token = jwt.sign(
+        user,
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: "7d",
+        }
+    );
+    user.token = token;
     return {
         code : 200,
-        msg : {
-            username: username,
-            userid: userid,
-        }
+        msg : user,
     };
 };
 
@@ -40,12 +52,25 @@ exports.verify_login = async function(email, password) {
         return {code: 400, msg: "Incorrect Password"};
     }
 
+    const user = {
+        username: username,
+        userid: userid,
+    };
+
+    // sign the json web token and return it to the user
+    console.log(process.env);
+    const token = jwt.sign(
+        user,
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: "7d",
+        }
+    );
+    user.token = token;
+
     return {
         code: 200,
-        msg: {
-            username: username,
-            userid: userid,
-        }
+        msg: user,
     };
 };
 
