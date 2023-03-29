@@ -69,7 +69,7 @@ const theme = createTheme({
 });
 
 const Home = () => {
-    const [filters, setFilters] = React.useState(initialFilters);
+    const [filters, setFilters] = React.useState(JSON.parse(JSON.stringify(initialFilters)));
     const [leaseData, setLeaseData] = React.useState([]);
     const [alert, setAlert] = React.useState("");
     const [firstRender, setFirstRender] = React.useState(true);
@@ -86,6 +86,7 @@ const Home = () => {
     }
 
     const searchWithFilters = (event) => {
+
         if (filters[1].value !== "" && filters[2].value !== "" && filters[1].value.localeCompare(filters[2].value) > 0) {
             setAlert({severity: "warning", content: "Start Date must be earlier than End Date"});
             return;
@@ -103,6 +104,7 @@ const Home = () => {
             }
         });
         query = process.env.REACT_APP_SERVER_URL + "home" + query.slice(0, -1);
+        setFilters(JSON.parse(JSON.stringify(initialFilters))); // deep copy needed
 
         fetch(query)
             .then(async response => {
