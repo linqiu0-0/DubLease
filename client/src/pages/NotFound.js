@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Button, Typography } from '@mui/material';
+import {useNavigate } from "react-router-dom";
 
 const NotFound = () => {
+    const navigate = useNavigate();
     return (
         <Box
             sx={{
@@ -19,7 +21,7 @@ const NotFound = () => {
             <Typography variant="h6" style={{ color: 'white' }}>
                 The page you’re looking for doesn’t exist.
             </Typography>
-            <Button variant="contained" href="/" sx={{my: 2}}>Back Home</Button>
+            <Button variant="contained" onClick={()=>{navigate("/")}} sx={{my: 2}}>Back Home</Button>
         </Box>
     );
 };

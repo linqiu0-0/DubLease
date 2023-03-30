@@ -115,7 +115,7 @@ const SubleaseInfo = () => {
                             if (entryFrom !== null && entryFrom.entryFrom === "Listing") {
                                 navigate("/listings");
                             } else {
-                                navigate("/home");
+                                navigate("/");
                             }
                         }}
                     >
