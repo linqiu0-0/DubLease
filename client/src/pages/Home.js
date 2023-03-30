@@ -109,6 +109,7 @@ const Home = () => {
         fetchFilteredSubleases(query);
     }
 
+
     const fetchFilteredSubleases = async (query) => {
         console.log(query);
         const ans =  await fetch(query)

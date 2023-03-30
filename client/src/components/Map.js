@@ -58,6 +58,7 @@ function load(p) {
                 <span>${p.space} ft<sup>2</sup></span>
             </div>
             </div>
+            <link> daf<link>
         </div>
         `;
     return comp;

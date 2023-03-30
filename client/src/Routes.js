@@ -25,13 +25,10 @@ const ProjectRoutes = () => {
         <QueryClientProvider client={queryClient}>
             <Router basename={process.env.PUBLIC_URL}>
                 <Routes>
-                    <Route path="/" element={<SignIn />} />
+                    <Route path="/" element={<Home />} />
+
+                    <Route path="/signin" element={<SignIn />} />
                     <Route path="/signup" element={<SignUp />} />
-                    <Route path="/home" element={
-                        <RequireAuth>
-                            <Home />
-                        </RequireAuth>
-                    } />
                     <Route path="/profile" element={
                         <RequireAuth> <Profile /></RequireAuth>
                     } />
@@ -39,10 +36,7 @@ const ProjectRoutes = () => {
                         <RequireAuth>
                             <Listings />
                         </RequireAuth>} />
-                    <Route path="/sublease/:id" element={
-                        <RequireAuth>
-                            <SubleaseInfo />
-                        </RequireAuth>} />
+                    <Route path="/sublease/:id" element={ <SubleaseInfo />}/>
                     <Route path="/edit/:id" element={
                         <RequireAuth>
                             <EditLease />
