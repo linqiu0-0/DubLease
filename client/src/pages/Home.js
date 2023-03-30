@@ -12,6 +12,7 @@ import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
 import Button from "@mui/material/Button";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import {useQuery} from 'react-query';
 
 const monthPicker = [
     {
@@ -70,7 +71,7 @@ const theme = createTheme({
 
 const Home = () => {
     const [filters, setFilters] = React.useState(JSON.parse(JSON.stringify(initialFilters)));
-    const [leaseData, setLeaseData] = React.useState([]);
+    //const [leaseData, setLeaseData] = React.useState([]);
     const [alert, setAlert] = React.useState("");
     const [firstRender, setFirstRender] = React.useState(true);
     const username = window.sessionStorage.getItem("username")
@@ -105,8 +106,12 @@ const Home = () => {
         });
         query = process.env.REACT_APP_SERVER_URL + "home" + query.slice(0, -1);
         setFilters(JSON.parse(JSON.stringify(initialFilters))); // deep copy needed
+        fetchFilteredSubleases(query);
+    }
 
-        fetch(query)
+    const fetchFilteredSubleases = async (query) => {
+        console.log(query);
+        const ans =  await fetch(query)
             .then(async response => {
                 const data = await response.json();
                 // console.log(data);
@@ -118,17 +123,31 @@ const Home = () => {
                 }
                 setFirstRender(false);
 
-                setLeaseData(data);
+                // setLeaseData(data);
+                return data;
             })
             .catch(error => {
                 console.error('There was an error!', error);
                 setAlert({severity: "error", content: "There is an internal error."});
             });
+        // console.log(ans);
+        return ans;
     }
 
-    useEffect(() => {
-        searchWithFilters();
-    }, []);
+    // useEffect(() => {
+    //     searchWithFilters();
+    // }, []);
+
+    const { isLoading, isError, data, error } = useQuery('search', () => fetchFilteredSubleases(process.env.REACT_APP_SERVER_URL + "home"));
+
+    let leaseData = [];
+    if (data) {
+        leaseData = data;
+    }
+
+    if (isLoading) {
+        return;
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -202,7 +221,7 @@ const Home = () => {
                                        }}>
                                     {leaseData.map((singleLease) => (
                                         <LeaseCard key={singleLease.post_id} leaseCardData={singleLease}
-                                                   errorDisplay={error=>setAlert({severity: "error", content: error})}/>
+                                                   errorDisplay={error => setAlert({severity: "error", content: error})}/>
                                     ))}
                                 </Stack>
                             }

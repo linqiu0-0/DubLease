@@ -33,24 +33,15 @@ const SubleaseInfo = () => {
             }
             let data = await response.json();
             let imageBytes = data.Body.data;
-            imageBytes = _arrayBufferToBase64(imageBytes);
-            let imageUrl = "data:image/png;base64," + imageBytes;
+            let blob = new Blob([new Uint8Array(imageBytes)],{type:'image/png'});
+            let file = new File([blob],imageKey);
+            let imageUrl = URL.createObjectURL(file);
             images.push({ src: imageUrl }); // have to use push since multiple images may change state at the same time
         } catch (error) {
             console.error('There was an error!', error);
             throw new Error("Image " + error.message);
         }
     };
-
-    const _arrayBufferToBase64=(buffer) => {
-        var binary = '';
-        var bytes = new Uint8Array( buffer );
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode( bytes[ i ] );
-        }
-        return window.btoa( binary );
-    }
 
     const fetchSublaseInfo = async (event) => {
         let query = process.env.REACT_APP_SERVER_URL + "get_sublease?id=" + leaseId.id;
