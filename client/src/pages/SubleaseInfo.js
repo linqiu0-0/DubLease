@@ -1,19 +1,18 @@
-import React, {useEffect} from "react";
-import {Box, Button, Container, Typography} from '@mui/material';
-import MainAppBar from "../components/AppBar";
+import React from "react";
+import {Box, Button, Container, Typography, Avatar} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate, useParams, useLocation} from "react-router-dom";
-import Map from "../components/Map";
-import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Unstable_Grid2";
+import {useQuery} from 'react-query';
+
+import MainAppBar from "../components/AppBar";
+import Map from "../components/Map";
 import ImagesCarousel from "../components/ImagesCarousel";
 import SubleaseInfoSkeleton from "../components/Skeletons/SubleaseInfoSkeleton";
 import GeneralError from "../components/GeneralError";
-import {useQuery} from 'react-query';
 
 const SubleaseInfo = () => {
     const [mapData, setMapData] = React.useState([]);
-    const [errorMessage, setErrorMessage] = React.useState("");
 
     const navigate = useNavigate();
     const leaseId = useParams();
@@ -31,6 +30,7 @@ const SubleaseInfo = () => {
 
             const data = await response.json();
 
+
             data.user_phone = (data.user_phone === null || data.user_phone === "") ? "N/A": data.user_phone;
             const category = data.rental_features.find(
                 f => f.label === ("Category")
@@ -39,20 +39,21 @@ const SubleaseInfo = () => {
             return data;
         } catch (error) {
             console.error('There was an error!', error);
-            setErrorMessage(error.message);
+            throw new Error(error);
         }
     }
 
     const subleaseInfoData =
         useQuery(["subleaseInfo", leaseId],
-            () => fetchSublaseInfo());
+            () => fetchSublaseInfo(),
+{
+            retry:false
+        });
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        setErrorMessage("");
     };
 
     return (
@@ -62,6 +63,12 @@ const SubleaseInfo = () => {
                 subleaseInfoData.isLoading ?
                 <SubleaseInfoSkeleton/>
                 :
+                    subleaseInfoData.isError ?
+                        <>
+                            <SubleaseInfoSkeleton/>
+                            <GeneralError errorMessage={subleaseInfoData.error.message} onClose={handleClose}/>
+                        </>
+                        :
                 <Container fixed>
 
                     <Button
@@ -165,7 +172,6 @@ const SubleaseInfo = () => {
                     </Box>
                 </Container>
             }
-            <GeneralError errorMessage={errorMessage} onClose={handleClose}/>
         </React.Fragment>
     );
 };

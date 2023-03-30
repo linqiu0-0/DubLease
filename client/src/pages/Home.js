@@ -1,17 +1,15 @@
 import React, {useEffect} from "react";
-import MainAppBar from "../components/AppBar";
-import Box from "@mui/material/Box";
-import LeaseCard from "../components/LeaseCard";
 import Grid from "@mui/material/Unstable_Grid2";
-import Typography from "@mui/material/Typography";
+import {Alert, CircularProgress, createTheme, Stack, ThemeProvider, Box, Typography, Button} from "@mui/material";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+
+import MainAppBar from "../components/AppBar";
+import LeaseCard from "../components/LeaseCard";
 import SearchBar from "../components/SearchBar";
-import {Alert, CircularProgress, createTheme, Stack, ThemeProvider} from "@mui/material";
 import DropDownSelect from "../components/DropDownSelect";
 import Map from "../components/Map";
-import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
-import Button from "@mui/material/Button";
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import BasicFilters from "../assets/static/filter.json";
 
 const monthPicker = [
     {

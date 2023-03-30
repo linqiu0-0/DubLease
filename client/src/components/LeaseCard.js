@@ -1,21 +1,17 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Divider, Paper, Skeleton, SvgIcon } from "@mui/material";
+import { Box, Divider, Paper, SvgIcon, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ReactComponent as BedIcon } from '../assets/images/BedIcon.svg';
 import { ReactComponent as SizeIcon } from '../assets/images/SizeIcon.svg';
 import { ReactComponent as BathIcon } from '../assets/images/BathIcon.svg';
 import "../styles/App.css"
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import LeaseCardSkeleton from "./Skeletons/LeaseCardSkeleton";
 import ImagePlaceHolder from "../assets/images/PlaceHolderImage.png";
 import {useQuery} from 'react-query';
 
 
 function LeaseCard({ leaseCardData, errorDisplay }) {
-    const [image, setImage] = React.useState("");
 
     const navigate = useNavigate();
 
@@ -28,7 +24,6 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
     }
     const fetchImage = async (imageKey) => {
         if (imageKey == null) {
-            // setImage(ImagePlaceHolder);
             return ImagePlaceHolder;
         }
         try {
@@ -43,7 +38,6 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
             let blob = new Blob([new Uint8Array(imageBytes)],{type:'image/png'});
             let file = new File([blob],imageKey);
             let imageUrl = URL.createObjectURL(file);
-            // setImage(imageUrl);
             return imageUrl;
         } catch (error) {
             console.error(error);
@@ -52,12 +46,8 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
         return null;
     };
 
-    // useEffect(() => {
-    //     fetchImage(leaseCardData.image_keys[0]);
-    // }, []);
-
     const { isLoading, isError, data, error } =
-        useQuery(["leasePhoto", leaseCardData.image_keys[0]],
+        useQuery(["subleaseImage", leaseCardData.image_keys[0]],
             () => fetchImage(leaseCardData.image_keys[0]));
 
     return (

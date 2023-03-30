@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { Carousel } from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import PropTypes from 'prop-types';
 import ImagePlaceHolder from "../assets/images/PlaceHolderImage.png";
 import {useQueries} from 'react-query';
-import {Skeleton} from "@mui/material";
+import {Skeleton, Box} from "@mui/material";
 
 export default function ImagesCarousel({ image_keys }) {
 
@@ -23,8 +22,6 @@ export default function ImagesCarousel({ image_keys }) {
             let blob = new Blob([new Uint8Array(imageBytes)],{type:'image/png'});
             let file = new File([blob],imageKey);
             let imageUrl = URL.createObjectURL(file);
-            // images.push({ src: imageUrl }); // have to use push since multiple images may change state at the same time
-            // console.log(images);
             return imageUrl;
         } catch (error) {
             console.error('There was an error!', error);
@@ -43,7 +40,6 @@ export default function ImagesCarousel({ image_keys }) {
     if (userQueries === []) {
         userQueries.push({isLoadging: false, data: ImagePlaceHolder});
     }
-    console.log(userQueries);
 
     return (
         <Carousel showThumbs={false} >
