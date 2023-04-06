@@ -1,20 +1,17 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Divider, Paper, Skeleton, SvgIcon } from "@mui/material";
+import { Box, Divider, Paper, SvgIcon, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ReactComponent as BedIcon } from '../assets/images/BedIcon.svg';
 import { ReactComponent as SizeIcon } from '../assets/images/SizeIcon.svg';
 import { ReactComponent as BathIcon } from '../assets/images/BathIcon.svg';
 import "../styles/App.css"
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import LeaseCardSkeleton from "./Skeletons/LeaseCardSkeleton";
 import ImagePlaceHolder from "../assets/images/PlaceHolderImage.png";
+import {useQuery} from 'react-query';
 
 
 function LeaseCard({ leaseCardData, errorDisplay }) {
-    const [image, setImage] = React.useState("");
 
     const navigate = useNavigate();
 
@@ -26,10 +23,8 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
         });
     }
     const fetchImage = async (imageKey) => {
-
         if (imageKey == null) {
-            setImage(ImagePlaceHolder);
-            return;
+            return ImagePlaceHolder;
         }
         try {
             let response = await fetch(process.env.REACT_APP_SERVER_URL + "get_image?key=" + imageKey);
@@ -40,31 +35,23 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
             }
             let data = await response.json();
             let imageBytes = data.Body.data;
-            imageBytes = _arrayBufferToBase64(imageBytes);
-            let imageUrl = "data:image/png;base64," + imageBytes;
-            setImage(imageUrl);
+            let blob = new Blob([new Uint8Array(imageBytes)],{type:'image/png'});
+            let file = new File([blob],imageKey);
+            let imageUrl = URL.createObjectURL(file);
+            return imageUrl;
         } catch (error) {
             console.error(error);
             errorDisplay(error.message);
         }
+        return null;
     };
 
-    const _arrayBufferToBase64 = (buffer) => {
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-    }
-
-    useEffect(() => {
-        fetchImage(leaseCardData.image_keys[0]);
-    }, []);
+    const { isLoading, isError, data, error } =
+        useQuery(["subleaseImage", leaseCardData.image_keys[0]],
+            () => fetchImage(leaseCardData.image_keys[0]));
 
     return (
-        (image === "") ?
+        (isLoading) ?
             (<LeaseCardSkeleton />)
             :
             (<Paper variant="outlined" onClick={browseSubleaseDetail}>
@@ -73,7 +60,7 @@ function LeaseCard({ leaseCardData, errorDisplay }) {
                     {/* Cover Image*/}
                     <Grid xs={5}>
                         <img
-                            src={image}
+                            src={data}
                             alt={leaseCardData.name + " cover image"}
                             className="img"
                         />

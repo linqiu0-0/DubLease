@@ -10,7 +10,7 @@ function Map({leaseData, isSubleaseInfo}) {
     fromSubleaseInfo = isSubleaseInfo;
 
     useEffect(() => {
-        if (propertyData.length === 1 && !propertyData[0].category) {
+        if (!propertyData || propertyData.length === 1 && !propertyData[0].category) {
             console.log("no data for map");
             return;
         }

@@ -1,17 +1,15 @@
 import React, {useEffect} from "react";
-import MainAppBar from "../components/AppBar";
-import Box from "@mui/material/Box";
-import LeaseCard from "../components/LeaseCard";
 import Grid from "@mui/material/Unstable_Grid2";
-import Typography from "@mui/material/Typography";
+import {Alert, CircularProgress, createTheme, Stack, ThemeProvider, Box, Typography, Button} from "@mui/material";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+
+import MainAppBar from "../components/AppBar";
+import LeaseCard from "../components/LeaseCard";
 import SearchBar from "../components/SearchBar";
-import {Alert, createTheme, Stack, ThemeProvider} from "@mui/material";
 import DropDownSelect from "../components/DropDownSelect";
 import Map from "../components/Map";
-import BasicFilters from "../assets/static/filter.json";
 import MonthPicker from "../components/MonthPicker";
-import Button from "@mui/material/Button";
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import BasicFilters from "../assets/static/filter.json";
 
 const monthPicker = [
     {
@@ -84,7 +82,6 @@ const Home = () => {
         filter.value = filterValue;
         setFilters(newFilters);
     }
-
     const searchWithFilters = (event) => {
 
         if (filters[1].value !== "" && filters[2].value !== "" && filters[1].value.localeCompare(filters[2].value) > 0) {
@@ -104,7 +101,7 @@ const Home = () => {
             }
         });
         query = process.env.REACT_APP_SERVER_URL + "home" + query.slice(0, -1);
-        setFilters(JSON.parse(JSON.stringify(initialFilters))); // deep copy needed
+        console.log(query);
 
         fetch(query)
             .then(async response => {
@@ -145,9 +142,16 @@ const Home = () => {
                         <Typography variant="h5" component="h1" px={1} >
                             Search Properties
                         </Typography>
-                        <Typography variant="subtitle1" component="div" p={1}>
-                            {Object.keys(leaseData).length} Results found
-                        </Typography>
+                        {
+                            firstRender ?
+                                <Typography variant="subtitle1" component="div" p={1}>
+                                    Finding Available Results
+                                </Typography>
+                                :
+                                <Typography variant="subtitle1" component="div" p={1}>
+                                    {Object.keys(leaseData).length} Results found
+                                </Typography>
+                        }
 
                         <Box sx={{display: "flex"}}>
                             <SearchBar
@@ -195,14 +199,24 @@ const Home = () => {
 
                                 </Box>
                                 :
+                                    firstRender ?
+                                        <Box height={800} sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center"}}>
+                                            <CircularProgress size={150}/>
+                                        </Box>
+                                         :
+
                                 <Stack spacing={2} mt={1} px={1}
                                        sx={{
                                            height: "800px",
                                            overflow: "auto"
                                        }}>
-                                    {leaseData.map((singleLease) => (
+                                    {
+                                        leaseData.map((singleLease) => (
                                         <LeaseCard key={singleLease.post_id} leaseCardData={singleLease}
-                                                   errorDisplay={error=>setAlert({severity: "error", content: error})}/>
+                                                   errorDisplay={error => setAlert({severity: "error", content: error})}/>
                                     ))}
                                 </Stack>
                             }
