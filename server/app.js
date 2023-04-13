@@ -1,3 +1,5 @@
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -6,6 +8,9 @@ const search = require('./sublease/search');
 const account = require('./user/account');
 const lease = require('./sublease/lease_actions');
 const imageHandler = require('./data/file_storage');
+const auth = require('./user/authentication');
+
+const verify_token = auth.verify_token;
 
 const app = express();
 
@@ -34,10 +39,16 @@ app.get('/', function (req, res) {
 
 /*________________________Get Requests_________________________*/
 // User Profile
-app.get('/profile', async(req, res) => {
-   const userid = req.query.id;
+app.get('/profile', verify_token, async(req, res) => {
+   // const userid = req.query.id;
+   const userid = req.user.userid;
    if (!userid) {
       res.status(400).send("user id is required");
+      return;
+   }
+
+   if (userid != req.query.id) {
+      res.status(401).send("Unauthorized user");
       return;
    }
 
@@ -99,10 +110,16 @@ app.get('/home', async (req, res) => {
     }
  });
 
- app.get('/list', async(req, res) => {
-   const userid = req.query.id;
+ app.get('/list', verify_token, async(req, res) => {
+   const userid = req.user.userid;
+   // const userid = req.query.id;
    if (!userid) {
       res.status(400).send("user id is required");
+      return;
+   }
+
+   if (userid != req.query.id) {
+      res.status(401).send("Unauthorized user");
       return;
    }
 
@@ -113,7 +130,7 @@ app.get('/home', async (req, res) => {
       console.log(e);
       res.status(500).send(new Error("internal server error"));
    }
- })
+ });
 
 
 /*________________________Post Requests_________________________*/
@@ -154,14 +171,20 @@ app.post('/login', async (req, res) => {
    }
 });
 
-app.post('/edit_profile', async (req, res) => {
-   var user_id = req.body.id;
+app.post('/edit_profile', verify_token, async (req, res) => {
+   // var user_id = req.body.id;
+   var user_id = req.user.userid;
    var username = req.body.username;
    var email = req.body.email;
    var phone = req.body.phone;
 
    if (!user_id) {
       res.status(400).send("user id is required");
+      return;
+   }
+
+   if (user_id != req.body.id) {
+      res.status(401).send("Unauthorized user");
       return;
    }
 
@@ -181,8 +204,9 @@ app.post('/edit_profile', async (req, res) => {
 
 
 // leasing module
-app.post('/add_lease', async (req, res) => {
-   const user_id = req.body.user_id;
+app.post('/add_lease', verify_token, async (req, res) => {
+   // const user_id = req.body.user_id;
+   const user_id = req.user.userid;
    const address = req.body.address;
    const category = req.body.category;
    const property_name = req.body.propertyName;
@@ -205,6 +229,11 @@ app.post('/add_lease', async (req, res) => {
       return;
    }
 
+   if (user_id != req.body.user_id) {
+      res.status(401).send("Unauthorized user");
+      return;
+   }
+
    try {
       const {code, msg} = await lease.add_lease(user_id, images, address, category, property_name, area, room_type, price, deposit, 
                                                 description, start_date, end_date, gender, pet, parking, longitude, latitude);
@@ -215,8 +244,9 @@ app.post('/add_lease', async (req, res) => {
    }
 });
 
-app.post('/edit_lease', async(req, res) => {
+app.post('/edit_lease', verify_token, async(req, res) => {
    const lease_id = req.body.lease_id;
+   // const user_id = req.user.userid;
    const user_id = req.body.user_id;
    const address = req.body.address;
    const category = req.body.category;
@@ -238,6 +268,11 @@ app.post('/edit_lease', async(req, res) => {
 
    if (!lease_id) {
       res.status(400).send("lease id is required");
+      return;
+   }
+
+   if (user_id != req.user.userid) {
+      res.status(401).send("Unauthorized user");
       return;
    }
 
@@ -311,8 +346,9 @@ app.post('/batch_delete_images', async(req, res) => {
    }
 });
 
-app.post('/archive_lease', async(req, res) => {
+app.post('/archive_lease', verify_token, async(req, res) => {
    const lease_id = req.body.lease_id;
+   const user_id = req.user.userid;
    const status = req.body.status;
    if (!lease_id) {
       res.status(400).send("lease id is required")
@@ -320,7 +356,7 @@ app.post('/archive_lease', async(req, res) => {
    }
 
    try {
-      const {code, msg} = await lease.archive_lease(lease_id, status);
+      const {code, msg} = await lease.archive_lease(lease_id, user_id, status);
       res.status(code).send(msg);
    } catch (e) {
       console.log(e);
@@ -328,15 +364,16 @@ app.post('/archive_lease', async(req, res) => {
    }
 });
 
-app.post('/delete_lease', async(req, res) => {
+app.post('/delete_lease', verify_token, async(req, res) => {
    const lease_id = req.body.lease_id;
+   const user_id = req.user.userid;
    if (!lease_id) {
       res.status(400).send("lease id is required")
       return;
    }
 
    try {
-      const {code, msg} = await lease.delete_lease(lease_id);
+      const {code, msg} = await lease.delete_lease(lease_id, user_id);
       res.status(code).send(msg);
    } catch (e) {
       console.log(e);

@@ -194,6 +194,18 @@ exports.check_lease_exists = async function(id) {
     });
 };
 
+exports.get_userid_by_leaseid = async function(lease_id) {
+    const sql = 'SELECT UserID as userid FROM Sublease WHERE PostID = ?';
+    return new Promise((resolve, reject) => {
+        connection.query(sql, lease_id, function(error, results, fields) {
+            if (error) {
+                return reject(error);
+            }
+            return resolve(results[0].userid);
+        });
+    });
+}
+
 exports.list_sublease_by_user_id = async function(userid) {
     const sql = 'SELECT * FROM Sublease WHERE UserID = ?';
     return new Promise((resolve, reject) => {
