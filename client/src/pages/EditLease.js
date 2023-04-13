@@ -106,7 +106,7 @@ const EditLease = () => {
         if (addressSplit[0].slice(-1) === ")") {
             let unitIndex = addressSplit[0].lastIndexOf("(");
             setStreetAddress(addressSplit[0].substring(0, unitIndex));
-            setUnitNum(addressSplit[0].substring(unitIndex, addressSplit[0].length - 1));
+            setUnitNum(addressSplit[0].substring(unitIndex + 1, addressSplit[0].length - 1));
         } else {
             setStreetAddress(addressSplit[0]);
         }
@@ -196,6 +196,7 @@ const EditLease = () => {
             const parkingInt = parseInt(parking);
             const latitudeFloat = parseFloat(latitude);
             const longitudeFloat = parseFloat(longitude);
+            const unitNumFormatted = unitNum !== "" ? "(" + unitNum + ")" : unitNum;
 
             // only upload new images
             let temp = [];
@@ -217,7 +218,7 @@ const EditLease = () => {
                 body: JSON.stringify({
                     "lease_id": leaseId.id,
                     "user_id": userid,
-                    "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
+                    "address": streetAddress + " " + unitNumFormatted + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
                     "category": category,
                     "propertyName": propertyName,
                     "area": areaFloat,
@@ -322,9 +323,7 @@ const EditLease = () => {
                                     variant="outlined"
                                     value={unitNum}
                                     onChange={(e) => {
-                                        if (e.target.value !== "") {
-                                            setUnitNum("(" + e.target.value + ")");
-                                        }
+                                        setUnitNum(e.target.value);
                                     }}
 
                                 ></TextField>

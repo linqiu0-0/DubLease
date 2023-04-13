@@ -53,6 +53,9 @@
     display: flex;
     color: var(--white);
   }
+
+  
+
   
   .property .info {
     display: none;
@@ -86,15 +89,28 @@
     padding: 5px;
     align-items: center;
     font-size: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
   }
   
+  /*
+ * Property styles in highlighted state.
+ */
+
   .property.hover {
-    height: 80px;
+    height: 100px;
     width: auto;
     background-color: var(--pink);
     border-radius: 8px;
     padding: 8px 15px;
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .property.hover .icon {
+    width: 40px;
+    height: 40px;
+    font-size: 35px;
+    margin-right: 10px;
   }
   
   .property.hover .info {
@@ -103,14 +119,17 @@
   
   .property .bed {
     color: var(--orange);
+    margin-right: 0.5rem;
   }
   
   .property .bath {
     color: var(--orange);
+    margin-right: 0.5rem;
   }
   
   .property .size {
     color: var(--orange);
+    margin-right: 0.5rem;
   }
   
   /*
