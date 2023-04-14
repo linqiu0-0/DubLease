@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import MainAppBar from "../components/AppBar";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -86,8 +86,8 @@ const EditLease = () => {
             let data = await response.json();
             let imageBytes = data.Body.data;
 
-            let blob = new Blob([new Uint8Array(imageBytes)],{type:'image/png'});
-            let file = new File([blob],imageKey);
+            let blob = new Blob([new Uint8Array(imageBytes)], { type: 'image/png' });
+            let file = new File([blob], imageKey);
             imageList.push(file);
             prevImagesName.push(imageKey);
             console.log(file);
@@ -178,7 +178,7 @@ const EditLease = () => {
     }, []);
 
     const handleSubmit = () => {
-        if(!validLatitude) {
+        if (!validLatitude) {
             //need popup/alert
             console.log("Invalid latitude");
         } else if (!validLongitude) {
@@ -214,7 +214,10 @@ const EditLease = () => {
             // console.log(difference);
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('token')
+                },
                 body: JSON.stringify({
                     "lease_id": leaseId.id,
                     "user_id": userid,
@@ -271,10 +274,10 @@ const EditLease = () => {
                     size="medium"
                     color="primary"
                     variant="contained" onClick={
-                    () => {
-                        navigate('/home');
-                    }
-                }>
+                        () => {
+                            navigate('/');
+                        }
+                    }>
                     <ArrowBackIcon />
                     <Typography variant="button" component="span" p={1}>
                         Back Home
@@ -651,7 +654,7 @@ const EditLease = () => {
                                 <Upload prevImages={prevImages} photos={photoData => {
                                     setImages(photoData);
                                     console.log(photoData);
-                                }}/>
+                                }} />
                             </Grid>
 
 
