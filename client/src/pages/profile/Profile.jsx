@@ -38,7 +38,10 @@ const Profile = () => {
             setEdit(false)
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('token')
+                },
                 body: JSON.stringify({
                     "id": userId,
                     "email": email,
@@ -50,10 +53,6 @@ const Profile = () => {
             window.sessionStorage.setItem("username", name)
             fetch(process.env.REACT_APP_SERVER_URL + "edit_profile", requestOptions)
                 .then(checkStatus)
-                .then(response => response.json())
-                // .then((data) => {
-                //     // console.log(data)
-                // })
                 .catch(handleError);
         }
     }
@@ -61,7 +60,10 @@ const Profile = () => {
     useEffect(() => {
         const requestOptions = {
             method: 'Get',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            },
         };
 
         let queryUrl = "?id=" + userId
@@ -74,7 +76,7 @@ const Profile = () => {
                 setEmail(data.email)
             })
             .catch(handleError);
-    },[])
+    }, [])
 
     function handleError(error) {
         console.log(error);
@@ -202,7 +204,6 @@ const Profile = () => {
                                             </Text>
                                             <TextField
                                                 className="font-medium p-[0] text-[16px] placeholder:text-black_900 text-black_900 text-left w-[100%]"
-                                                wrapClassName="w-[100%]"
                                                 name="Frame"
                                                 value={name}
                                                 shape="RoundedBorder8"
@@ -224,7 +225,6 @@ const Profile = () => {
                                             </Text>
                                             <TextField
                                                 className="font-medium p-[0] text-[16px] placeholder:text-black_900 text-black_900 text-left w-[100%]"
-                                                wrapClassName="w-[100%]"
                                                 name="Frame One"
                                                 value={name}
                                                 shape="RoundedBorder8"
@@ -238,11 +238,12 @@ const Profile = () => {
                                             Phone Number
                                         </Text>
                                         <MuiTelInput className="sm:w-[100%] w-[580px]"
-                                                     defaultCountry="US" value={phone}
-                                                     onChange={handlePhoneChange}
-                                                     helperText={!validPhone ? 'Invalid phone number!' : ' '}
-                                                     error={!validPhone}
-                                                     disabled={!edit}
+                                            defaultCountry="US" 
+                                            value={phone}
+                                            onChange={handlePhoneChange}
+                                            helperText={!validPhone ? 'Invalid phone number!' : ' '}
+                                            error={!validPhone}
+                                            disabled={!edit}
                                         />
                                     </div>
                                     <div className="flex flex-col gap-[8px] h-[120px] md:h-[auto] sm:h-[auto] items-start justify-start mt-[24px] sm:w-[100%] w-[580px]">
@@ -251,10 +252,8 @@ const Profile = () => {
                                         </Text>
                                         <TextField
                                             className="font-medium p-[0] text-[16px] placeholder:text-black_900 text-black_900 text-left w-[100%]"
-                                            wrapClassName="w-[100%]"
                                             name="Frame One"
                                             type="email"
-                                            defaultValue={email}
                                             value={email}
                                             shape="RoundedBorder8"
                                             onChange={(e) => {

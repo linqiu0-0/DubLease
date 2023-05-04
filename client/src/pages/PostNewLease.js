@@ -95,7 +95,10 @@ const PostNewLease = () => {
 
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('token')
+                },
                 body: JSON.stringify({
                     "user_id": userId,
                     "address": streetAddress + " " + unitNumFormatted + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
@@ -155,7 +158,7 @@ const PostNewLease = () => {
                     color="primary"
                     variant="contained" onClick={
                         () => {
-                            navigate('/home');
+                            navigate('/');
                         }
                     }>
                     <ArrowBackIcon />

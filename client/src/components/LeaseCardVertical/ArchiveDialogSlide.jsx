@@ -32,7 +32,10 @@ function ArchiveDialogSlide({ openArchive, setOpenArchive, post_id, lease_status
     const handleAgree = () => {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            },
             body: JSON.stringify({
                 "lease_id": post_id,
                 "status": !lease_status,

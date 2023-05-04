@@ -50,7 +50,7 @@ function MainAppBar() {
                     }}
                 >
                     <Toolbar disableGutters>
-                        <SvgIcon component="a" fontSize="large" href="/home" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, pt: 1 }}>
+                        <SvgIcon component="a" fontSize="large" href="/DubLease" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, pt: 1 }}>
                             <Logo />
                         </SvgIcon>
 

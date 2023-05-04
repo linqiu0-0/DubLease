@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Grid } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -14,6 +14,7 @@ import { Link } from "react-router-dom"
 
 import { PromotionRight } from "./Promotion.jsx";
 import { Text } from "../../components/Text";
+import useAuth from "../../hooks/useAuth.jsx";
 
 const SignUp = () => {
     const formRef = React.useRef();
@@ -27,14 +28,9 @@ const SignUp = () => {
     const [email, setEmail] = React.useState("");
     const [username, setUsername] = React.useState("");
     const [passwordAgain, setPasswordAgain] = React.useState("")
-
-
+    const auth = useAuth();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = ({ event }) => {
-        event.preventDefault();
-    };
 
 
     const updateSignupData = () => {
@@ -48,10 +44,10 @@ const SignUp = () => {
             .then(checkStatus)
             .then(response => response.json())
             .then(data => {
-                navigate('/', {
-                    state: {
-                        username: data.username
-                    }
+                window.sessionStorage.setItem("username", data.username);
+                window.sessionStorage.setItem("userId", data.userid);
+                auth.login(data.token).then(() => {
+                    navigate('/');
                 });
             })
             .catch(handleError);
@@ -154,7 +150,6 @@ const SignUp = () => {
                                                     color="secondary"
                                                     aria-label="toggle password visibility"
                                                     onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                 >
                                                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -188,7 +183,6 @@ const SignUp = () => {
                                                 color="secondary"
                                                 aria-label="toggle password visibility"
                                                 onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
                                                 edge="end"
                                             >
                                                 {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -235,6 +229,7 @@ const SignUp = () => {
                         </Link>
                     </Text>
                 </div>
+
                 <PromotionRight />
             </div>
         </>
