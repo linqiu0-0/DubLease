@@ -30,17 +30,20 @@ function DeleteDialogSlide({ openDelete, setOpenDelete, post_id, setReloading })
     const handleAgree = () => {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            },
             body: JSON.stringify({
                 "lease_id": post_id
             })
         };
         fetch(process.env.REACT_APP_SERVER_URL + "delete_lease", requestOptions)
             .then(checkStatus)
-            .then(() => { 
+            .then(() => {
                 setReloading(true)
                 setOpenDelete(false);
-             })
+            })
             .catch((error) => { console.log(error) });
     }
 

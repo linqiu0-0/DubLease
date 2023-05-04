@@ -10,9 +10,15 @@ const Listings = () => {
   const [reloading, setReloading] = React.useState(false);
 
   const getLeaseData = () => {
+    const requestOptions = {
+      method: 'Get',
+      headers: { 'Content-Type': 'application/json',
+      'x-access-token':window.sessionStorage.getItem('token')
+   },
+  };
     let queryUrl = "?id=" + window.sessionStorage.getItem("userId");
 
-    fetch(process.env.REACT_APP_SERVER_URL + "list" + queryUrl)
+    fetch(process.env.REACT_APP_SERVER_URL + "list" + queryUrl, requestOptions)
       .then(async response => {
         const data = await response.json();
         // check for error response

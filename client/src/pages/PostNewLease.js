@@ -90,13 +90,18 @@ const PostNewLease = () => {
             const parkingInt = parseInt(parking);
             const latitudeFloat = parseFloat(latitude);
             const longitudeFloat = parseFloat(longitude);
+            const unitNumFormatted = unitNum !== "" ? "(" + unitNum + ")" : unitNum;
+
 
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('token')
+                },
                 body: JSON.stringify({
                     "user_id": userId,
-                    "address": streetAddress + " " + unitNum + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
+                    "address": streetAddress + " " + unitNumFormatted + ", " + cityAddress + ", " + stateAddress + " " + zipcode,
                     "category": category,
                     "propertyName": propertyName,
                     "area": areaFloat,
@@ -153,7 +158,7 @@ const PostNewLease = () => {
                     color="primary"
                     variant="contained" onClick={
                         () => {
-                            navigate('/home');
+                            navigate('/');
                         }
                     }>
                     <ArrowBackIcon />
@@ -201,9 +206,7 @@ const PostNewLease = () => {
                                     size="30ch"
                                     variant="outlined"
                                     onChange={(e) => {
-                                        if (e.target.value !== "") {
-                                            setUnitNum("(" + e.target.value + ")");
-                                        }
+                                        setUnitNum(e.target.value);
                                     }}
                                 ></TextField>
                             </Grid>

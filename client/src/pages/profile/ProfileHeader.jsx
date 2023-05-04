@@ -28,7 +28,7 @@ const ProfileHeader = () => {
                                     shape="icbRoundedBorder8"
                                     size="smIcn"
                                     variant="icbFillDeeppurpleA200"
-                                    href="/home"
+                                    href="/DubLease"
                                 >
                                     <Logo />
                                 </Button>
@@ -79,12 +79,7 @@ const ProfileHeader = () => {
                             src="images/img_arrowleft_gray_600.svg"
                             className="common-pointer h-[20px] w-[20px]"
                             onClick={() =>
-                                navigate('/home', {
-                                    state: {
-                                        username: username,
-                                        userId: userId
-                                    }
-                                })}
+                                navigate('/')}
                             alt="arrowleft"
                         />
                         <Text

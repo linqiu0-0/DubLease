@@ -5,16 +5,12 @@ const authContext = React.createContext();
 function useAuth() {
 
   const getToken = () => {
-    const tokenString = window.sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    return userToken?.AuthToken
+    return window.sessionStorage.getItem('token');
   };
 
-  const saveToken = () => {
-    let userToken = {
-      AuthToken: "authorizedToken"
-    }
-    window.sessionStorage.setItem('token', JSON.stringify(userToken));
+  const saveToken = (token) => {
+  
+    window.sessionStorage.setItem('token',token);
   };
 
   const [authed, setAuthed] = React.useState(getToken() != null);
@@ -22,9 +18,9 @@ function useAuth() {
 
   return {
     authed,
-    login() {
+    login(token) {
       return new Promise((res) => {
-        saveToken();
+        saveToken(token);
         setAuthed(true);
         res();
       });

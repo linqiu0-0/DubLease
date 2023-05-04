@@ -34,8 +34,8 @@ export default function SubleaseInfoSkeleton() {
                 <Skeleton animation="wave" width={"20%"}/>
             </Typography>
 
-            <Box marginTop={2} sx={{height: 550 }}>
-                <Skeleton animation="wave" variant="rectangular" height={550}/>
+            <Box marginTop={2} sx={{height: 650 }}>
+                <Skeleton animation="wave" variant="rectangular" height={650}/>
             </Box>
             <Typography variant="h6" component="div" p={1}>
                 Description

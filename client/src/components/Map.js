@@ -10,7 +10,7 @@ function Map({leaseData, isSubleaseInfo}) {
     fromSubleaseInfo = isSubleaseInfo;
 
     useEffect(() => {
-        if (propertyData.length === 1 && !propertyData[0].category) {
+        if (!propertyData || propertyData.length === 1 && !propertyData[0].category) {
             console.log("no data for map");
             return;
         }
@@ -58,6 +58,7 @@ function load(p) {
                 <span>${p.space} ft<sup>2</sup></span>
             </div>
             </div>
+            <link> daf<link>
         </div>
         `;
     return comp;
